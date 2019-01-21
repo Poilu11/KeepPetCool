@@ -1,0 +1,9 @@
+body {
+    font-family:"ZCOOL KuaiLe";
+    background-color: whitesmoke;
+}
+
+nav ul {
+    list-style: none;
+    display: inline;
+}

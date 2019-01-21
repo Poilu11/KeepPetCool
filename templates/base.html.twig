@@ -1,12 +1,76 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i|ZCOOL+KuaiLe" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1 class="bg-dark text-center text-white">KeepPet <img class="" style="width:10%;" src="images/2emejet.png "
+                    alt=""></h1>
+
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="">Login</a>
+                </li>
+                <a href="">Logout</a>
+                <a href="">S'inscrire</a>
+                <a href="">Profil</a>
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="row container-fluid">
+        <div class="center-block">
+            <ul class="col-4">
+                <li>DogIcon</li>
+                <li>CatIcon</li>
+                <li>LizardIcon</li>
+            </ul>
+            <ul class="col-4">
+                <li>DomIcon</li>
+                <li>PromenadeIcon</li>
+            </ul>
+            <a class="col-2">SearchIcon</a>
+        </div>
+    </nav>
+
+
+    {% block body %}{% endblock %}
+
+
+    <footer class="container">
+        <div class="col-4"><a href="">Faq</a></div>
+        <div class="col-4"><a href="">Mentions légales</a></div>
+        <div class="col-4"><a href="">Contact</a></div>
+    </footer>
+
+
+    {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    {% endblock %}
+</body>
+
 </html>
