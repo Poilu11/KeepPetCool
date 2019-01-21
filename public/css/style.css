@@ -1,9 +1,47 @@
 body {
-    font-family:"ZCOOL KuaiLe";
+    font-family:"Space Mono";
     background-color: whitesmoke;
 }
 
-nav ul {
-    list-style: none;
-    display: inline;
+.fas {
+    color: white;
+}
+
+.criteriaNav{
+    position: relative;
+    top: -2px;
+}
+
+
+
+@media (min-width : 1224px)
+{
+
+    .criteriaNav
+    {
+        position: fixed;
+        display: block;
+        height : 40vh;
+        width : 10vh;
+        top: 30vh;
+        left: 3vw;
+        border-radius: 15px;
+    }
+
+    .criteriaNav form
+    {
+        display: block;
+        width : 100%;
+    }
+    
+    .criteriaNav form i
+    {
+        display: block;
+        font-size: 2em;
+    }
+    
+    .criteriaNav form a
+    {
+        display: block;
+    }    
 }
