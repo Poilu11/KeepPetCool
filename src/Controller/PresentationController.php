@@ -16,7 +16,6 @@ class PresentationController extends AbstractController
      */
     public function new()
     {
-        // TODO
 
         return $this->render('presentation/new.html.twig', [
             
