@@ -21,7 +21,7 @@ body {
     {
         position: fixed;
         display: block;
-        height : 47vh;
+        height : auto;
         width : 10vh;
         top: 40vh;
         left: 3vw;
