@@ -19,20 +19,26 @@
 </head>
 
 <body>
-    <header class="bg-dark pt-4 pr-4 pl-4">
+    <header class="bg-dark p-4">
         <div>
-            <h1 class="text-center text-white">KeepPet <img class="" style="width:10%;" src="images/2emejet.png " alt=""></h1>
+            <h1 class="text-center text-white">KeepPetCool <img class="" style="width:10%;" src="images/2emejet.png " alt=""></h1>
 
         </div>
         <nav class="row justify-content-end">
-            <a class="text-white text-decoration-none nav-link" href="">Login</a>
-            <a class="text-white text-decoration-none nav-link" href="">Logout</a>
-            <a class="text-white text-decoration-none nav-link" href="">S'inscrire</a>
-            <a class="text-white text-decoration-none nav-link" href="">Profil</a>
+            <button class="m-1 btn btn-white">
+            <a class="text-dark text-decoration-none nav-link" href="">Login</a>
+            </button>
+            <button class="m-1 btn btn-white">
+            <a class="text-dark text-decoration-none nav-link" href="">Logout</a></button>
+            <button class="m-1 btn btn-white">
+            <a class="text-dark text-decoration-none nav-link" href="">S'inscrire</a></button>
+            <button class="m-1 btn btn-white">
+            <a class="text-dark text-decoration-none nav-link" href="">Profil</a></button>
         </nav>
 
     </header>
 
+    
     <nav class="criteriaNav bg-dark">
         <form class="text-center">
             <i class="p-1 fas fa-dog"></i>
@@ -45,76 +51,25 @@
         </form>
     </nav>
 
-
-    {# <div class="card col-2">
-        <div class="card-header">
-            Recherche
-        </div>
-        <div class="card-body">
-            <form class="bg-dark">
-                <input type="checkbox"><i class="p-1 fas fa-dog"></i></input>
-                <input type="checkbox"><i class="p-1 fas fa-cat"></i></input>
-                <input type="checkbox"><i class="p-1 fas fa-kiwi-bird"></i></input>
-                <input type="checkbox"><i class="p-1 fas fa-horse-head"></i></input>
-                <input type="checkbox"><i class="p-1 fas fa-home"></i></input>
-                <input type="checkbox"><i class="p-1 fas fa-walking"></i></input>
-            </form>
-            <a href="#" class="btn btn-primary">Rechercher<i class="p-1 fas fa-search"></a>
-        </div>
-    </div> #}
-
     {% block body %}
-
-<div class="m-2 row">
-    <div class=" m-auto col-8 card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
-        </div>
-    </div>
-    <div class="m-auto col-8 card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
-        <div class="m-auto col-8 card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                        content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-</div>
-        {% endblock %}
+    {% endblock %}
 
 
-        <footer class="container ">
-            <span class="col-4"><a href="">Faq</a></span>
-            <span class="col-4"><a href="">Mentions légales</a></span>
-            <span class="col-4"><a href="">Contact</a></span>
-        </footer>
+    <footer class="bg-dark text-center p-4">
+        <span class="col-4"><a class="text-white text-decoration-none"href="">Faq</a></span>
+        <span class="text-white col-4"><a class="text-white text-decoration-none"href="">Mentions légales</a></span>
+        <span class="text-white col-4"><a class="text-white text-decoration-none"href="">Contact</a></span>
+    </footer>
 
 
-        {% block javascripts %}
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
-        {% endblock %}
+    {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    {% endblock %}
 </body>
 
 </html>
