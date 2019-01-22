@@ -27,14 +27,18 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/comment/{idPetsitter}/new/{idOwner}", name="comment_new", methods={"GET", "POST"}, requirements={"idPetsitter"="\d+"}, requirements={"idOwner"="\d+"})
+     * @Route("/comment/{idPetsitter}/new/{idOwner}", name="comment_new", methods={"POST"}, requirements={"idPetsitter"="\d+"}, requirements={"idOwner"="\d+"})
      * @ParamConverter("user", options={"mapping": {"idPetsitter": "id"}})
      * @ParamConverter("user", options={"mapping": {"idOwner": "id"}})
      */
-    public function new(User $user, Request $request, EntityManagerInterface $em)
+    public function new($idPetsitter, $idOwner, User $user, CommentRepository $commentRepository, Request $request, EntityManagerInterface $em)
     {
         dd('Page création');
-        return $this->render('presentation/show.html.twig', [
+
+        // TODO traitement du formulaire
+
+
+        return $this->render('comment/new.html.twig', [
             
         ]);
     }
