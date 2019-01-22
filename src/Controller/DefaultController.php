@@ -19,11 +19,11 @@ class DefaultController extends AbstractController
 
         // Pour administrateurs et modérateurs
         $allPresentations = $presentationRepository->findAllPresentationsByUserType('petsitter');
-        dump($allPresentations);
+        // dump($allPresentations);
 
         // Pour utlisateurs connectés et non connectés
         $activePresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
-        dd($activePresentations);
+        // dd($activePresentations);
 
 
         // Methode permettant de calculer la moyenne des commentaires par petsitter
