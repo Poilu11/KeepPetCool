@@ -40,7 +40,7 @@ class PresentationController extends AbstractController
      */
     public function disable(Request $request)
     {
-        dd('Nous sommes dans la page de traitement Disable');
+        dd('Nous sommes dans la page de traitement Presentation Disable');
 
         $this->redirectToRoute('home_page');
     }
