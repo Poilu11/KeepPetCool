@@ -25,7 +25,6 @@ class DefaultController extends AbstractController
         $activePresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
         // dd($activePresentations);
 
-
         // Methode permettant de calculer la moyenne des commentaires par petsitter
         $arrayNote = [];
 

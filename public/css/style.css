@@ -3,7 +3,7 @@ body {
     background-color: whitesmoke;
 }
 
-.fas {
+.criteriaNav .fas {
     color: white;
 }
 
@@ -22,7 +22,7 @@ body {
         position: fixed;
         display: block;
         height : auto;
-        width : 10vh;
+        width : 5vw;
         top: 40vh;
         left: 3vw;
         border-radius: 15px;
