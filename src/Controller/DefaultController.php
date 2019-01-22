@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Presentation;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,20 +14,56 @@ class DefaultController extends AbstractController
      */
     public function home()
     {
-        $repositoryPresentation = $this->getDoctrine()->getRepository(Presentation::class);
+
+        $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
 
         // Pour administrateurs et modérateurs
-        $allPresentations = $repositoryPresentation->findBy([], ['createdAt' => 'DESC']);
+        $allPresentations = $presentationRepository->findAllPresentationsByUserType('petsitter');
+        dump($allPresentations);
 
         // Pour utlisateurs connectés et non connectés
-        $activePresentations = $repositoryPresentation->findBy(['isActive' => true], ['createdAt' => 'DESC']);
+        $activePresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
+        dd($activePresentations);
 
-        // dump($allPresentations);
-        // dd($activePresentations);
+
+        // Methode permettant de calculer la moyenne des commentaires par petsitter
+        $arrayNote = [];
+
+        foreach($allPresentations as $currentPresentation)
+        {
+            $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
+            $comments = $commentRepository->findBy(['petsitter' => $currentPresentation->getUser()->getId()]);
+            $commentsCount = count($comments);
+
+            // On initialise la variable d'addition
+            $sum = 0;
+
+            foreach($comments as $currentComment)
+            {
+                $sum += $currentComment->getNote();
+            }
+
+            if($commentsCount > 0)
+            {
+                $moy = $sum / $commentsCount;
+            }
+            else
+            {
+                $moy = 'NC';
+            }
+
+            $arrayNote[$currentPresentation->getUser()->getId()] = $moy;
+
+        }
+        // Fin de la méthode permettant de calculer la moyenne
+        
+
+        // dd($arrayNote);
 
         return $this->render('default/home.html.twig', [
             'allPresentations' => $allPresentations,
-            'activePresentations' => $activePresentations
+            'activePresentations' => $activePresentations,
+            'notes' => $arrayNote
         ]);
     }
 

@@ -19,6 +19,34 @@ class PresentationRepository extends ServiceEntityRepository
         parent::__construct($registry, Presentation::class);
     }
 
+    public function findAllPresentationsByUserType($type){
+
+        $qb = $this->createQueryBuilder('presentation')
+            ->innerJoin('presentation.user', 'user')
+            ->orderBy('presentation.createdAt', 'ASC')
+            ->setParameter('type', $type)
+            ->where('user.type =:type')
+            ->getQuery();
+        
+        return $qb->execute();
+
+    }
+
+    public function findActivePresentationsByUserType($type){
+
+        $qb = $this->createQueryBuilder('presentation')
+            ->innerJoin('presentation.user', 'user')
+            ->orderBy('presentation.createdAt', 'ASC')
+            ->setParameter('type', $type)
+            ->where('presentation.isActive = true')
+            ->andWhere('user.type =:type')
+            ->getQuery();
+        
+        return $qb->execute();
+
+    }
+
+
     // /**
     //  * @return Presentation[] Returns an array of Presentation objects
     //  */

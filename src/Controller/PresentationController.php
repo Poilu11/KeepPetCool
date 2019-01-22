@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Presentation;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,11 +50,35 @@ class PresentationController extends AbstractController
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      */
-    public function show(Presentation $presentation, EntityManagerInterface $em)
+    public function show($id, Presentation $presentation, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
 
+        // DEBUT Calcul moyenne des notes
+        // On récupère l'ensemble des commentaires associés au petsitter
+        $comments = $commentRepository->findBy(['petsitter' => $id]);
+        $commentsCount = count($comments);
+
+        // On initialise la variable d'addition
+        $sum = 0;
+
+        foreach($comments as $currentComment)
+        {
+            $sum += $currentComment->getNote();
+        }
+
+        if($commentsCount > 0)
+        {
+            $moy = $sum / $commentsCount;
+        }
+        else
+        {
+            $moy = 'NC';
+        }
+        // FIN Calcul moyenne des notes
+
         return $this->render('presentation/show.html.twig', [
-            'presentation' => $presentation
+            'presentation' => $presentation,
+            'note' => $moy
         ]);
     }
 }

@@ -15,6 +15,7 @@ use Faker\ORM\Doctrine\Populator;
 use App\DataFixtures\Faker\NoteProvider;
 use App\DataFixtures\Faker\SpeciesProvider;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\DataFixtures\Faker\UserTypeProvider;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -47,28 +48,17 @@ class AppFixtures extends Fixture
 
         $em->persist($modoRole);
 
-        $petsitterProRole = new Role();
-        $petsitterProRole->setCode('ROLE_PETPRO');
-        $petsitterProRole->setName('Petsitter Professionnel');
+        $userRole = new Role();
+        $userRole->setCode('ROLE_USER');
+        $userRole->setName('Utilisateur');
 
-        $em->persist($petsitterProRole);
-
-        $petsitterPartRole = new Role();
-        $petsitterPartRole->setCode('ROLE_PETPART');
-        $petsitterPartRole->setName('Petsitter Particulier');
-
-        $em->persist($petsitterPartRole);
-
-        $ownerRole = new Role();
-        $ownerRole->setCode('ROLE_OWNER');
-        $ownerRole->setName('Propriétaire');
-
-        $em->persist($ownerRole);
+        $em->persist($userRole);
 
         $adminUser = new User();
         $adminUser->setUsername('admin')
             ->setPassword($this->encoder->encodePassword($adminUser, 'admin'))
             ->setEmail('admin@admin.com')
+            ->setType('Administrateur')
             ->setFirstname('Toto')
             ->setLastname('Lunar')
             ->setAddress('10 rue Tatamine')
@@ -117,9 +107,11 @@ class AppFixtures extends Fixture
         // Ajout ProviderFaker
         $generator->addProvider(new SpeciesProvider($generator));
         $generator->addProvider(new NoteProvider($generator));
+        $generator->addProvider(new UserTypeProvider($generator));
         
         $populator = new Populator($generator, $em);
         $populator->addEntity(User::class, 70, array(
+            'type' => function() use ($generator) { return $generator->randomUserType(); },
             'firstname' => function() use ($generator) { return $generator->firstName(null); },
             'lastname' => function() use ($generator) { return $generator->lastName; },
             'phoneNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
@@ -128,7 +120,7 @@ class AppFixtures extends Fixture
             'pathCertificat' => 'assets/media/docs/certificat.pdf',
             'isActive' => true,
             'isValidated' => false,
-            'role' => $petsitterProRole,
+            'role' => $userRole,
         ));
 
         $populator->addEntity(Species::class, 5, array(
