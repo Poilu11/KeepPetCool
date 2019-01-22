@@ -72,6 +72,42 @@ class AppFixtures extends Fixture
         
         $em->persist($adminUser);
 
+        $modoUser = new User();
+        $modoUser->setUsername('modo')
+            ->setPassword($this->encoder->encodePassword($modoUser, 'modo'))
+            ->setEmail('modo@modo.com')
+            ->setType('Modérateur')
+            ->setFirstname('Tata')
+            ->setLastname('Lunar')
+            ->setAddress('10 rue Tatamane')
+            ->setZipCode('73000')
+            ->setCity('Chambéry')
+            ->setLongitude(4.079306)
+            ->setLatitude(48.293024)
+            ->setIsValidated(false)
+            ->setCreatedAt(new DateTime())
+            ->setRole($modoRole);
+        
+        $em->persist($modoUser);
+
+        $userUser = new User();
+        $userUser->setUsername('user')
+            ->setPassword($this->encoder->encodePassword($userUser, 'user'))
+            ->setEmail('user@user.com')
+            ->setType('Utilisateur')
+            ->setFirstname('Titi')
+            ->setLastname('Lunario')
+            ->setAddress('10 rue Blabla')
+            ->setZipCode('74000')
+            ->setCity('Albertville')
+            ->setLongitude(4.079306)
+            ->setLatitude(48.293024)
+            ->setIsValidated(false)
+            ->setCreatedAt(new DateTime())
+            ->setRole($userRole);
+        
+        $em->persist($userUser);
+
         $service1 = new Service();
         $service1->setName('Gardiennage à domicile');
 
@@ -116,8 +152,8 @@ class AppFixtures extends Fixture
             'lastname' => function() use ($generator) { return $generator->lastName; },
             'phoneNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
             'cellNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
-            'pathAvatar' => 'assets/media/pictures/default.png',
-            'pathCertificat' => 'assets/media/docs/certificat.pdf',
+            'pathAvatar' => 'media/pictures/default.png',
+            'pathCertificat' => 'media/docs/certificat.pdf',
             'isActive' => true,
             'isValidated' => false,
             'role' => $userRole,

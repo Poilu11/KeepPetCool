@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,15 +32,69 @@ class CommentController extends AbstractController
      * @ParamConverter("user", options={"mapping": {"idPetsitter": "id"}})
      * @ParamConverter("user", options={"mapping": {"idOwner": "id"}})
      */
-    public function new($idPetsitter, $idOwner, User $user, CommentRepository $commentRepository, Request $request, EntityManagerInterface $em)
+    public function new(Request $request, EntityManagerInterface $em)
     {
-        dd('Page création');
-
         // TODO traitement du formulaire
 
 
         return $this->render('comment/new.html.twig', [
             
         ]);
+    }
+
+    /**
+     * @Route("/comment/{id}/disable", name="comment_disable", methods={"GET"})
+     */
+    public function disable(Comment $comment, EntityManagerInterface $em)
+    {
+       // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+
+       if($comment->getIsActive())
+       {
+            $comment->setIsActive(false);
+            $em->flush;
+
+            $this->addFlash(
+                'success',
+                'Commentaire désactivé avec succès !'
+            );
+
+       }
+       else
+       {
+            $comment->setIsActive(true);
+            $em->flush;
+
+            $this->addFlash(
+                'success',
+                'Commentaire activé avec succès !'
+            );
+       }
+
+        return $this->redirectToRoute('comment_index');
+    }
+
+    /**
+     * @Route("/comment/{id}/validate", name="comment_validate", methods={"GET"})
+     */
+    public function validate(Comment $comment)
+    {
+       // On vérifie que l'utilisateur soit connecté
+       $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    
+       $currentUser = $this->getUser();
+
+       if($currentUser->getId() !== $comment->getUser()->getId())
+       {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas valider le commentaire concernant un tiers !'
+            );
+
+            return $this->redirectToRoute('dashboard');
+       }
+
+        return $this->redirectToRoute('dashboard');
     }
 }
