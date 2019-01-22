@@ -22,6 +22,7 @@
     <header class="bg-dark p-4">
         <div>
             <h1 class="text-center text-white">KeepPetCool <img class="" style="width:10%;" src="images/2emejet.png " alt=""></h1>
+            <p class="text-center text-white">Vos PetSitters près de chez vous</p>
 
         </div>
         <nav class="row justify-content-end">
@@ -39,17 +40,7 @@
     </header>
 
     
-    <nav class="criteriaNav bg-dark">
-        <form class="text-center">
-            <i class="p-1 fas fa-dog"></i>
-            <i class="p-1 fas fa-cat"></i>
-            <i class="p-1 fas fa-kiwi-bird"></i>
-            <i class="p-1 fas fa-horse-head"></i>
-            <i class="p-1 fas fa-home"></i>
-            <i class="p-1 fas fa-walking"></i>
-            <a class="col-2"><i class="p-1 fas fa-search"></i></a>
-        </form>
-    </nav>
+    {{ include('_criteria_nav.html.twig') }}
 
     {% block body %}
     {% endblock %}
