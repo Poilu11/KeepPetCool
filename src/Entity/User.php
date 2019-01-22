@@ -125,6 +125,11 @@ class User implements UserInterface, \Serializable
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -461,5 +466,17 @@ class User implements UserInterface, \Serializable
 
     public function __toString(){
         return $this->username;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }
