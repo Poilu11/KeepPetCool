@@ -21,9 +21,9 @@ body {
     {
         position: fixed;
         display: block;
-        height : 40vh;
+        height : 47vh;
         width : 10vh;
-        top: 30vh;
+        top: 40vh;
         left: 3vw;
         border-radius: 15px;
     }
