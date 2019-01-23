@@ -1,11 +1,51 @@
+<!--
 <nav class="criteriaNav bg-dark">
-        <form class="text-center">
-            <i class="p-1 fas fa-dog"></i>
-            <i class="p-1 fas fa-cat"></i>
-            <i class="p-1 fas fa-kiwi-bird"></i>
-            <i class="p-1 fas fa-horse-head"></i>
-            <i class="p-1 fas fa-home"></i>
-            <i class="p-1 fas fa-walking"></i>
-            <a class="col-2"><i class="p-1 fas fa-search"></i></a>
-        </form>
-    </nav>
+    <form class="text-center">
+        <i class="p-1 fas fa-dog"></i>
+        <i class="p-1 fas fa-cat"></i>
+        <i class="p-1 fas fa-kiwi-bird"></i>
+        <i class="p-1 fas fa-horse-head"></i>
+        <i class="p-1 fas fa-home"></i>
+        <i class="p-1 fas fa-walking"></i>
+        <a class="col-2"><i class="p-1 fas fa-search"></i></a>
+    </form>
+</nav>
+-->
+
+<div class= "criteria-nav container-fluid bg-dark fixed-top d-flex p-1 justify-content-around text-light ">
+
+    <div class="col-1 filter-active" data-filter="dog">
+        <i class="p-1 fas fa-dog"></i>
+        <span class="d-block">Chien</span>
+    </div>
+
+    <div class="col-1" data-filter="cat">
+        <i class="p-1 fas fa-cat"></i>
+        <span class="d-block">Chat</span>
+    </div>
+
+    <div class="col-1 filter-active" data-filter="horse">
+        <i class="p-1 fas fa-horse-head"></i>
+        <span class="d-block">Cheval</span>
+    </div>
+
+    <div class="col-1" data-filter="bird">
+        <i class="p-1 fas fa-kiwi-bird"></i>
+        <span class="d-block">Oiseau</span>
+    </div>
+
+    <div class="col-1" data-filter="home">
+        <i class="p-1 fas fa-home"></i>
+        <span class="d-block">Garde à domicile</span>
+    </div>
+
+    <div class="col-1" data-filter="walk">
+        <i class="p-1 fas fa-walking"></i>
+        <span class="d-block">Promenade</span>
+    </div>
+
+    <button class="text-light bg-dark">
+        <i class="fas fa-search"></i>
+    </button>
+
+</div>
