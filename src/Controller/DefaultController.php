@@ -17,18 +17,16 @@ class DefaultController extends AbstractController
 
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
 
-
         // Si utisateur non connecté
         // accès à toutes les présentations petsitter actives
         $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
 
+        // On récupère les infos de l'utilisateur connecté (si connecté)
+        $currentUser = $this->getUser();
 
         // Si utisateur non connecté
-        if ($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'))
+        if (isset($currentUser) && !empty($currentUser))
         {
-            // On récupère les infos de l'utilisateur
-            $currentUser = $this->getUser();
-
             if($currentUser->getType() == 'owner')
             {
                 $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
@@ -45,6 +43,7 @@ class DefaultController extends AbstractController
             }
         }
 
+        // dump($presentations);
 
         // DEBUT calcul moyenne des notes de tous les petsitters
         $arrayNote = [];
@@ -76,6 +75,8 @@ class DefaultController extends AbstractController
 
         }
         // FIN calcul moyenne des notes de tous les petsitterse
+
+        // dd($arrayNote);
 
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
