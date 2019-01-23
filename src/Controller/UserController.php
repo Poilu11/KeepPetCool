@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\User;
+use App\Form\UserType;
 use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -22,13 +25,54 @@ class UserController extends AbstractController
         // actuellement connecté
         $user = $this->getUser();
 
-        $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidate' => false], ['createdAt' => 'DESC']);
+        $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidated' => false], ['createdAt' => 'DESC']);
 
         return $this->render('user/dashboard.html.twig', [
             'user' => $user,
             'comments' => $commentsToValidate
         ]);
     }
+
+    /**
+     * @Route("/signup", name="signup", methods={"GET", "POST"})
+     */
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+        
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $plainPassword = $user->getPassword();
+            $user->setPassword($encoder->encodePassword($user, $plainPassword));
+
+            $user->setLongitude(4.079306);
+            $user->setLatitude(4.079306);
+            $user->setPathAvatar('media/default-avatar.png');
+            
+            $defaultRole = $this->getDoctrine()->getRepository(Role::class)->findOneBy(['code' => 'ROLE_USER']);
+            $user->setRole($defaultRole);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre inscription est validée ! Vous pouvez dès maintenant vous connecter pour poser ou répondre à une question :-)'
+            );
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('user/signup.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
+    }
+
 
     /**
      * @Route("/profile/{id}/edit", name="profile_edit", methods={"GET", "POST"}, requirements={"id"="\d+"})

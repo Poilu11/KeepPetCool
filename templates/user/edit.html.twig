@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition Profil{% endblock %}
+
+{% block body %}
+
+<h2>Modifier mes information personnelles</h2>
+
+{{ include('user/_form.html.twig', { 'form': form } ) }}
+
+{% endblock %}
