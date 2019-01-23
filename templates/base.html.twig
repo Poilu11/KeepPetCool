@@ -24,16 +24,16 @@
                                         </div>
                                         <nav class="row justify-content-end mt-4">
                                             <button class="btn btn-white m-1 p-1">
-                                                <a class="p-1 text-dark text-decoration-none nav-link" href="">
+                                                <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('login')}}">
                                                     <i class="pr-1 fas fa-sign-in-alt"></i>Login</a>
                                             </button>
                                             <button class="m-1 btn btn-white">
-                                                <a class="p-1 text-dark text-decoration-none nav-link" href="">
+                                                <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('signup')}}">
                                                     <i class="pr-1 fas fa-user-plus"></i>S'inscrire</a>
                                             </button>
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                                 <button class="btn btn-white m-1 p-1">
-                                                    <a class="p-1 text-dark text-decoration-none nav-link" href="">
+                                                    <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('logout')}}">
                                                         <i class="pr-1 fas fa-sign-out-alt"></i>Logout</a>
                                                 </button>
                                                 <button class="m-1 btn btn-white">
