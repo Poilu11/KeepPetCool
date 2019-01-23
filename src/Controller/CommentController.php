@@ -14,20 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/comment", name="comment_index", methods={"GET"})
-     */
-    public function index(CommentRepository $commentRepository)
-    {
-        $comments = $commentRepository->findBy([], ['createdAt' => 'DESC']);
-
-        // dd($comments);
-
-        return $this->render('comment/index.html.twig', [
-            'comments' => $comments
-        ]);
-    }
-
-    /**
      * @Route("/comment/{idPetsitter}/new/{idOwner}", name="comment_new", methods={"POST"}, requirements={"idPetsitter"="\d+"}, requirements={"idOwner"="\d+"})
      * @ParamConverter("user", options={"mapping": {"idPetsitter": "id"}})
      * @ParamConverter("user", options={"mapping": {"idOwner": "id"}})
