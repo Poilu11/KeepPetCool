@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\CommentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,7 @@ class UserController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard", methods={"GET"})
      */
-    public function dashboard(CommentRepository $commentRepository)
+    public function dashboard(CommentRepository $commentRepository, EntityManagerInterface $em)
     {
         // On vérifie que l'utilisateur soit connecté
          $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -24,6 +26,10 @@ class UserController extends AbstractController
         // Récupération des informations de l'utilisateur
         // actuellement connecté
         $user = $this->getUser();
+
+        // Gestion de la date de dernière connexion
+        $user->setConnectedAt(new DateTime());
+        $em->flush();
 
         $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidated' => false], ['createdAt' => 'DESC']);
 
@@ -62,7 +68,7 @@ class UserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre inscription est validée ! Vous pouvez dès maintenant vous connecter pour poser ou répondre à une question :-)'
+                'Votre inscription est validée ! Vous pouvez dès maintenant vous connecter'
             );
             return $this->redirectToRoute('login');
         }
@@ -77,7 +83,7 @@ class UserController extends AbstractController
     /**
      * @Route("/profile/{id}/edit", name="profile_edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function edit($id, User $user, Request $request)
+    public function edit($id, User $user, Request $request, UserPasswordEncoderInterface $encoder)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -93,13 +99,70 @@ class UserController extends AbstractController
                 'Vous n\'êtes pas autorisé à modifier les informations d\'un tiers !'
             );
 
-            $this->redirecToRoute('dashboard');
+            return $this->redirectToRoute('dashboard');
         }
 
-        // TODO traitement du Form
+        // On récupère le mot de passe actuel
+        $oldPassword = $user->getPassword();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        // Traitement du formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(empty($user->getPassword()))
+            {
+                // En l'absence de nouveau mot de passe,
+                // reprise de l'ancien mot de passe encodé
+                $encodedPassword = $oldPassword;
+            }
+            else
+            {
+                // On récupère le mot de passe en clair
+                $plainPassword = $user->getPassword();
+
+                // On ajoute une condition pour vérifier la longueur du mot de passe
+                // car la constraint Length() ne fonctionne pas de manière optimale
+                // sans la contrainte NotBlank()
+                $countWordsPlainPassword = strlen($plainPassword);
+                if($countWordsPlainPassword >= 4 && $countWordsPlainPassword <= 12)
+                {
+                    // Encodage du mot de passe modifié
+                    $encodedPassword = $encoder->encodePassword($user, $plainPassword);
+                }
+                else
+                {
+                    $this->addFlash(
+                        'danger',
+                        'Modification du nouveau mot de passe non prise en compte : doit contenir 4 et 12 caractères.'
+                    );
+                    // TRES IMPORTANT
+                    // On récupère alors l'ancien mot de passe encodé
+                    // qu'on réenregistre pour le user
+                    $encodedPassword = $oldPassword;
+                    $user->setPassword($encodedPassword);
+                    $this->getDoctrine()->getManager()->flush();
+                    // Si je ne ré-enregistre pas l'ancien (actuel) mot de passe en BDD
+                    // le user est alors déconnecté, et la redirection ci-dessous ne fonctionne donc pas => Le user est redirigé vers la page de connexion
+                    // De plus, la constraint Length() dans le UserType ne semble pas
+                    // fonctionner de manière optimale sans le Blank()
+                    return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+                }
+                
+            }
+            $user->setPassword($encodedPassword);
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Les modifications de vos informations personnelles ont bien été prises en compte'
+            );
+            
+            return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
+        }
 
         return $this->render('user/edit.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'form' => $form->createView()
         ]);
     }
 

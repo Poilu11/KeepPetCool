@@ -3,21 +3,100 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
-// use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Ajout d'un listener
+        $listener = function (FormEvent $event) {
+            $user = $event->getData();
+            $form = $event->getForm();
+            
+            // Dans le cas d'un signup
+            if(is_null($user->getId()))
+            {
+                $form->add('password', RepeatedType::class, [
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'La confirmation du mot de passe est incorrecte',
+                    'required' => true,
+                    'first_options'  => [
+                        'label' => 'Mot de passe (entre 4 et 12 caractères)',
+                        'attr' => [
+                            'placeholder' => 'Création du mot de passe'
+                        ]
+                    ],
+                    'second_options' => [
+                        'label' => 'Confirmation du mot de passe',
+                        'attr' => [
+                            'placeholder' => 'Confirmation du mot de passe'
+                        ]
+                    ],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Vous devez fournir un mot de passe !'
+                        ]),
+                        new Length([
+                            'min' => 4,
+                            'max' => 12,
+                            'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
+                            'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
+                        ])
+                    ]
+                ]);
+            }
+            // Dans le cas d'un edit
+            else
+            {
+                $form->add('password', RepeatedType::class, [
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'La confirmation du mot de passe est incorrecte',
+                    'required' => false,
+                    'first_options'  => [
+                        'label' => 'Mot de passe (entre 4 et 12 caractères)',
+                        'attr' => [
+                            'placeholder' => 'Laisser vide si inchangé'
+                        ]
+                    ],
+                    'second_options' => [
+                        'label' => 'Confirmation du mot de passe',
+                        'attr' => [
+                            'placeholder' => 'Confirmation du mot de passe modifié'
+                        ]
+                    ],
+                    'constraints' => [
+                        // Ne fonctionne pas correctement => traité dans le Controller
+                        // new Length([
+                        //     'min' => 4,
+                        //     'max' => 12,
+                        //     'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
+                        //     'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
+                        // ])
+                    ]
+                ])
+                ->remove('type');
+            }
+                
+        };
+
+
+
+
+
+        
         $builder
             ->add('username', TextType::class, [
                 'label' => 'Identifiant',
@@ -36,7 +115,7 @@ class UserType extends AbstractType
                     ])
                 ]
             ])
-            ->add('password')
+            // ->add('password')
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
                 'attr' => [
@@ -161,6 +240,7 @@ class UserType extends AbstractType
 
             ])
             // ->add('role')
+            ->addEventListener(FormEvents::PRE_SET_DATA, $listener)
         ;
     }
 
