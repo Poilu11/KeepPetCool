@@ -2,14 +2,19 @@
 // src/AppBundle/Entity/User.php
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username", message="Identifiant déjà utilisé")
+ * @UniqueEntity("email", message="Adresse email déjà utilisée")
  */
 class User implements UserInterface, \Serializable
 {
@@ -133,6 +138,9 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->isValidated = false;
+        $this->createdAt = new DateTime();
+
         $this->comments = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
@@ -157,7 +165,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        $role = $role->getCode();
+        $role = $this->role->getCode();
 
         $roleArray = [
             $role
