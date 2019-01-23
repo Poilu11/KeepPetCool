@@ -4,13 +4,13 @@ namespace App\DataFixtures\Faker;
 
 class UserTypeProvider extends \Faker\Provider\Base
 {
-    private $note = [
-        'Petsitter',
-        'Propriétaire'
+    private $type = [
+        'petsitter',
+        'owner'
     ];
 
     public function randomUserType()
     {
-        return $this->randomElement($this->note);
+        return $this->randomElement($this->type);
     }
 }

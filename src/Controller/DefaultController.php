@@ -17,18 +17,39 @@ class DefaultController extends AbstractController
 
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
 
-        // Pour administrateurs et modérateurs
-        $allPresentations = $presentationRepository->findAllPresentationsByUserType('petsitter');
-        // dump($allPresentations);
 
-        // Pour utlisateurs connectés et non connectés
-        $activePresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
-        // dd($activePresentations);
+        // Si utisateur non connecté
+        // accès à toutes les présentations petsitter actives
+        $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
 
-        // Methode permettant de calculer la moyenne des commentaires par petsitter
+
+        // Si utisateur non connecté
+        if ($this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            // On récupère les infos de l'utilisateur
+            $currentUser = $this->getUser();
+
+            if($currentUser->getType() == 'owner')
+            {
+                $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
+            }
+
+            if($currentUser->getType() == 'petsitter')
+            {
+                $presentations = $presentationRepository->findActivePresentationsByUserType('owner');
+            }
+
+            if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
+            {
+                $presentations = $presentationRepository->findBy([], ['createdAt' => 'DESC']);
+            }
+        }
+
+
+        // DEBUT calcul moyenne des notes de tous les petsitters
         $arrayNote = [];
 
-        foreach($allPresentations as $currentPresentation)
+        foreach($presentations as $currentPresentation)
         {
             $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
             $comments = $commentRepository->findBy(['petsitter' => $currentPresentation->getUser()->getId()]);
@@ -54,14 +75,10 @@ class DefaultController extends AbstractController
             $arrayNote[$currentPresentation->getUser()->getId()] = $moy;
 
         }
-        // Fin de la méthode permettant de calculer la moyenne
-        
-
-        // dd($arrayNote);
+        // FIN calcul moyenne des notes de tous les petsitterse
 
         return $this->render('default/home.html.twig', [
-            'allPresentations' => $allPresentations,
-            'activePresentations' => $activePresentations,
+            'presentations' => $presentations,
             'notes' => $arrayNote
         ]);
     }

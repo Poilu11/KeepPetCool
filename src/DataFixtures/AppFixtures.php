@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
         $adminUser->setUsername('admin')
             ->setPassword($this->encoder->encodePassword($adminUser, 'admin'))
             ->setEmail('admin@admin.com')
-            ->setType('Administrateur')
+            ->setType('administrateur')
             ->setFirstname('Toto')
             ->setLastname('Lunar')
             ->setAddress('10 rue Tatamine')
@@ -76,7 +76,7 @@ class AppFixtures extends Fixture
         $modoUser->setUsername('modo')
             ->setPassword($this->encoder->encodePassword($modoUser, 'modo'))
             ->setEmail('modo@modo.com')
-            ->setType('Modérateur')
+            ->setType('moderateur')
             ->setFirstname('Tata')
             ->setLastname('Lunar')
             ->setAddress('10 rue Tatamane')
@@ -90,13 +90,31 @@ class AppFixtures extends Fixture
         
         $em->persist($modoUser);
 
-        $userUser = new User();
-        $userUser->setUsername('user')
-            ->setPassword($this->encoder->encodePassword($userUser, 'user'))
-            ->setEmail('user@user.com')
-            ->setType('Utilisateur')
+        $petsitterUser = new User();
+        $petsitterUser->setUsername('petsit')
+            ->setPassword($this->encoder->encodePassword($petsitterUser, 'petsit'))
+            ->setEmail('petuser@user.com')
+            ->setType('petsitter')
             ->setFirstname('Titi')
-            ->setLastname('Lunario')
+            ->setLastname('PetsitterFamily')
+            ->setAddress('17 rue Blibli')
+            ->setZipCode('74000')
+            ->setCity('Annecy')
+            ->setLongitude(4.079306)
+            ->setLatitude(48.293024)
+            ->setIsValidated(false)
+            ->setCreatedAt(new DateTime())
+            ->setRole($userRole);
+        
+        $em->persist($petsitterUser);
+
+        $ownerUser = new User();
+        $ownerUser->setUsername('owner')
+            ->setPassword($this->encoder->encodePassword($ownerUser, 'owner'))
+            ->setEmail('owneruser@user.com')
+            ->setType('owner')
+            ->setFirstname('GrosMinet')
+            ->setLastname('OwnerFamily')
             ->setAddress('10 rue Blabla')
             ->setZipCode('74000')
             ->setCity('Albertville')
@@ -106,7 +124,7 @@ class AppFixtures extends Fixture
             ->setCreatedAt(new DateTime())
             ->setRole($userRole);
         
-        $em->persist($userUser);
+        $em->persist($ownerUser);
 
         $service1 = new Service();
         $service1->setName('Gardiennage à domicile');
