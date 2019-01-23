@@ -1,47 +1,24 @@
 body {
     font-family:"Space Mono";
     background-color: whitesmoke;
+    margin-top: 5em;
 }
 
-.criteriaNav .fas {
-    color: white;
+.filter-active{
+    border: solid 0.1em lightgrey;
+    border-radius: 0.1em;
 }
 
-.criteriaNav{
-    position: relative;
-    top: -2px;
-}
-
-
-
-@media (min-width : 1224px)
+@media (max-width : 1224px)
 {
-
-    .criteriaNav
-    {
-        position: fixed;
-        display: block;
-        height : auto;
-        width : 5vw;
-        top: 40vh;
-        left: 3vw;
-        border-radius: 15px;
-    }
-
-    .criteriaNav form
-    {
-        display: block;
-        width : 100%;
+    .criteria-list ul{
+        font-size: 4em;
+        flex-direction: column;
+        align-items: center;
     }
     
-    .criteriaNav form i
-    {
+    .criteria-list ul li{
         display: block;
-        font-size: 2em;
+        margin: 0.5em;
     }
-    
-    .criteriaNav form a
-    {
-        display: block;
-    }    
 }

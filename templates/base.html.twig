@@ -49,7 +49,10 @@
                                             {% endif %}
                                         </nav>
                                     </header>
+
                                     {{ include('_criteria_nav.html.twig') }}
+
+                                    {# gestion des messages flash #}
                                     {% for index, messages in app.flashes %}
                                         {% for message in messages %}
                                             <div class="alert alert-{{ index }}" role="alert">
