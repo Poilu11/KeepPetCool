@@ -1,51 +1,47 @@
-<!--
-<nav class="criteriaNav bg-dark">
-    <form class="text-center">
-        <i class="p-1 fas fa-dog"></i>
-        <i class="p-1 fas fa-cat"></i>
-        <i class="p-1 fas fa-kiwi-bird"></i>
-        <i class="p-1 fas fa-horse-head"></i>
-        <i class="p-1 fas fa-home"></i>
-        <i class="p-1 fas fa-walking"></i>
-        <a class="col-2"><i class="p-1 fas fa-search"></i></a>
-    </form>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon h1"></span>
+  </button>
+
+  <div class=" collapse navbar-collapse criteria-list" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto col-12 d-flex justify-content-around text-light h4">
+
+      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="dog">
+        <i class="fas fa-dog p-1"></i>
+        <span class="d-block h6">Chien</span>
+      </li>
+
+      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="cat">
+        <i class="fas fa-cat p-1"></i>
+        <span class="d-block h6">Chat</span>
+      </li>
+
+      <li class="col-1 filter-active nav-item d-flex flex-column justify-content-center align-items-center" data-filter="bird">
+        <i class="fas fa-crow p-1"></i>
+        <span class="d-block h6">Bird</span>
+      </li>
+
+      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="horse">
+        <i class="fas fa-horse p-1"></i>
+        <span class="d-block h6">Cheval</span>
+      </li>
+
+      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="home">
+        <i class="fas fa-home p-1"></i>
+        <span class="d-block h6">A domicile</span>
+      </li>
+
+      <li class="col-1 filter-active nav-item d-flex flex-column justify-content-center align-items-center" data-filter="walk">
+        <i class="fas fa-walking p-1"></i>
+        <span class="d-block h6">Promenade</span>
+      </li>
+
+      <li class="col-1 nav-item d-flex flex-column justify-content-around">
+        <button class="rounded bg-dark text-light"><i class="fas fa-search"></i></button>
+      </li>
+
+    </ul>
+
+  </div>
 </nav>
--->
-
-<div class= "criteria-nav container-fluid bg-dark fixed-top d-flex p-1 justify-content-around text-light ">
-
-    <div class="col-1 filter-active" data-filter="dog">
-        <i class="p-1 fas fa-dog"></i>
-        <span class="d-block">Chien</span>
-    </div>
-
-    <div class="col-1" data-filter="cat">
-        <i class="p-1 fas fa-cat"></i>
-        <span class="d-block">Chat</span>
-    </div>
-
-    <div class="col-1 filter-active" data-filter="horse">
-        <i class="p-1 fas fa-horse-head"></i>
-        <span class="d-block">Cheval</span>
-    </div>
-
-    <div class="col-1" data-filter="bird">
-        <i class="p-1 fas fa-kiwi-bird"></i>
-        <span class="d-block">Oiseau</span>
-    </div>
-
-    <div class="col-1" data-filter="home">
-        <i class="p-1 fas fa-home"></i>
-        <span class="d-block">Garde à domicile</span>
-    </div>
-
-    <div class="col-1" data-filter="walk">
-        <i class="p-1 fas fa-walking"></i>
-        <span class="d-block">Promenade</span>
-    </div>
-
-    <button class="text-light bg-dark">
-        <i class="fas fa-search"></i>
-    </button>
-
-</div>
