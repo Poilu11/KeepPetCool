@@ -170,7 +170,7 @@ class AppFixtures extends Fixture
             'lastname' => function() use ($generator) { return $generator->lastName; },
             'phoneNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
             'cellNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
-            'pathAvatar' => null,
+            'pathAvatar' => 'default-avatar.png',
             'pathCertificat' => 'media/docs/certificat.pdf',
             'isActive' => true,
             'isValidated' => false,
