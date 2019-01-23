@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -195,7 +196,9 @@ class UserType extends AbstractType
             ])
             // ->add('longitude')
             // ->add('latitude')
-            // ->add('pathAvatar') // TODO plus tard
+            ->add('pathAvatar', FileType::class, [
+                'label' => 'Votre avatar'
+            ])
             ->add('phoneNumber', TextType::class, [
                 'label' => 'Numéro téléphone fixe',
                 'required' => false,

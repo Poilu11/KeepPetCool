@@ -6,6 +6,7 @@
 parameters:
     locale: 'en'
     slugger_to_lower: true
+    avatar_directory: '%kernel.project_dir%/public/avatars'
 
 services:
     # default configuration for services in *this* file

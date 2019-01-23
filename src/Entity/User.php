@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -81,6 +81,12 @@ class User implements UserInterface, \Serializable
     private $latitude;
 
     /**
+     * @Assert\File(
+     * maxSize = "1024k", 
+     * mimeTypes={ "image/gif", "image/jpeg", "image/png" },
+     * mimeTypesMessage = "Seuls les formats suivants sont acceptés : gif, png, jpeg"
+     * )
+     * 
      * @ORM\Column(type="string", length=512, nullable=true)
      */
     private $pathAvatar;
@@ -290,12 +296,12 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getPathAvatar(): ?string
+    public function getPathAvatar()
     {
         return $this->pathAvatar;
     }
 
-    public function setPathAvatar(?string $pathAvatar): self
+    public function setPathAvatar($pathAvatar): self
     {
         $this->pathAvatar = $pathAvatar;
 
