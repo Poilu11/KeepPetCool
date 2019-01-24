@@ -8,8 +8,6 @@
 
 {% for presentation in presentations %}
 
-<img src="{{ asset(image_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}" style="width: 300px;height:400px;float:right;" class="img-fluid">
-
 
 {{ include('presentation/_card.html.twig') }}
 
