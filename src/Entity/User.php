@@ -159,7 +159,7 @@ class User implements UserInterface, \Serializable
         return null;
     }
 
-    public function getPassword(): ?string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -387,7 +387,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword($password): self
     {
         $this->password = $password;
 
