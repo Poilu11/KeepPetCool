@@ -196,7 +196,7 @@ class UserType extends AbstractType
             ])
             // ->add('longitude')
             // ->add('latitude')
-            ->add('pathAvatar', FileType::class, [
+            ->add('avatar', FileType::class, [
                 'label' => 'Votre avatar'
             ])
             ->add('phoneNumber', TextType::class, [

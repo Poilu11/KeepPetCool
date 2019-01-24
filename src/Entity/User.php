@@ -89,7 +89,7 @@ class User implements UserInterface, \Serializable
      * 
      * @ORM\Column(type="string", length=512, nullable=true)
      */
-    private $pathAvatar;
+    private $avatar;
 
     /**
      * @ORM\Column(type="string", length=16, nullable=true)
@@ -100,11 +100,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=16, nullable=true)
      */
     private $cellNumber;
-
-    /**
-     * @ORM\Column(type="string", length=512, nullable=true)
-     */
-    private $pathCertificat;
 
     /**
      * @ORM\Column(type="boolean")
@@ -296,14 +291,14 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getPathAvatar()
+    public function getAvatar()
     {
-        return $this->pathAvatar;
+        return $this->avatar;
     }
 
-    public function setPathAvatar($pathAvatar): self
+    public function setAvatar($avatar): self
     {
-        $this->pathAvatar = $pathAvatar;
+        $this->avatar = $avatar;
 
         return $this;
     }
@@ -328,18 +323,6 @@ class User implements UserInterface, \Serializable
     public function setCellNumber(?string $cellNumber): self
     {
         $this->cellNumber = $cellNumber;
-
-        return $this;
-    }
-
-    public function getPathCertificat(): ?string
-    {
-        return $this->pathCertificat;
-    }
-
-    public function setPathCertificat(?string $pathCertificat): self
-    {
-        $this->pathCertificat = $pathCertificat;
 
         return $this;
     }

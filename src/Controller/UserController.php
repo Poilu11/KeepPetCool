@@ -57,7 +57,7 @@ class UserController extends AbstractController
             $user->setPassword($encoder->encodePassword($user, $plainPassword));
 
             // DEBUT Gestion de l'avatar
-            $file = $user->getPathAvatar();
+            $file = $user->getAvatar();
 
             if(!is_null($file)){
                 
@@ -72,11 +72,11 @@ class UserController extends AbstractController
                 dump($e);
                 }
                
-                $user->setPathAvatar($fileName);
+                $user->setAvatar($fileName);
             }
             else
             {
-                $user->setPathAvatar('default-avatar.png');
+                $user->setAvatar('default-avatar.png');
             }
             // FIN Gestion de l'avatar
 

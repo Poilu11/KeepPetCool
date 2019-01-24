@@ -61,6 +61,7 @@ class AppFixtures extends Fixture
             ->setType('administrateur')
             ->setFirstname('Toto')
             ->setLastname('Lunar')
+            ->setAvatar('default-avatar.png')
             ->setAddress('10 rue Tatamine')
             ->setZipCode('75000')
             ->setCity('Paris')
@@ -79,6 +80,7 @@ class AppFixtures extends Fixture
             ->setType('moderateur')
             ->setFirstname('Tata')
             ->setLastname('Lunar')
+            ->setAvatar('default-avatar.png')
             ->setAddress('10 rue Tatamane')
             ->setZipCode('73000')
             ->setCity('Chambéry')
@@ -97,6 +99,7 @@ class AppFixtures extends Fixture
             ->setType('petsitter')
             ->setFirstname('Titi')
             ->setLastname('PetsitterFamily')
+            ->setAvatar('default-avatar.png')
             ->setAddress('17 rue Blibli')
             ->setZipCode('74000')
             ->setCity('Annecy')
@@ -115,6 +118,7 @@ class AppFixtures extends Fixture
             ->setType('owner')
             ->setFirstname('GrosMinet')
             ->setLastname('OwnerFamily')
+            ->setAvatar('default-avatar.png')
             ->setAddress('10 rue Blabla')
             ->setZipCode('74000')
             ->setCity('Albertville')
@@ -170,8 +174,7 @@ class AppFixtures extends Fixture
             'lastname' => function() use ($generator) { return $generator->lastName; },
             'phoneNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
             'cellNumber' => function() use ($generator) { return $generator->e164PhoneNumber; },
-            'pathAvatar' => 'default-avatar.png',
-            'pathCertificat' => 'media/docs/certificat.pdf',
+            'avatar' => 'default-avatar.png',
             'isActive' => true,
             'isValidated' => false,
             'role' => $userRole,
