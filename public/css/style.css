@@ -18,13 +18,14 @@ body {
 }
 
 .criteria-active{
-    border: 1px solid whitesmoke;
+    border: 1px solid;
+    border-radius: 5px;
     padding: 0px;
 }
 
 .criteria-nav > div{
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     align-content: center;
     align-items : center;
 }

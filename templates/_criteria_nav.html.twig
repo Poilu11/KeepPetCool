@@ -1,41 +1,45 @@
-<nav class="container-fluid bg-dark criteria-nav">
+<nav class="container-fluid bg-dark border border-dark criteria-nav text-white d-flex justify-content-between">
 
-{% if app.user %}
-  {% if app.user.type == 'petsitter' %}
+  <img class="d-block border-right " src="images/2emejet.png" style="width:5%;" alt="">
+  <div class="d-flex align-items-center ">
+    {% if app.user %}
+    {% if app.user.type == 'petsitter' %}
     {% set petsitterClass = ""%}
     {% set ownerClass = "criteria-active"%}
-  {% else %}
+    {% else %}
     {% set petsitterClass = "criteria-active"%}
     {% set ownerClass = ""%}
-  {% endif %}
-{% else %}
-  {% set petsitterClass = "criteria-active"%}
-  {% set ownerClass = ""%}
-{% endif %}
+    {% endif %}
+    {% else %}
+    {% set petsitterClass = "criteria-active"%}
+    {% set ownerClass = ""%}
+    {% endif %}
 
-  <div class="col-2"> Je cherche : </div>
+    <div class="col-2"> Je cherche : </div>
 
-  <div class="col-2 {{petsitterClass}} user-checkbox" data-usertype="petsitter">
-    <i class="fas fa-user-alt"></i>
-    <div>Un petsitter</div>
+    <div class="col-2 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
+      <div class=""><i class="m-auto fas fa-user-alt"></i></div>
+      <div>Petsitter</div>
+    </div>
+
+    <div class="col-2 text-center {{ownerClass}} user-checkbox" data-usertype="owner">
+      <i class="fas fa-dog"></i>
+      <div>Propriétaire</div>
+    </div>
+
+    <div class="col-2 text-center">
+      
+        <label for="radius">Ville</label>
+        <input class="form-control" placeholder="zipcode" id="zipcode"></input>
+      
+    </div>
+    <span class="col-2">
+      <label for="radius">Rayon</label>
+      <input type="number" id="radius" class=" col-3"><span>km</span>
+      
+    </span>
+
+    <button class="bg-dark col-1" id="searchButton" data-route="{{path('search', {'userType' : '', 'zipcode': '', 'radius': ''})}}"><i
+        class="fas fa-search"></i></button>
   </div>
-
-  <div class="col-2 {{ownerClass}} user-checkbox" data-usertype="owner">
-    <i class="fas fa-dog"></i>
-    <div>Un propriétaire</div>
-  </div>
-
-  <span class="col-2">
-    <label for="radius">Ville</label>
-    <input class="col-5" placeholder="zipcode" id="zipcode"></input>
-  </span>
-
-  <span class="col-2">
-    <label for="radius">Rayon</label>
-    <input type="number" id="radius" class="col-3"></div>
-    <span>km</span>
-  </span>
-
-  <button class="bg-dark col-1" id="searchButton" data-route="{{path('search', {'userType' : '', 'zipcode': '', 'radius': ''})}}"><i class="fas fa-search"></i></button>
-
 </nav>
