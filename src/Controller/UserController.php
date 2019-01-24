@@ -302,6 +302,8 @@ class UserController extends AbstractController
         // Je récupère l'ancien avatar
         $oldFile = $user->getAvatar();
         
+        // Si le user a déjà l'avatar par défaut,
+        // on ne supprime pas l'avatar
         if($oldFile !== 'default-avatar.png')
         {
             // Je supprime l'ancien avatar
