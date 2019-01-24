@@ -11,6 +11,8 @@
 <div class="example-wrapper">
     <h1>Hello ! ✅</h1>
 
+    <a href="{{ path('avatar_delete', {'id': app.user.id}) }}"><i class="fas fa-times"></i> Supprimer</a>
+
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ '/var/www/html/Plateforme-de-Dogsitting/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>

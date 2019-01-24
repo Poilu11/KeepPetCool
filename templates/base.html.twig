@@ -24,14 +24,17 @@
                                             </p>
                                         </div>
                                         <nav class="row justify-content-end mt-4">
+                                            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                                             <button class="btn btn-white m-1 p-1">
                                                 <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('login')}}">
                                                     <i class="pr-1 fas fa-sign-in-alt"></i>Login</a>
                                             </button>
+                                            
                                             <button class="m-1 btn btn-white">
                                                 <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('signup')}}">
                                                     <i class="pr-1 fas fa-user-plus"></i>S'inscrire</a>
                                             </button>
+                                            {% endif %}
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                                 <button class="btn btn-white m-1 p-1">
                                                     <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('logout')}}">
@@ -77,11 +80,12 @@
                                         </span>
                                     </footer>
                                     {% block javascripts %}
-                                        <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                                        <script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-                                        <script crossorigin="anonymous" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-                                        <script src="{{asset('js/app.js')}}"></script>
+
                                     {% endblock %}
+                                    <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                                    <script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+                                    <script crossorigin="anonymous" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                                    <script src="{{asset('js/app.js')}}"></script>
                                 </body>
                             </html>
                         
