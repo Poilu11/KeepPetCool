@@ -118,10 +118,19 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/search/", name="search", methods={"GET", "POST"})
+     * @Route("/search/{userType}-{zipcode}-{radius}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "zipcode"="[0-9]*", "radius"="[0-9]*"})
      */
-    public function search()
+    public function search($userType, $zipcode, $radius)
     {
+        $debug = 'La route fonctionne, voici les données en entrées de la recherche :'.PHP_EOL.PHP_EOL;
+
+        $debug .= "Le type d'utilisateur recherché : ".$userType.PHP_EOL.PHP_EOL;
+
+        $debug .= "Le zipcode de la ville : ".$zipcode.PHP_EOL.PHP_EOL;
+
+        $debug .= "Le rayon de la recherche : ".$radius.PHP_EOL.PHP_EOL;
+
+        dd($debug);
         
         return $this->render('default/search.html.twig', [
             

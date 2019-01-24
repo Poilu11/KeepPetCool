@@ -45,7 +45,10 @@ var searchButton =
     handleClick: function(e)
     {
         var target = e.currentTarget;
+
         var relativeLink = target.dataset.route;
+        var length = relativeLink.length;
+        relativeLink = relativeLink.substring(0, length-2);
 
         var userType = document.querySelector('.criteria-active').dataset.usertype;
 
@@ -53,7 +56,9 @@ var searchButton =
 
         var radius = document.querySelector('#radius').value;
 
-        relativeLink += '/'+userType+'-'+zipcode+'-'+radius;
+
+
+        relativeLink += userType+'-'+zipcode+'-'+radius;
 
         window.location.href = relativeLink;
     },
