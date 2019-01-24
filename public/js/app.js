@@ -14,7 +14,6 @@ var userCheckboxes =
 
     handleClick: function(e)
     {
-        e.stopPropagation();
         var target = e.currentTarget;
         var otherCheckbox = null;
 
@@ -47,6 +46,8 @@ var searchButton =
         var target = e.currentTarget;
 
         var relativeLink = target.dataset.route;
+
+        // Le relative link dispose de deux tirets à la fin, ceux-ci gène pour concaténer les paramètres de la routes search. Je les retire grâce à substring.
         var length = relativeLink.length;
         relativeLink = relativeLink.substring(0, length-2);
 
@@ -55,8 +56,6 @@ var searchButton =
         var zipcode = document.querySelector('#zipcode').value;
 
         var radius = document.querySelector('#radius').value;
-
-
 
         relativeLink += userType+'-'+zipcode+'-'+radius;
 
