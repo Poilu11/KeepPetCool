@@ -46,6 +46,18 @@ class UserController extends AbstractController
      */
     public function signup(Request $request, UserPasswordEncoderInterface $encoder)
     {
+        // Si connecté,
+        // On redirige sur la page dashboard
+        $currentUser = $this->getUser();
+        if(isset($currentUser) || !empty($currentUser))
+        {
+            $this->addFlash(
+                'danger',
+                'Vous êtes déjà connecté !'
+            );
+            return $this->redirectToRoute('dashboard');
+        }
+
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
@@ -81,8 +93,8 @@ class UserController extends AbstractController
             }
             // FIN Gestion de l'avatar
 
-            $user->setLongitude(4.079306);
-            $user->setLatitude(4.079306);
+            //$user->setLongitude(4.079306);
+            // $user->setLatitude(4.079306);
             
             $defaultRole = $this->getDoctrine()->getRepository(Role::class)->findOneBy(['code' => 'ROLE_USER']);
             $user->setRole($defaultRole);
