@@ -1,16 +1,34 @@
 <nav class="container-fluid bg-dark criteria-nav">
 
-  <div class="col-2">
+{% if app.user %}
+  {% if app.user.type == 'petsitter' %}
+    {% set petsitterClass = ""%}
+    {% set ownerClass = "criteria-active"%}
+  {% else %}
+    {% set petsitterClass = "criteria-active"%}
+    {% set ownerClass = ""%}
+  {% endif %}
+{% else %}
+  {% set petsitterClass = "criteria-active"%}
+  {% set ownerClass = ""%}
+{% endif %}
+
+  <div class="col-2"> Je cherche : </div>
+
+  <div class="col-2 {{petsitterClass}}">
     <i class="fas fa-user-alt"></i>
-    <div>Petsitter</div>
+    <div>Un petsitter</div>
   </div>
 
-  <div class="col-2 criteria-active">
+  <div class="col-2 {{ownerClass}}">
     <i class="fas fa-dog"></i>
-    <div>Propriétaire</div>
+    <div>Un propriétaire</div>
   </div>
 
-  <input class="col-1" placeholder="zipcode"></input>
+  <span class="col-2">
+    <label for="radius">Ville</label>
+    <input class="col-5" placeholder="zipcode"></input>
+  </span>
 
   <span class="col-2">
     <label for="radius">Rayon</label>
@@ -18,6 +36,6 @@
     <span>km</span>
   </span>
 
-  <button class="bg-dark"><i class="fas fa-search"></i></button>
+  <button class="bg-dark col-1"><i class="fas fa-search"></i></button>
 
 </nav>

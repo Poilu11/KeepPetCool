@@ -11,7 +11,7 @@ body {
     padding-bottom: 1em;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-content: center;
     align-items : center;
     color: whitesmoke;
@@ -19,6 +19,7 @@ body {
 
 .criteria-active{
     border: 1px solid whitesmoke;
+    padding: 0px;
 }
 
 .criteria-nav > div{
@@ -35,7 +36,8 @@ body {
 }
 
 .criteria-nav input{
-    width: 100px;
+    width: 100;
+    padding: 0px;
 }
 
 #radius{
