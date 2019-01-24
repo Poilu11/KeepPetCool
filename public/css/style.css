@@ -1,24 +1,44 @@
 body {
     font-family:"Space Mono";
     background-color: whitesmoke;
-    margin-top: 5em;
 }
 
-.filter-active{
-    border: solid 0.1em lightgrey;
+.criteria-nav{
+    z-index: 100;
+    position: fixed;
+    top: 0px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    align-items : center;
+    color: whitesmoke;
+}
+
+.criteria-active{
+    border: 1px solid whitesmoke;
+}
+
+.criteria-nav > div{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items : center;
+}
+
+.criteria-nav > button{
+    border: solid 0.1em whitesmoke;
     border-radius: 0.1em;
+    color: whitesmoke;
 }
 
-@media (max-width : 1224px)
-{
-    .criteria-list ul{
-        font-size: 4em;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .criteria-list ul li{
-        display: block;
-        margin: 0.5em;
-    }
+.criteria-nav input{
+    width: 100px;
 }
+
+#radius{
+    padding : 0px;
+}
+

@@ -1,47 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon h1"></span>
-  </button>
+<nav class="container-fluid bg-dark criteria-nav">
 
-  <div class=" collapse navbar-collapse criteria-list" id="navbarSupportedContent">
-
-    <ul class="navbar-nav mr-auto col-12 d-flex justify-content-around text-light h4">
-
-      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="dog">
-        <i class="fas fa-dog p-1"></i>
-        <span class="d-block h6">Chien</span>
-      </li>
-
-      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="cat">
-        <i class="fas fa-cat p-1"></i>
-        <span class="d-block h6">Chat</span>
-      </li>
-
-      <li class="col-1 filter-active nav-item d-flex flex-column justify-content-center align-items-center" data-filter="bird">
-        <i class="fas fa-crow p-1"></i>
-        <span class="d-block h6">Bird</span>
-      </li>
-
-      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="horse">
-        <i class="fas fa-horse p-1"></i>
-        <span class="d-block h6">Cheval</span>
-      </li>
-
-      <li class="col-1 nav-item d-flex flex-column justify-content-center align-items-center" data-filter="home">
-        <i class="fas fa-home p-1"></i>
-        <span class="d-block h6">A domicile</span>
-      </li>
-
-      <li class="col-1 filter-active nav-item d-flex flex-column justify-content-center align-items-center" data-filter="walk">
-        <i class="fas fa-walking p-1"></i>
-        <span class="d-block h6">Promenade</span>
-      </li>
-
-      <li class="col-1 nav-item d-flex flex-column justify-content-around">
-        <button class="rounded bg-dark text-light"><i class="fas fa-search"></i></button>
-      </li>
-
-    </ul>
-
+  <div class="col-2">
+    <i class="fas fa-user-alt"></i>
+    <div>Petsitter</div>
   </div>
+
+  <div class="col-2 criteria-active">
+    <i class="fas fa-dog"></i>
+    <div>Propriétaire</div>
+  </div>
+
+  <input class="col-1" placeholder="zipcode"></input>
+
+  <span class="col-2">
+    <label for="radius">Rayon</label>
+    <input type="number" id="radius" class="col-3" placeholder="10"></div>
+    <span>km</span>
+  </span>
+
+  <button class="bg-dark"><i class="fas fa-search"></i></button>
+
 </nav>
