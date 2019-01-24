@@ -118,7 +118,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/search", name="search", methods={"GET", "POST"})
+     * @Route("/search/", name="search", methods={"GET", "POST"})
      */
     public function search()
     {

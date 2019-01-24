@@ -15,27 +15,27 @@
 
   <div class="col-2"> Je cherche : </div>
 
-  <div class="col-2 {{petsitterClass}}">
+  <div class="col-2 {{petsitterClass}} user-checkbox" data-usertype="petsitter">
     <i class="fas fa-user-alt"></i>
     <div>Un petsitter</div>
   </div>
 
-  <div class="col-2 {{ownerClass}}">
+  <div class="col-2 {{ownerClass}} user-checkbox" data-usertype="owner">
     <i class="fas fa-dog"></i>
     <div>Un propriétaire</div>
   </div>
 
   <span class="col-2">
     <label for="radius">Ville</label>
-    <input class="col-5" placeholder="zipcode"></input>
+    <input class="col-5" placeholder="zipcode" id="zipcode"></input>
   </span>
 
   <span class="col-2">
     <label for="radius">Rayon</label>
-    <input type="number" id="radius" class="col-3" placeholder="10"></div>
+    <input type="number" id="radius" class="col-3"></div>
     <span>km</span>
   </span>
 
-  <button class="bg-dark col-1"><i class="fas fa-search"></i></button>
+  <button class="bg-dark col-1" id="searchButton" data-route="{{path('search')}}"><i class="fas fa-search"></i></button>
 
 </nav>
