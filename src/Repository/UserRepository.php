@@ -19,6 +19,21 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findUserNear($type, $lat, $long, $radius)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.type = :type')
+            ->setParameter('type', $type)
+            ->andWhere('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111) < :radius')
+            ->orderBy('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111)','ASC')
+            ->setParameter('lat', $lat)
+            ->setParameter('long', $long)
+            ->setParameter('radius', $radius)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -2,7 +2,7 @@ body {
     font-family:"Space Mono";
     background-color: whitesmoke;
 }
-
+/* 
 .criteria-nav{
     z-index: 100;
     position: fixed;
@@ -15,33 +15,37 @@ body {
     align-content: center;
     align-items : center;
     color: whitesmoke;
-}
+} */
 
-.criteria-active{
+ .criteria-active{
     border: 1px solid;
     border-radius: 5px;
     padding: 0px;
-}
-
-.criteria-nav > div{
-    /* display: flex; */
-    /* flex-direction: column; */
+} 
+/* 
+criteria-nav > div{
+     display: flex; 
+    flex-direction: column;
     align-content: center;
     align-items : center;
-}
+} */
 
-.criteria-nav > button{
+/* .criteria-nav > button{
     border: solid 0.1em whitesmoke;
     border-radius: 0.1em;
     color: whitesmoke;
-}
+} */
 
-.criteria-nav input{
+/* .criteria-nav input{
     width: 100;
     padding: 0px;
-}
+} */
 
 #radius{
     padding : 0px;
 }
 
+
+ap-input {
+    color:dark;
+}

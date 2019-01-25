@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Comment;
 use App\Entity\Presentation;
+use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -118,15 +121,57 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/search/{userType}-{zipcode}-{radius}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "zipcode"="[0-9]*", "radius"="[0-9]*"})
+     * @Route("/search/{userType}-{city}-{radius}-{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "city"="[\w|_]*", "radius"="[0-9]*", "latAndLong" = "(\d*\.?\d*)\+?(\d*\.?\d*)"})
      */
-    public function search($userType, $zipcode, $radius)
+    public function search($userType, $city, $radius, $latAndLong, UserRepository $userRepo)
     {
+        if(is_null($userType) || is_null($city) || is_null($radius))
+        {
+            if(is_null($userType))
+            {
+                $this->addFlash('danger', 'Vous devez sélectionner un type d\'utilisateur');
+            }
+
+            if(is_null($city))
+            {
+                $this->addFlash('danger', 'Vous devez sélectionner une ville');
+            }
+            
+            if(is_null($radius))
+            {
+                $this->addFlash('danger', 'Vous devez saisir un rayon de recherche');
+            }
+
+            return $this->redirectToRoute('home');
+        }
+
+        $coords = explode('+', $latAndLong);
+
+        
+        $users = $userRepo->findUserNear($userType, $coords[0], $coords[1], $radius);
+        
+        /*
+        $user = $userRepo->findOneBy(['username' => 'paulette']);
+
+        $dist = sqrt(pow($user->getLatitude() - $coords[0],2) + pow($user->getLatitude() - $coords[0],2));
+        dump($dist);
+        */
+        
+
+
+
+
+
+        dump($users);
+
+        
+
+        
         $debug = 'La route fonctionne, voici les données en entrées de la recherche :'.PHP_EOL.PHP_EOL;
 
         $debug .= "Le type d'utilisateur recherché : ".$userType.PHP_EOL.PHP_EOL;
 
-        $debug .= "Le zipcode de la ville : ".$zipcode.PHP_EOL.PHP_EOL;
+        $debug .= "Le zipcode de la ville : ".$city.PHP_EOL.PHP_EOL;
 
         $debug .= "Le rayon de la recherche : ".$radius.PHP_EOL.PHP_EOL;
 
@@ -135,5 +180,10 @@ class DefaultController extends AbstractController
         return $this->render('default/search.html.twig', [
             
         ]);
+    }
+
+    function getNotesArray(CommentRepository $commentRepo)
+    {
+
     }
 }
