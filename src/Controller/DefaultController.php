@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Comment;
+use App\Util\NoteResolver;
 use App\Entity\Presentation;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
@@ -15,7 +16,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home_page", methods={"GET"})
      */
-    public function home()
+    public function home(NoteResolver $noteResolv)
     {
 
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
@@ -46,40 +47,10 @@ class DefaultController extends AbstractController
             }
         }
 
-        // dump($presentations);
-
         // DEBUT calcul moyenne des notes de tous les petsitters
-        $arrayNote = [];
-
-        foreach($presentations as $currentPresentation)
-        {
-            $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
-            $comments = $commentRepository->findBy(['petsitter' => $currentPresentation->getUser()->getId()]);
-            $commentsCount = count($comments);
-
-            // On initialise la variable d'addition
-            $sum = 0;
-
-            foreach($comments as $currentComment)
-            {
-                $sum += $currentComment->getNote();
-            }
-
-            if($commentsCount > 0)
-            {
-                $moy = $sum / $commentsCount;
-            }
-            else
-            {
-                $moy = 'NC';
-            }
-
-            $arrayNote[$currentPresentation->getUser()->getId()] = $moy;
-
-        }
+        $arrayNote = $noteResolv->getUsersNotes($presentations);
         // FIN calcul moyenne des notes de tous les petsitterse
 
-        // dd($arrayNote);
 
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
@@ -123,7 +94,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/search/{userType}-{city}-{radius}-{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "city"="[\w|_]*", "radius"="[0-9]*", "latAndLong" = "(\d*\.?\d*)\+?(\d*\.?\d*)"})
      */
-    public function search($userType, $city, $radius, $latAndLong, UserRepository $userRepo)
+    public function search($userType, $city, $radius, $latAndLong, UserRepository $userRepo, NoteResolver $noteResolv)
     {
         if(is_null($userType) || is_null($city) || is_null($radius))
         {
@@ -146,25 +117,17 @@ class DefaultController extends AbstractController
         }
 
         $coords = explode('+', $latAndLong);
-
-        
         $users = $userRepo->findUserNear($userType, $coords[0], $coords[1], $radius);
-        
+
         /*
-        $user = $userRepo->findOneBy(['username' => 'paulette']);
+        $presentations = [];
+        foreach($users as $user)
+        {
+           $presentations[] = $user->getPresentation();
+        }
 
-        $dist = sqrt(pow($user->getLatitude() - $coords[0],2) + pow($user->getLatitude() - $coords[0],2));
-        dump($dist);
+        $notes = $noteResolv->getUsersNotes($presentations);
         */
-        
-
-
-
-
-
-        dump($users);
-
-        
 
         
         $debug = 'La route fonctionne, voici les données en entrées de la recherche :'.PHP_EOL.PHP_EOL;
@@ -177,13 +140,9 @@ class DefaultController extends AbstractController
 
         dd($debug);
         
-        return $this->render('default/search.html.twig', [
-            
+        return $this->render('default/home.html.twig', [
+            'presentations' => $presentations,
+            'notes' => $notes
         ]);
-    }
-
-    function getNotesArray(CommentRepository $commentRepo)
-    {
-
     }
 }
