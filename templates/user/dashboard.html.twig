@@ -3,20 +3,52 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<table class="table my-3" style="width: 70%; margin: auto;">
+    <tbody>
+    <tr>
+        <th scope="row" colspan="2" style="text-align: center;"><img src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}" style="width: 100px; height:150px;"></th>
+    </tr>
+      <tr>
+        <th scope="row">Identifiant</th>
+        <td>{{ user.username }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Email</th>
+        <td>{{ user.email }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Prénom</th>
+        <td>{{ user.firstname }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Nom</th>
+        <td>{{ user.lastname }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<div class="example-wrapper">
-    <h1>Hello ! ✅</h1>
+ <table class="table my-3" style="width: 70%; margin: auto;">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col" colspan="3">Liste des commentaires à valider</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td>Commentaire laissé par {{ comment.owner.username }} ({{ comment.owner.firstname }} {{ comment.owner.lastname }})</td>
+            <td>le {{ comment.createdAt|date("d/m/Y") }}</td>
+            <td>
+            <i class="fas fa-thumbs-up"></i> Accepter<br>
+            <i class="fas fa-thumbs-down"></i> Refuser
+            </td>
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun commentaire à valider</td>
+            </tr>
+        {% endfor %}
 
-    <a href="{{ path('avatar_delete', {'id': app.user.id}) }}"><i class="fas fa-times"></i> Supprimer</a>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Plateforme-de-Dogsitting/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Plateforme-de-Dogsitting/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    </tbody>
+</table>
 {% endblock %}

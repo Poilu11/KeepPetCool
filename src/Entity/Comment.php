@@ -51,6 +51,11 @@ class Comment
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDisplayed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +145,18 @@ class Comment
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getIsDisplayed(): ?bool
+    {
+        return $this->isDisplayed;
+    }
+
+    public function setIsDisplayed(bool $isDisplayed): self
+    {
+        $this->isDisplayed = $isDisplayed;
 
         return $this;
     }

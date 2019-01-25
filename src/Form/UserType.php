@@ -193,8 +193,8 @@ class UserType extends AbstractType
                     ])
                 ]
             ])
-            ->add('longitude', HiddenType::class)
-            ->add('latitude', HiddenType::class)
+            ->add('longitude')
+            ->add('latitude')
             ->add('avatar', FileType::class, [
                 'label' => 'Votre avatar'
             ])
