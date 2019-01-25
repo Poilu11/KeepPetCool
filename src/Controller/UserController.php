@@ -33,7 +33,8 @@ class UserController extends AbstractController
         $user->setConnectedAt(new DateTime());
         $em->flush();
 
-        $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidated' => false], ['createdAt' => 'DESC']);
+        // Récupération des commentaires à valider
+        $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidated' => false, 'isDisplayed' =>true], ['createdAt' => 'DESC']);
 
         return $this->render('user/dashboard.html.twig', [
             'user' => $user,
@@ -99,9 +100,16 @@ class UserController extends AbstractController
             $defaultRole = $this->getDoctrine()->getRepository(Role::class)->findOneBy(['code' => 'ROLE_USER']);
             $user->setRole($defaultRole);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Si longitude ou latitude vide(s)
+            if(empty($user->getLongitude()) || empty($user->getLatitude()))
+            {
+                $user->setLongitude(-147.349);
+                $user->setLatitude(64.751);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
             $this->addFlash(
                 'success',
@@ -227,7 +235,16 @@ class UserController extends AbstractController
                 }
                 
             }
+            
             $user->setPassword($encodedPassword);
+
+            // Si longitude ou latitude vide(s)
+            if(is_null($user->getLongitude()) || is_null($user->getLatitude()))
+            {
+                $user->setLongitude(-147.349);
+                $user->setLatitude(64.751);
+            }
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(
                 'success',

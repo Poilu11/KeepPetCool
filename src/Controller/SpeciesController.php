@@ -39,6 +39,11 @@ class SpeciesController extends AbstractController
             $entityManager->persist($species);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Catégorie d\'espèce correctement créée !'
+            );
+
             return $this->redirectToRoute('species_index');
         }
 
@@ -59,10 +64,15 @@ class SpeciesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('species_index', [
-                'id' => $species->getId(),
-            ]);
+            return $this->redirectToRoute('species_index');
+
+            
+            $this->addFlash(
+                'success',
+                'Catégorie d\'espèce correctement modifiée !'
+            );
         }
+
 
         return $this->render('species/edit.html.twig', [
             'species' => $species,

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Species index{% endblock %}
+{% block title %}Liste des espèces{% endblock %}
 
 {% block body %}
-    <h1>Species index</h1>
+    <h1>Liste des espèces</h1>
 
     <table class="table">
         <thead>
@@ -19,17 +19,17 @@
                 <td>{{ species.id }}</td>
                 <td>{{ species.name }}</td>
                 <td>
-                    <a href="{{ path('species_show', {'id': species.id}) }}">show</a>
-                    <a href="{{ path('species_edit', {'id': species.id}) }}">edit</a>
+                    <a href="{{ path('species_edit', {'id': species.id}) }}">Editer</a>
+                    <a href="{{ path('species_delete', {'id': species.id}) }}">Supprimer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun résultat trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('species_new') }}">Create new</a>
+    <a href="{{ path('species_new') }}">Nouvelle Espèce</a>
 {% endblock %}

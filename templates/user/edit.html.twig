@@ -9,3 +9,33 @@
 {{ include('user/_form.html.twig', { 'form': form } ) }}
 
 {% endblock %}
+
+
+{% block javascripts %}
+
+
+<script>
+(function() {
+  var placesAutocomplete = places({
+    appId: 'plGC46KI2VZT',
+    apiKey: '55c75f3e4182a21915613e93a7e52924',
+    container: document.querySelector('#user_address'),
+    templates: {
+      value: function(suggestion) {
+        return suggestion.name;
+      }
+    }
+  }).configure({
+    type: 'address'
+  });
+  placesAutocomplete.on('change', function resultSelected(e) {
+ 
+    document.querySelector('#user_city').value = e.suggestion.city
+    document.querySelector('#user_zipCode').value = e.suggestion.postcode
+    document.querySelector('#user_latitude').value = e.suggestion.latlng.lat
+    document.querySelector('#user_longitude').value = e.suggestion.latlng.lng
+  });
+})();
+</script>
+
+{% endblock %}

@@ -204,6 +204,7 @@ class AppFixtures extends Fixture
             'note' => function() use ($generator) { return $generator->randomNote(); },
             'isActive' => true,
             'isValidated' => false,
+            'isDisplayed' => true
           ));
         
         $insertedEntities = $populator->execute();

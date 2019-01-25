@@ -62,16 +62,19 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/comment/{id}/validate", name="comment_validate", methods={"GET"})
+     * @Route("/comment/{id}/validate", name="comment_validate", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function validate(Comment $comment)
+    public function validate(Comment $comment, EntityManagerInterface $em)
     {
        // On vérifie que l'utilisateur soit connecté
        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-    
+        
+       // On récupère les informations du user actuellement connecté
        $currentUser = $this->getUser();
 
-       if($currentUser->getId() !== $comment->getUser()->getId())
+       // On vérifie que le user connecté correspond au petsitter
+       // concerné par la commentaire, sinon on ne traite pas la demande de validation
+       if($currentUser->getId() !== $comment->getPetsitter()->getId())
        {
             $this->addFlash(
                 'danger',
@@ -80,6 +83,52 @@ class CommentController extends AbstractController
 
             return $this->redirectToRoute('dashboard');
        }
+
+       // On valide le commentaire
+       $comment->setIsValidated(true);
+       $comment->setIsDisplayed(false);
+       $em->flush();
+
+       $this->addFlash(
+            'success',
+            'Commentaire correctement validé !'
+        );
+
+        return $this->redirectToRoute('dashboard');
+    }
+
+    /**
+     * @Route("/comment/{id}/notvalidate", name="comment_not_validate", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function notValidate(Comment $comment, EntityManagerInterface $em)
+    {
+        // On vérifie que l'utilisateur soit connecté
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // On récupère les informations du user actuellement connecté
+        $currentUser = $this->getUser();
+
+        // On vérifie que le user connecté correspond au petsitter
+        // concerné par la commentaire, sinon on ne traite pas la demande de validation
+        if($currentUser->getId() !== $comment->getPetsitter()->getId())
+        {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas refuser le commentaire concernant un tiers !'
+            );
+
+            return $this->redirectToRoute('dashboard');
+        }
+
+        // On ne valide pas le commentaire
+        // et on demande que le commentaire n'apparaisse plus
+        $comment->setIsDisplayed(false);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            'Commentaire refusé avec succès !'
+        );
 
         return $this->redirectToRoute('dashboard');
     }
