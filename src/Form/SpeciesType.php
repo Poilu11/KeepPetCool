@@ -13,7 +13,7 @@ class SpeciesType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('presentations')
+            // ->add('presentations')
         ;
     }
 
