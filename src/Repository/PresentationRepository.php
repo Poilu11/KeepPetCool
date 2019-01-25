@@ -46,6 +46,23 @@ class PresentationRepository extends ServiceEntityRepository
 
     }
 
+    /*
+    public function findPresByUserNear($type, $lat, $long, $radius)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.user', 'u')
+            ->where('u.type = :type')
+            ->setParameter('type', $type)
+            ->andWhere('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111) < :radius')
+            ->orderBy('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111)','ASC')
+            ->setParameter('lat', $lat)
+            ->setParameter('long', $long)
+            ->setParameter('radius', $radius)
+            ->getQuery()
+            ->getResult();
+    }
+    */
+
 
     // /**
     //  * @return Presentation[] Returns an array of Presentation objects

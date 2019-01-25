@@ -21,13 +21,13 @@
 <body>
     <header class="bg-secondary p-5 mt-5 ">
         <div>
-            <a class="text-decoration-none nav-link" href="{{ path('home_page') }}"><h1 class=" text-center text-white">KeepPetCool
-                <img alt="" class="" src="images/2emejet.png " style="width:10%;"></h1></a>
+            <h1 class=" text-center "><a class="text-decoration-none  text-white" href="{{ path('home_page') }}">KeepPetCool
+                <img alt="" class="" src="images/2emejet.png " style="width:10%;"></h1>
             <p class="text-center text-white">
                 <i>Vos PetSitters près de chez vous</i>
             </p>
         </div>
-        <nav class="row justify-content-end mt-4">
+        {# <nav class="row justify-content-end mt-4">
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
             <button class="btn btn-white m-1 p-1">
                 <a class="p-1 text-dark text-decoration-none nav-link" href="{{path('login')}}">
@@ -55,7 +55,7 @@
                     <i class="pr-1 fas fa-cogs"></i>Admin</a>
             </button>
             {% endif %}
-        </nav>
+        </nav> #}
     </header>
 
 

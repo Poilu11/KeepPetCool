@@ -14,7 +14,7 @@ class NoteResolver{
             $this->commentRepo = $commentRepo;
         }
 
-        public function getUserNote(Presentation $pres)
+        public function getUserNoteFromPres(Presentation $pres)
         {
             $comments = $this->commentRepo->findBy(['petsitter' => $pres->getUser()->getId()]);
             $commentsCount = count($comments);
@@ -39,13 +39,13 @@ class NoteResolver{
             return $moy;
         }
 
-        public function getUsersNotes($presList)
+        public function getUsersNotesFromPres($presList)
         {
             $notes = [];
 
             foreach($presList as $pres)
             {
-                $notes[$pres->getUser()->getId()] = $this->getUserNote($pres);
+                $notes[$pres->getUser()->getId()] = $this->getUserNoteFromPres($pres);
             }
 
             return $notes;

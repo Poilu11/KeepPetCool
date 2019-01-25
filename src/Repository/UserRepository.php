@@ -24,6 +24,8 @@ class UserRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.type = :type')
             ->setParameter('type', $type)
+            //Projection des coordonnées en degré sur la terre plate grâce à la constante 111 (écart moyen de distance entre deux degrés de coordonnées)
+            // Théorème de pythagore pour calculer la distance : https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_de_Pythagore
             ->andWhere('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111) < :radius')
             ->orderBy('SQRT( (:lat - u.latitude)*(:lat - u.latitude)*111*111 + (:long - u.longitude)*(:long - u.longitude)*111*111)','ASC')
             ->setParameter('lat', $lat)

@@ -14,14 +14,14 @@
                             <i class="h2 fas fa-sign-out-alt"></i></a>
                     
                     
-                        <a class="text-white text-decoration-none nav-link" href="">
-                            <i class="h2 fas fa-user"></i>Profil</a>
-                    </button>
+                        <a class="h2 text-white text-decoration-none nav-link" href="">
+                            <i class="h2 fas fa-user"></i></a>
+                    
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     
-                        <a class="text-white text-decoration-none nav-link" href="">
-                            <i class="h2 fas fa-cogs"></i>Admin</a>
+                        <a class="h2 text-white text-decoration-none nav-link" href="">
+                            <i class="h2 fas fa-cogs"></i></a>
                     
                 {% endif %}
             </nav>
@@ -55,7 +55,7 @@
             <div class="col-3 col-md-4">
                 <input class="text-dark" id="zipcode" placeholder="Adresse"></input>
             </div>
-            <div class="d-flex align-items-center col-1">
+            <div class="d-flex align-items-center col-1 col-md-3">
                 <input class="form-control" id="radius" type="number">
                     <p class="mb-0">Km</p>
                 </div>

@@ -8,6 +8,7 @@ use App\Util\NoteResolver;
 use App\Entity\Presentation;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
+use App\Repository\PresentationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -48,7 +49,7 @@ class DefaultController extends AbstractController
         }
 
         // DEBUT calcul moyenne des notes de tous les petsitters
-        $arrayNote = $noteResolv->getUsersNotes($presentations);
+        $arrayNote = $noteResolv->getUsersNotesFromPres($presentations);
         // FIN calcul moyenne des notes de tous les petsitterse
 
 
@@ -94,8 +95,10 @@ class DefaultController extends AbstractController
     /**
      * @Route("/search/{userType}-{city}-{radius}-{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "city"="[\w|_]*", "radius"="[0-9]*", "latAndLong" = "(\d*\.?\d*)\+?(\d*\.?\d*)"})
      */
-    public function search($userType, $city, $radius, $latAndLong, UserRepository $userRepo, NoteResolver $noteResolv)
+    public function search($userType, $city, $radius, $latAndLong, UserRepository $userRepo, PresentationRepository $presRepo, NoteResolver $noteResolv)
     {
+
+        // Je check si les informations de la search bar sont vides, si c'est la cas je rajoute des flash messages et je redirige vers la home.
         if(is_null($userType) || is_null($city) || is_null($radius))
         {
             if(is_null($userType))
@@ -116,29 +119,24 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        // Les coordonnées étant au format aaa.aa+bb.bbb, j'utilise explode pour récupérer ma latitude et ma longtude séparemment.
         $coords = explode('+', $latAndLong);
         $users = $userRepo->findUserNear($userType, $coords[0], $coords[1], $radius);
 
-        /*
+        //Pour chaque user récupéré par la requête custom, je récupère la présentation associée, si elle existe.
         $presentations = [];
         foreach($users as $user)
         {
-           $presentations[] = $user->getPresentation();
+            if(!is_null($presRepo->findOneBy(['user' => $user])))
+            {
+                $presentations[] = $presRepo->findOneBy(['user' => $user]);
+            }
         }
 
-        $notes = $noteResolv->getUsersNotes($presentations);
-        */
+        dd($presentations);
 
-        
-        $debug = 'La route fonctionne, voici les données en entrées de la recherche :'.PHP_EOL.PHP_EOL;
-
-        $debug .= "Le type d'utilisateur recherché : ".$userType.PHP_EOL.PHP_EOL;
-
-        $debug .= "Le zipcode de la ville : ".$city.PHP_EOL.PHP_EOL;
-
-        $debug .= "Le rayon de la recherche : ".$radius.PHP_EOL.PHP_EOL;
-
-        dd($debug);
+        // Les notes moyennes des notes pour chaque user à partir des présentations
+        $notes = $noteResolv->getUsersNotesFromPres($presentations);
         
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
