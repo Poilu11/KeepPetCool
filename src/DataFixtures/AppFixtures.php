@@ -17,6 +17,7 @@ use App\DataFixtures\Faker\SpeciesProvider;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Faker\UserTypeProvider;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\DataFixtures\Faker\PriceServiceProvider;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -166,6 +167,7 @@ class AppFixtures extends Fixture
         $generator->addProvider(new SpeciesProvider($generator));
         $generator->addProvider(new NoteProvider($generator));
         $generator->addProvider(new UserTypeProvider($generator));
+        $generator->addProvider(new PriceServiceProvider($generator));
         
         $populator = new Populator($generator, $em);
         $populator->addEntity(User::class, 70, array(
@@ -187,6 +189,7 @@ class AppFixtures extends Fixture
         $populator->addEntity(Presentation::class, 50, array(
           'title' => function() use ($generator) { return $generator->words($nb = 7, $asText = true); },
           'body' => function() use ($generator) { return $generator->sentence($nbWords = 100, $variableNbWords = true); },
+          'price' => function() use ($generator) { return $generator->randomPriceService(); },
           'isActive' => true,
         ), [
             // https://github.com/fzaninotto/Faker#populating-entities-using-an-orm-or-an-odm

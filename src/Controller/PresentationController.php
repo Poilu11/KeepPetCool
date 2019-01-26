@@ -142,7 +142,11 @@ class PresentationController extends AbstractController
 
         // DEBUT Calcul moyenne des notes
         // On récupère l'ensemble des commentaires associés au petsitter
-        $comments = $commentRepository->findBy(['petsitter' => $id]);
+        $comments = $commentRepository->findBy([
+            'petsitter' => $presentation->getUser(),
+            'isActive' => true,
+            'isValidated' => true
+            ]);
         $commentsCount = count($comments);
 
         // On initialise la variable d'addition
@@ -165,6 +169,7 @@ class PresentationController extends AbstractController
 
         return $this->render('presentation/show.html.twig', [
             'presentation' => $presentation,
+            'comments' => $comments,
             'note' => $moy
         ]);
     }

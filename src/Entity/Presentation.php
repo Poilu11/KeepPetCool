@@ -64,6 +64,11 @@ class Presentation
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private $price;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -214,6 +219,18 @@ class Presentation
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
