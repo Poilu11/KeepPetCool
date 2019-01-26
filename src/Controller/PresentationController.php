@@ -167,6 +167,30 @@ class PresentationController extends AbstractController
     {
         $currentUser = $this->getUser();
 
+        if(!$presentation->getIsActive())
+        {
+            if(!isset($currentUser))
+            {
+                $this->addFlash(
+                    'danger',
+                    'Présentation en cours de modération !'
+                );
+
+                return $this->redirectToRoute('home_page');
+            }
+
+            if(isset($currentUser) && $currentUser->getRole()->getCode() == 'ROLE_USER')
+            {
+                $this->addFlash(
+                    'danger',
+                    'Présentation en cours de modération !'
+                );
+
+                return $this->redirectToRoute('home_page');
+            }
+
+        }
+
         // Gestion de l'affichage des commentaires selons le rôle de l'utilisateur
         // DEBUT Calcul moyenne des notes
         // On récupère l'ensemble des commentaires associés au petsitter

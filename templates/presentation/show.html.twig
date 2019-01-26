@@ -4,7 +4,12 @@
 
 {% block body %}
 
-    <h2>{{ presentation.title }}</h2>
+    <h2>{{ presentation.title }}
+            {# Informations sur note et prix uniquement si Petsitter #}
+            {% if presentation.user.type == 'petsitter' %}
+            - <i class="fas fa-star"></i> Note : {{ note }}/5 - Prix/heure : {{ presentation.price }}
+            {% endif %}
+    </h2>
     {% if not presentation.isActive %}
         <p style="color: red;">Présentation actuellement bloquée</p>
     {% endif %}
@@ -12,11 +17,7 @@
     <a href="{{ path('presentation_disable', {'id': presentation.id}) }}"><i class="fas fa-times" style="color: red;"></i> Bloquer/Débloquer cette présentation</a>
     {% endif %}
     
-    <h3>Présentation de {{ presentation.user.firstname }} {{ presentation.user.lastname }} 
-        {% if presentation.user.type == 'petsitter' %}
-        - <i class="fas fa-star"></i> Note : {{ note }}/5 - Prix/heure : {{ presentation.price }}
-        {% endif %}
-    </h3>
+    <h3><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}" style="width: 70px; height:100px;"> Présentation de {{ presentation.user.firstname }} {{ presentation.user.lastname }}</h3>
 
     {# Affichage des espèces et services proposés
      uniquement si le user de la présentation est un petsitter #}
