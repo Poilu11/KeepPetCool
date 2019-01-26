@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PresentationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,22 @@ class CommentController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em)
     {
-        // TODO traitement du formulaire
+        // On vérifie que l'utilisateur soit connecté
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // Récupération des informations de l'utilisateur
+        // actuellement connecté
+        $user = $this->getUser();
+
+        if($user->getType() !== 'owner')
+        {
+            $this->addFlash(
+                'danger',
+                'Vous n\'êtes pas autorisé à laisser un commentaire'
+            );
+
+            return $this->redirectToRoute('dashboard');
+        }
 
 
         return $this->render('comment/new.html.twig', [
@@ -31,7 +47,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/comment/{id}/disable", name="comment_disable", methods={"GET"})
      */
-    public function disable(Comment $comment, EntityManagerInterface $em)
+    public function disable(Comment $comment, PresentationRepository $presentationRepository, EntityManagerInterface $em)
     {
        // On vérifie que l'utilisateur soit admin ou modo
        $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
@@ -39,7 +55,7 @@ class CommentController extends AbstractController
        if($comment->getIsActive())
        {
             $comment->setIsActive(false);
-            $em->flush;
+            $em->flush();
 
             $this->addFlash(
                 'success',
@@ -50,7 +66,7 @@ class CommentController extends AbstractController
        else
        {
             $comment->setIsActive(true);
-            $em->flush;
+            $em->flush();
 
             $this->addFlash(
                 'success',
@@ -58,7 +74,13 @@ class CommentController extends AbstractController
             );
        }
 
-        return $this->redirectToRoute('comment_index');
+       $petsitter = $comment->getPetsitter();
+       $presentation = $presentationRepository->findOneBy(['user' => $petsitter]);
+
+        return $this->redirectToRoute('presentation_show', [
+            'id' => $presentation->getId(),
+            'slug' => $presentation->getSlug()
+            ]);
     }
 
     /**

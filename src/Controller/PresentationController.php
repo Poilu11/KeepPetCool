@@ -125,11 +125,37 @@ class PresentationController extends AbstractController
     /**
      * @Route("/presentation/{id}/disable", name="presentation_disable", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function disable(Request $request)
+    public function disable(Presentation $presentation, Request $request, EntityManagerInterface $em)
     {
-        dd('Nous sommes dans la page de traitement Presentation Disable');
+        // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
 
-        $this->redirectToRoute('home_page');
+       if($presentation->getIsActive())
+       {
+            $presentation->setIsActive(false);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Présentation désactivée avec succès !'
+            );
+
+       }
+       else
+       {
+            $presentation->setIsActive(true);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Présentation activée avec succès !'
+            );
+       }
+
+        return $this->redirectToRoute('presentation_show', [
+            'id' => $presentation->getId(),
+            'slug' => $presentation->getSlug()
+        ]);
     }
 
     /**
@@ -139,15 +165,40 @@ class PresentationController extends AbstractController
      */
     public function show($id, Presentation $presentation, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
+        $currentUser = $this->getUser();
 
+        // Gestion de l'affichage des commentaires selons le rôle de l'utilisateur
         // DEBUT Calcul moyenne des notes
         // On récupère l'ensemble des commentaires associés au petsitter
-        $comments = $commentRepository->findBy([
-            'petsitter' => $presentation->getUser(),
-            'isActive' => true,
-            'isValidated' => true
-            ]);
-        $commentsCount = count($comments);
+        if(isset($currentUser) && !empty($currentUser))
+        {
+            if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
+            {
+                $comments = $commentRepository->findBy([
+                    'petsitter' => $presentation->getUser(),
+                    'isValidated' => true
+                    ]);
+                $commentsCount = count($comments);
+            }
+            else
+            {
+                $comments = $commentRepository->findBy([
+                    'petsitter' => $presentation->getUser(),
+                    'isActive' => true,
+                    'isValidated' => true
+                    ]);
+                $commentsCount = count($comments);
+            }
+        }
+        else
+        {
+            $comments = $commentRepository->findBy([
+                'petsitter' => $presentation->getUser(),
+                'isActive' => true,
+                'isValidated' => true
+                ]);
+            $commentsCount = count($comments);
+        }
 
         // On initialise la variable d'addition
         $sum = 0;

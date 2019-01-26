@@ -83,24 +83,24 @@ class Presentation
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle()
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle($title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getBody(): ?string
+    public function getBody()
     {
         return $this->body;
     }
 
-    public function setBody(string $body): self
+    public function setBody($body): self
     {
         $this->body = $body;
 

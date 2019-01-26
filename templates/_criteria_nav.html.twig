@@ -18,7 +18,7 @@
                             <i class="h2 fas fa-user"></i></a>
                     
                 {% endif %}
-                {% if is_granted('ROLE_MODO') %}
+                {% if is_granted('ROLE_ADMIN') %}
                     
                         <a class="h2 text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
                             <i class="h2 fas fa-cogs"></i></a>

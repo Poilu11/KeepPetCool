@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -48,12 +49,22 @@ class PresentationType extends AbstractType
 
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre de votre présentation'
+                'label' => 'Titre de votre présentation',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci d\'indiquer un titre !'
+                    ])
+                ]
             ])
             ->add('body', TextareaType::class, [
                 'label' => 'Présentez-vous',
                 'attr' => [
                     'rows' => 7
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Vous devez fournir une description !'
+                    ])
                 ]
             ])
             // ->add('isActive')
