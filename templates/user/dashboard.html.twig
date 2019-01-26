@@ -6,7 +6,7 @@
 <table class="table my-3" style="width: 70%; margin: auto;">
     <tbody>
     <tr>
-        <th scope="row" colspan="2" style="text-align: center;"><img src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}" style="width: 100px; height:150px;"><br><a href="{{ path('avatar_delete', {'id': user.id}) }}"><i class="fas fa-times"></i></a></th>
+        <th scope="row" colspan="2" style="text-align: center;"><img src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}" style="width: 100px; height:150px;"><a href="{{ path('avatar_delete', {'id': user.id}) }}"><i class="fas fa-times" style="color: red;"></i></a></th>
     </tr>
       <tr>
         <th scope="row">Identifiant</th>
@@ -24,6 +24,13 @@
         <th scope="row">Nom</th>
         <td>{{ user.lastname }}</td>
       </tr>
+      <tr>
+        <th scope="row">Rôle / Type</th>
+        <td>{{ user.role.name }} / {{ user.type }}</td>
+      </tr>
+      <tr>
+            <th scope="row" colspan="2"><a href="{{ path('home_page') }}">Aller à l'accueil</a> - <a href="{{ path('profile_edit', {'id': user.id}) }}">Editer mon profil</a> - <a href="{{ path('presentation_new') }}">Ma fiche de présentation</a></th>
+        </tr>
     </tbody>
   </table>
 
@@ -54,10 +61,14 @@
 
 {# si utilisateur connecté ET ayant un rôle d'admin #}
 {% if is_granted('IS_AUTHENTICATED_FULLY') and (app.user.role.code == 'ROLE_ADMIN') %}
-<ul class="list-group" style="width: 70%; margin: auto;">
+<div style="width: 70%; margin: auto;">
+<p style="color: #6C757D; font-weight: bold;">Menu d'administration du site</p>
+<ul class="list-group">
+    <a href="{{ path('status') }}"><li class="list-group-item" aria-disabled="true">Gestion des rôles utilisateurs</li></a>
     <a href="{{ path('species_index') }}"><li class="list-group-item" aria-disabled="true">Gestion des espèces animales</li></a>
     <a href="{{ path('service_index') }}"><li class="list-group-item">Gestion des prestations de services</li></a>
 </ul>
+</div>
 {% endif %}
 
 {% endblock %}

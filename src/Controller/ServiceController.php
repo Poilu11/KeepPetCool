@@ -93,7 +93,7 @@ class ServiceController extends AbstractController
 
         $this->addFlash(
             'success',
-            'Catégorie de service supprimée avec succès !'
+            'Service supprimée avec succès !'
         );
 
         return $this->redirectToRoute('service_index');

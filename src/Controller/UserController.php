@@ -6,6 +6,8 @@ use DateTime;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\RoleRepository;
+use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -287,13 +289,56 @@ class UserController extends AbstractController
     /**
      * @Route("/status", name="status", methods={"GET", "POST"})
      */
-    public function status(Request $request)
+    public function status(Request $request, RoleRepository $roleRepository, UserRepository $userRepository)
     {
+        if(!empty($_POST))
+        {
+            // On récupère les informations du formulaire
+            $userId = $request->request->get('user');
+            $roleId = $request->request->get('role');
+
+
+            $user = $userRepository->find($userId);
+            $role = $roleRepository->find($roleId);
+
+            // On bloque la possibilité de pouvoir modifier le rôle d'un administrateur
+            if($user->getRole()->getCode() === 'ROLE_ADMIN')
+            {
+                $this->addFlash(
+                    'danger',
+                    'Vous ne pouvez pas modifier le rôle d\'un administrateur !'
+                );
+    
+                return $this->redirectToRoute('status');
+            }
+
+            $user->setRole($role);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'La modification du rôle de l\'utilisateur ' . $user->getUsername() . ' a bien été prise en compte !'
+            );
+
+            return $this->redirectToRoute('status');
+
+        }
+
         // On vérifie que l'utilisateur soit connecté
+        // et qu'il est un rôle Administrateur
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        $roles = $roleRepository->findAll();
+
+        $users = $userRepository->findAll();
 
 
-        return $this->render('user/status.html.twig');
+        return $this->render('user/status.html.twig', [
+            'roles' => $roles,
+            'users' => $users
+        ]);
     }
 
     /**

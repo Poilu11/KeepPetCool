@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des rôles utilisateurs{% endblock %}
+
+{% block body %}
+<div style="width: 80%; margin: auto;">
+  
+  <h2>Gestion des rôles utilisateurs</h2>
+  
+  {% for user in users %}
+<form method="POST">
+      <div class="form-row">
+        <div class="col-5">
+          <label for="user{{ user.id }}">{{ user.username }} - {{ user.firstname }} {{ user.lastname }}</label>
+          <input type="hidden" class="form-control" id="user{{ user.id }}" name="user" value="{{ user.id }}">
+        </div>
+        <div class="col-2">
+          <label for="roleuser{{ user.id }}">{{ user.role.name }}</label>
+          {# <input type="text" class="form-control" placeholder="State"> #}
+        </div>
+        <div class="col-3">
+            <select class="custom-select mr-sm-2" id="role" name="role">
+                <option selected disabled>Choisir</option>
+                {% for role in roles %}
+                  <option value="{{ role.id }}">{{ role.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      <div class="col-2">
+      <input type="submit" value="Valider">
+    </div>
+  </div>
+</form>
+{% endfor %}
+
+</div>
+{% endblock %}
+

@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PresentationRepository")
@@ -65,6 +66,9 @@ class Presentation
 
     public function __construct()
     {
+        $this->isActive = true;
+        $this->createdAt = new DateTime();
+
         $this->species = new ArrayCollection();
         $this->services = new ArrayCollection();
     }

@@ -64,13 +64,12 @@ class SpeciesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('species_index');
-
-            
             $this->addFlash(
                 'success',
                 'Catégorie d\'espèce correctement modifiée !'
             );
+
+            return $this->redirectToRoute('species_index');
         }
 
 
