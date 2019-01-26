@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,6 +56,14 @@ class Comment
      * @ORM\Column(type="boolean")
      */
     private $isDisplayed;
+
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->isValidated = false;
+        $this->isDisplayed = true;
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {

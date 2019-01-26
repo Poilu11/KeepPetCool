@@ -63,5 +63,15 @@
             {% endfor %}
     </div>
     {% endif %}
-   
+
+    {# Si utilisateur connecté
+    et présentation petsitter et utilisateur connecté est un owner #}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% if presentation.user.type == 'petsitter' and app.user.type == 'owner' %}
+
+            {{ include('comment/_form.html.twig') }}
+
+        {% endif %}
+    {% endif %}
+
 {% endblock %}

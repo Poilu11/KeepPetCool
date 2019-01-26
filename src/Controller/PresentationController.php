@@ -40,7 +40,6 @@ class PresentationController extends AbstractController
             return $this->redirectToRoute('presentation_edit', ['id' => $presentationId]);
         }
 
-
         $presentation = new Presentation();
 
         $form = $this->createForm(PresentationType::class, $presentation);

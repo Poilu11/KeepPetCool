@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Comment;
+use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PresentationRepository;
@@ -19,7 +20,7 @@ class CommentController extends AbstractController
      * @ParamConverter("user", options={"mapping": {"idPetsitter": "id"}})
      * @ParamConverter("user", options={"mapping": {"idOwner": "id"}})
      */
-    public function new(Request $request, EntityManagerInterface $em)
+    public function new($idPetsitter, $idOwner, Request $request, PresentationRepository $presentationRepository, UserRepository $userRepository, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -38,10 +39,75 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
+        $petsitter = $userRepository->find($idPetsitter);
+        $owner = $userRepository->find($idOwner);
 
-        return $this->render('comment/new.html.twig', [
+        // On vérifie que le user "owner" n'est pas déjà laissé un commentaire
+        // pour le user "petsitter"
+        // Si c'est le cas, on ne traite pas le commentaire (un seul commentaire par relation owner/petsitter)
+        $checkOwnerCommentByPetsitter = $commentRepository->findBy(['owner' => $idOwner, 'petsitter' => $idPetsitter]);
+
+        // dd($checkOwnerCommentByPetsitter);
+        if(count($checkOwnerCommentByPetsitter) > 0)
+        {
+            $this->addFlash(
+                'danger',
+                'Vous avez déjà laissé un commentaire pour ce petsitter !'
+            );
             
-        ]);
+            $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
+
+            return $this->redirectToRoute('presentation_show', [
+                'id' => $presentation->getId(),
+                'slug' => $presentation->getSlug()
+                ]);
+        }
+
+
+        $body = trim(strip_tags($request->request->get('body')));
+        $note = intval(strip_tags($request->request->get('note')));
+
+        // dump($body);
+        // dd($note);
+
+        // On vérifie que toutes les informations nécessaires sont remplies
+        if(empty($body) || empty($note))
+        {
+            $this->addFlash(
+                'danger',
+                'Merci de remplir tous les champs du commentaire !'
+            );
+            
+            $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
+
+            return $this->redirectToRoute('presentation_show', [
+                'id' => $presentation->getId(),
+                'slug' => $presentation->getSlug()
+                ]);
+        }
+
+        // On enregistre le nouveau commentaire
+        $comment = new Comment();
+        $comment->setBody($body);
+        $comment->setNote($note);
+        $comment->setPetsitter($petsitter);
+        $comment->setOwner($owner);
+
+        $em->persist($comment);
+        $em->flush();
+
+        $this->addFlash(
+            'success',
+            'Votre commentaire a correctement été enregistré. En attente de validation par le petsitter.'
+        );
+
+
+        $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
+
+        return $this->redirectToRoute('presentation_show', [
+            'id' => $presentation->getId(),
+            'slug' => $presentation->getSlug()
+            ]);
     }
 
     /**

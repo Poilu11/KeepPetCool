@@ -1,0 +1,19 @@
+<p class="mt-5" style="font-size: 1.1em; font-weight: bold;">Laisser un commentaire</p>
+<form action="{{ path('comment_new', {'idPetsitter': presentation.user.id, 'idOwner': app.user.id}) }}" method="POST">
+    <div class="form-group">
+        <label for="bodyForm">Votre avis</label>
+        <textarea class="form-control" id="bodyForm" name="body" rows="7" placeholder="Laisser un commentaire"></textarea>
+      </div>
+        <div class="form-group">
+          <label for="noteForm">Votre note (sur 5)</label>
+          <select class="form-control" id="noteForm" name="note">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+          </select>
+          </div>
+          <input type="submit" value="Valider">
+</form>

@@ -34,6 +34,9 @@
     </tbody>
   </table>
 
+{# Liste des commentaires à valider
+    uniquement si le user est de type "petsitter" #}
+{% if app.user.type == 'petsitter' %}
  <table class="table my-3" style="width: 70%; margin: auto;">
     <thead class="thead-dark">
         <tr>
@@ -55,9 +58,9 @@
                 <td colspan="3">Aucun commentaire à valider</td>
             </tr>
         {% endfor %}
-
     </tbody>
 </table>
+{% endif %}
 
 {# si utilisateur connecté ET ayant un rôle d'admin #}
 {% if is_granted('IS_AUTHENTICATED_FULLY') and (app.user.role.code == 'ROLE_ADMIN') %}
