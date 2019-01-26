@@ -58,8 +58,8 @@ class CommentController extends AbstractController
             $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
 
             return $this->redirectToRoute('presentation_show', [
-                'id' => $presentation->getId(),
-                'slug' => $presentation->getSlug()
+                'slug' => $presentation->getSlug(),
+                'id' => $presentation->getId()
                 ]);
         }
 
@@ -81,8 +81,8 @@ class CommentController extends AbstractController
             $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
 
             return $this->redirectToRoute('presentation_show', [
-                'id' => $presentation->getId(),
-                'slug' => $presentation->getSlug()
+                'slug' => $presentation->getSlug(),
+                'id' => $presentation->getId()                
                 ]);
         }
 
@@ -105,8 +105,8 @@ class CommentController extends AbstractController
         $presentation = $presentationRepository->findOneBy(['user' => $idPetsitter]);
 
         return $this->redirectToRoute('presentation_show', [
-            'id' => $presentation->getId(),
-            'slug' => $presentation->getSlug()
+            'slug' => $presentation->getSlug(),
+            'id' => $presentation->getId()
             ]);
     }
 
@@ -144,8 +144,8 @@ class CommentController extends AbstractController
        $presentation = $presentationRepository->findOneBy(['user' => $petsitter]);
 
         return $this->redirectToRoute('presentation_show', [
-            'id' => $presentation->getId(),
-            'slug' => $presentation->getSlug()
+            'slug' => $presentation->getSlug(),
+            'id' => $presentation->getId()            
             ]);
     }
 

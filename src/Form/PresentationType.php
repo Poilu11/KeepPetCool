@@ -35,7 +35,7 @@ class PresentationType extends AbstractType
             $form = $event->getForm();
             $user = $this->security->getUser();
 
-            dump($user);
+            // dump($user);
             
             // Si le user n'est pas petsitter 
             if($user->getType() !== 'petsitter')

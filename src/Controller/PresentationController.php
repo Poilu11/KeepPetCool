@@ -62,8 +62,8 @@ class PresentationController extends AbstractController
             );
             
             return $this->redirectToRoute('presentation_show', [
-                'id' => $presentation->getId(),
                 'slug' => $presentation->getSlug(),
+                'id' => $presentation->getId()
             ]);
         }
 
@@ -111,8 +111,8 @@ class PresentationController extends AbstractController
             );
             
             return $this->redirectToRoute('presentation_show', [
-                'id' => $presentation->getId(),
                 'slug' => $presentation->getSlug(),
+                'id' => $presentation->getId()
             ]);
         }
 
@@ -152,15 +152,15 @@ class PresentationController extends AbstractController
        }
 
         return $this->redirectToRoute('presentation_show', [
-            'id' => $presentation->getId(),
-            'slug' => $presentation->getSlug()
+            'slug' => $presentation->getSlug(),
+            'id' => $presentation->getId()
         ]);
     }
 
     /**
-     * @Route("/presentation/{id}/{slug}", name="presentation_show", methods={"GET"})
-     * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
+     * @Route("/presentation/{slug}/{id}", name="presentation_show", methods={"GET"})
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
     public function show($id, Presentation $presentation, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
