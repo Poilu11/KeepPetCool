@@ -10,6 +10,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\PresentationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,12 @@ class UserController extends AbstractController
         // Récupération des informations de l'utilisateur
         // actuellement connecté
         $user = $this->getUser();
+
+        // Si utilisateur bloqué, redirection vers la page logout
+        if(!$user->getIsActive())
+        {
+            return $this->redirectToRoute('logout');
+        }
 
         // Gestion de la date de dernière connexion
         $user->setConnectedAt(new DateTime());
@@ -265,25 +272,74 @@ class UserController extends AbstractController
     /**
      * @Route("/profile/{id}/disable", name="profile_disable", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function disable(User $user, Request $request)
+    public function disable(User $user, PresentationRepository $presentationRepository, EntityManagerInterface $em)
     {
         // On vérifie que l'utilisateur soit admin ou modo
-        $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+        $this->denyAccessUnlessGranted(['ROLE_ADMIN']);
 
         // Je récupere les informations de l'user connecté
         $currentUser = $this->getUser();
 
-        if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
+        // Je vérifie que le User n'ait pas un statut autre que admin ou modo
+        if($currentUser->getRole()->getCode() !== 'ROLE_ADMIN')
         {
             $this->addFlash(
                 'danger',
-                'Vous n\'êtes pas autorisé à désactiver le compte de ce type d\'utilisateur'
+                'Vous n\'êtes pas autorisé à désactiver des comptes !'
             );
 
-            $this->redirecToRoute('dashboard');
+            return $this->redirecToRoute('dashboard');
         }
 
-        $this->redirectToRoute('home_page');
+        if($user->getRole()->getCode() === 'ROLE_ADMIN')
+        {
+            $this->addFlash(
+                'danger',
+                'Un compte administrateur ne peut pas être désactivé !'
+            );
+
+            return $this->redirectToRoute('status');
+        }
+
+        if($user->getIsActive())
+        {
+            $user->setIsActive(false);
+            $presentation = $presentationRepository->findOneBy(['user' => $user]);
+
+            if(isset($presentation))
+            {
+                $presentation->setIsActive(false);
+            }
+            
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Utilisateur désactivé avec succès'
+            );
+
+            return $this->redirectToRoute('status');
+        }
+        else
+        {
+            $user->setIsActive(true);
+            $presentation = $presentationRepository->findOneBy(['user' => $user]);
+
+            if(isset($presentation))
+            {
+                $presentation->setIsActive(true);
+            }
+            
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Utilisateur activé avec succès'
+            );
+
+            return $this->redirectToRoute('status');
+        }
+
     }
 
     /**
@@ -297,6 +353,15 @@ class UserController extends AbstractController
             $userId = $request->request->get('user');
             $roleId = $request->request->get('role');
 
+            if(!isset($roleId) || empty($roleId))
+            {
+                $this->addFlash(
+                    'danger',
+                    'Informations manquantes !'
+                );
+    
+                return $this->redirectToRoute('status');
+            }
 
             $user = $userRepository->find($userId);
             $role = $roleRepository->find($roleId);

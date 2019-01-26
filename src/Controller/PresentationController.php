@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Util\Slugger;
+use App\Util\NoteResolver;
 use App\Entity\Presentation;
 use App\Form\PresentationType;
 use App\Repository\CommentRepository;
@@ -117,6 +118,7 @@ class PresentationController extends AbstractController
         }
 
         return $this->render('presentation/edit.html.twig', [
+            'presentation' => $presentation,
             'form' => $form->createView()
         ]);
     }
@@ -127,7 +129,19 @@ class PresentationController extends AbstractController
     public function disable(Presentation $presentation, Request $request, EntityManagerInterface $em)
     {
         // On vérifie que l'utilisateur soit admin ou modo
-       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+       $this->denyAccessUnlessGranted(['IS_AUTHENTICATED_FULLY']);
+
+       $currentUser = $this->getUser();
+
+       if($currentUser->getRole()->getCode() !== 'ROLE_ADMIN' && $currentUser->getRole()->getCode() !== 'ROLE_MODO' && $currentUser->getId() !== $presentation->getUser()->getId())
+       {
+            $this->addFlash(
+                'danger',
+                'Vous n\'avez pas l\'autorisaton de désactiver la présentation d\'un tiers'
+            );
+
+            return $this->redirectToRoute('dashboard');
+       }
 
        if($presentation->getIsActive())
        {
@@ -162,27 +176,29 @@ class PresentationController extends AbstractController
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
-    public function show($id, Presentation $presentation, CommentRepository $commentRepository, EntityManagerInterface $em)
+    public function show($id, Presentation $presentation, CommentRepository $commentRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
     {
         $currentUser = $this->getUser();
 
         if(!$presentation->getIsActive())
         {
+            // Utilisateur non connecté
             if(!isset($currentUser))
             {
                 $this->addFlash(
                     'danger',
-                    'Présentation en cours de modération !'
+                    'Présentation actuellement bloquée !'
                 );
 
                 return $this->redirectToRoute('home_page');
             }
 
+            // Utilisateur connecté avec le rôle User
             if(isset($currentUser) && $currentUser->getRole()->getCode() == 'ROLE_USER')
             {
                 $this->addFlash(
                     'danger',
-                    'Présentation en cours de modération !'
+                    'Présentation actuellement bloquée !'
                 );
 
                 return $this->redirectToRoute('home_page');
@@ -200,7 +216,7 @@ class PresentationController extends AbstractController
                 $comments = $commentRepository->findBy([
                     'petsitter' => $presentation->getUser(),
                     'isValidated' => true
-                    ]);
+                    ], ['createdAt' => 'ASC']);
                 $commentsCount = count($comments);
             }
             else
@@ -209,42 +225,47 @@ class PresentationController extends AbstractController
                     'petsitter' => $presentation->getUser(),
                     'isActive' => true,
                     'isValidated' => true
-                    ]);
+                    ], ['createdAt' => 'ASC']);
                 $commentsCount = count($comments);
             }
         }
+        // Utilisateur non connecté
         else
         {
             $comments = $commentRepository->findBy([
                 'petsitter' => $presentation->getUser(),
                 'isActive' => true,
                 'isValidated' => true
-                ]);
+                ], ['createdAt' => 'ASC']);
             $commentsCount = count($comments);
         }
 
+
+        // NE PAS EFFACER, MERCI :-)
+        // NE PAS EFFACER, MERCI :-)
+
         // On initialise la variable d'addition
-        $sum = 0;
+        // $sum = 0;
 
-        foreach($comments as $currentComment)
-        {
-            $sum += $currentComment->getNote();
-        }
+        // foreach($comments as $currentComment)
+        // {
+        //     $sum += $currentComment->getNote();
+        // }
 
-        if($commentsCount > 0)
-        {
-            $moy = $sum / $commentsCount;
-        }
-        else
-        {
-            $moy = 'NC';
-        }
+        // if($commentsCount > 0)
+        // {
+        //     $moy = $sum / $commentsCount;
+        // }
+        // else
+        // {
+        //     $moy = 'NC';
+        // }
         // FIN Calcul moyenne des notes
 
         return $this->render('presentation/show.html.twig', [
             'presentation' => $presentation,
             'comments' => $comments,
-            'note' => $moy
+            'note' => $noteResolver->getUserNoteFromPres($presentation)
         ]);
     }
 }

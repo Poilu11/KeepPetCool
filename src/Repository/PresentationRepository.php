@@ -23,7 +23,7 @@ class PresentationRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('presentation')
             ->innerJoin('presentation.user', 'user')
-            ->orderBy('presentation.createdAt', 'ASC')
+            ->orderBy('presentation.createdAt', 'DESC')
             ->setParameter('type', $type)
             ->where('user.type =:type')
             ->getQuery();
@@ -36,7 +36,7 @@ class PresentationRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('presentation')
             ->innerJoin('presentation.user', 'user')
-            ->orderBy('presentation.createdAt', 'ASC')
+            ->orderBy('presentation.createdAt', 'DESC')
             ->setParameter('type', $type)
             ->where('presentation.isActive = true')
             ->andWhere('user.type =:type')

@@ -17,7 +17,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home_page", methods={"GET"})
      */
-    public function home(NoteResolver $noteResolv)
+    public function home(NoteResolver $noteResolver)
     {
 
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
@@ -49,7 +49,7 @@ class DefaultController extends AbstractController
         }
 
         // DEBUT calcul moyenne des notes de tous les petsitters
-        $arrayNote = $noteResolv->getUsersNotesFromPres($presentations);
+        $arrayNote = $noteResolver->getUsersNotesFromPres($presentations);
         // FIN calcul moyenne des notes de tous les petsitterse
 
 

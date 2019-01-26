@@ -30,6 +30,8 @@ class NoteResolver{
             if($commentsCount > 0)
             {
                 $moy = $sum / $commentsCount;
+                $moy = round($moy, 1); // arrondir un chiffre après la virgule
+                
             }
             else
             {

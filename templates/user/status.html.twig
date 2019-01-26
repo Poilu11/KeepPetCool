@@ -10,24 +10,33 @@
   {% for user in users %}
 <form method="POST">
       <div class="form-row">
-        <div class="col-5">
+        <div class="col-4">
           <label for="user{{ user.id }}">{{ user.username }} - {{ user.firstname }} {{ user.lastname }}</label>
           <input type="hidden" class="form-control" id="user{{ user.id }}" name="user" value="{{ user.id }}">
         </div>
-        <div class="col-2">
-          <label for="roleuser{{ user.id }}">{{ user.role.name }}</label>
+        <div class="col-4">
+          <label for="roleuser{{ user.id }}">{{ user.role.name }} - 
+            {% if user.isActive %}
+              Actif
+            {% else %}
+              <span style="color: red;">Désactivé</span>
+            {% endif %}
+          </label>
           {# <input type="text" class="form-control" placeholder="State"> #}
         </div>
-        <div class="col-3">
+        <div class="col-1">
             <select class="custom-select mr-sm-2" id="role" name="role">
-                <option selected disabled>Choisir</option>
+                  <option selected disabled>Choisir</option>
                 {% for role in roles %}
                   <option value="{{ role.id }}">{{ role.name }}</option>
                 {% endfor %}
             </select>
         </div>
-      <div class="col-2">
+      <div class="col-1">
       <input type="submit" value="Valider">
+    </div>
+    <div class="col-2">
+      <a href="{{ path('profile_disable', {'id': user.id}) }}" style="color: red;"><i class="fas fa-times"></i> Dé/Bloquer</a>
     </div>
   </div>
 </form>

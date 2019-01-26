@@ -4,5 +4,11 @@
 
 {% block body %}
 <h2>Edition fiche de présentation</h2>
+{% if presentation.isActive %}
+<p style="color: blue;">Publication actuellement activée : <a href="{{ path('presentation_disable', {'id': presentation.id}) }}">Désactiver</a></p>
+{% else %}
+<p style="color: red;">Publication actuellement non-activée (non-publiée) : <a href="{{ path('presentation_disable', {'id': presentation.id}) }}">Activer</a></p>
+{% endif %}
+
 {{ include('presentation/_form.html.twig') }}
 {% endblock %}
