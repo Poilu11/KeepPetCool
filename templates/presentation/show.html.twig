@@ -37,6 +37,18 @@
         {% endfor %}
         </p>
     {% endif %}
+    
+    {# Communication des coordonnées uniquement si connecté #}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <p>Coordonnées :</p>
+    <ul>
+        <li>Email : {{ presentation.user.email }}</li>
+        <li>Téléphone fixe : {{ presentation.user.phoneNumber }}</li>
+        <li>Téléphone portable : {{ presentation.user.cellNumber }}</li>
+    </ul>
+    {% else %}
+    <p style="color: red;">Connectez-vous pour accéder aux coordonnés de cette présentation.</p>
+    {% endif %}
 
     <p>{{ presentation.body }}</p>
 
@@ -66,7 +78,7 @@
 
     {# Si utilisateur connecté
     et présentation petsitter et utilisateur connecté est un owner #}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {% if presentation.user.type == 'petsitter' and app.user.type == 'owner' %}
 
             {{ include('comment/_form.html.twig') }}
