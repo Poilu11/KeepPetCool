@@ -194,10 +194,16 @@ class UserController extends AbstractController
                 $user->setAvatar($fileName);
                 // Si je remplace mon ancien avatar par un nouveau, je teste dans un premier temps s'il y en avait déjà un à supprimer ;)
                 if(!empty($oldFile)){
-                    // Fonction native a php qui supprime des fichiers
-                    unlink(
-                        $this->getParameter('avatar_directory') .'/'.$oldFile
-                    );
+
+                    // Mise en place condition pour ne pas supprimer
+                    // l'avatar par défaut
+                    if($oldFile !== 'default-avatar.png')
+                    {
+                        unlink(
+                            $this->getParameter('avatar_directory') .'/'.$oldFile
+                        );
+                    }
+
                 }
             } else { // Sinon, on garde l'ancienne valeur que j'avais deja en BDD
                 $user->setAvatar($oldFile);//ancien nom de fichier
