@@ -50,7 +50,7 @@
     <p style="color: red;">Connectez-vous pour accéder aux coordonnés de cette présentation.</p>
     {% endif %}
 
-    <p>{{ presentation.body }}</p>
+    <p>{{ presentation.body|nl2br }}</p>
 
     {# Affichage des commentaires uniquement si le user est un petsitter #}
     {% if presentation.user.type == 'petsitter' %}
@@ -62,7 +62,7 @@
                     <p style="color: red;">Commentaire actuellement bloqué</p>
                 {% endif %}
               <h5 class="card-title">Commentaire écrit le {{ comment.createdAt|date("d/m/Y") }}</h5>
-              <p class="card-text">{{ comment.body }}</p>
+              <p class="card-text">{{ comment.body|nl2br }}</p>
               <p class="blockquote-footer">Auteur: {{ comment.owner.username }}</p>
               {% if is_granted('ROLE_MODO') %}
               <a href="{{ path('comment_disable', {'id': comment.id}) }}"><i class="fas fa-times" style="color: red;"></i> Bloquer/Débloquer ce commentaire</a>
