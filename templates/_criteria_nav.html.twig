@@ -1,69 +1,66 @@
 <nav class="bg-dark border border-dark criteria-nav text-white fixed-top row justify-content-between m-0">
     <div class="row">
-      <a class="text-decoration-none nav-link" href="{{ path('home_page') }}"><img class="m-1 mr-3 border-right " src="{{ asset('images/logo.png') }}" alt=""></a>
-            <nav class="row d-flex align-items-center">
-                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a  class="text-white text-decoration-none nav-link" href="{{path('login')}}">
-                        <i  class="h2 fas fa-sign-in-alt"></i></a>
-                    <a class="text-white text-decoration-none nav-link" href="{{path('signup')}}">
-                        <i class="h2 fas fa-user-plus"></i></a>
-                {% endif %}
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    
-                        <a class="text-white text-decoration-none nav-link" href="{{path('logout')}}">
-                            <i class="h2 fas fa-sign-out-alt"></i></a>
-                    
-                    
-                        <a class="h2 text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
-                            <i class="h2 fas fa-user"></i></a>
-                    
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    
-                        <a class="h2 text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
-                            <i class="h2 fas fa-cogs"></i></a>
-                    
-                {% endif %}
-            </nav>
-        </div>
-        <div class="d-flex align-items-center d-flex justify-content-end col-8">
-            {% if app.user %}
-                {% if app.user.type == 'petsitter' %}
-                    {% set petsitterClass = ""%}
-                    {% set ownerClass = "criteria-active"%}
-                    {% else %}
-                    {% set petsitterClass = "criteria-active"%}
-                    {% set ownerClass = ""%}
-                {% endif %}
-                {% else %}
-                {% set petsitterClass = "criteria-active"%}
-                {% set ownerClass = ""%}
+        <a class="text-decoration-none nav-link" href="{{ path('home_page') }}"><img class="m-1 mr-3 border-right " src="{{ asset('images/logo.png') }}"
+                alt=""></a>
+        <nav class="row d-flex align-items-center">
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a class="text-white text-decoration-none nav-link" href="{{path('login')}}">
+                <i class="h2  text-center fas fa-sign-in-alt"></i>
+                <p>Login</p>
+            </a>
+            <a class="text-center text-white text-decoration-none nav-link" href="{{path('signup')}}">
+                <i class="h2 fas fa-user-plus"></i>
+                <p>Sign-Up</p>
+            </a>
             {% endif %}
-            <div class="col-2  d-xl-block  d-none">
-                Je cherche :
-            </div>
-            <div class="col-2 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
-                <div class="">
-                    <i class="m-auto fas fa-user-alt"></i>
-                </div>
-                <div>Petsitter</div>
-            </div>
-            <div class="col-2 text-center border-right {{ownerClass}} user-checkbox" data-usertype="owner">
-                <i class="fas fa-dog"></i>
-                <div>Propriétaire</div>
-            </div>
-            <div class="col-3 col-md-4">
-                <input class="text-dark" id="zipcode" placeholder="Adresse"></input>
-            </div>
-            <div class="d-flex align-items-center col-1 col-md-3">
-                <input class="form-control" id="radius" type="number">
-                    <p class="mb-0">Km</p>
-                </div>
-                <input id="search-latitude" name="search[latitude]" type="hidden" value="">
-                    <input id="search-longitude" name="search[longitude]" type="hidden" value="">
-                        <button class=" " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </nav>
-            
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a class="text-center text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
+                <i class="m-auto h2 fas fa-user"></i><p class="mt-2">Profil</p></a>
+            <a class="text-center text-danger text-decoration-none nav-link" href="{{path('logout')}}">
+                <i class="h2 fas fa-sign-out-alt"></i><p>Logout</p></a>
+
+            {% endif %}
+             
+        </nav>
+    </div>
+
+    <div class="d-flex align-items-center d-flex justify-content-end col-8">
+        {% if app.user %}
+        {% if app.user.type == 'petsitter' %}
+        {% set petsitterClass = ""%}
+        {% set ownerClass = "criteria-active"%}
+        {% else %}
+        {% set petsitterClass = "criteria-active"%}
+        {% set ownerClass = ""%}
+        {% endif %}
+        {% else %}
+        {% set petsitterClass = "criteria-active"%}
+        {% set ownerClass = ""%}
+        {% endif %}
+        <div class="pl-5 pr-0 col-2  d-xl-block  d-none">
+            Je cherche :
+        </div>
+        <div class="p-0 m-1 col-lg-1 col-md-2 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
+            <i class="m-auto fas fa-user-alt"></i>
+            <div>Petsitter</div>
+        </div>
+        <div class="m-1 col-lg-1 col-md-2 text-center {{ownerClass}} user-checkbox" data-usertype="owner">
+            <i class="fas fa-dog"></i>
+            <div>Owner</div>
+        </div>
+        <p class="ml-1 mb-0">à</p>
+        <div class="col-3 col-md-4">
+            <input class="text-dark" id="zipcode" placeholder="Adresse"></input>
+        </div>
+        <p class="mb-0">sur</p>
+        <div class="d-flex align-items-center col-lg-2 col-md-3">
+            <input class="form-control" id="radius" type="number">
+            <p class="pl-1 mb-0">Km</p>
+        </div>
+        <input id="search-latitude" name="search[latitude]" type="hidden" value="">
+        <input id="search-longitude" name="search[longitude]" type="hidden" value="">
+        <button class="btn btn-link " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
+            <i class="text-white fas fa-search"></i>
+        </button>
+    </div>
+</nav>

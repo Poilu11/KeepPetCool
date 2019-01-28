@@ -13,6 +13,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i|ZCOOL+KuaiLe" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     {% endblock %}
@@ -21,8 +22,8 @@
 <body>
     <header class="bg-secondary p-5 mt-5 ">
         <div>
-            <a class="text-decoration-none " href="{{ path('home_page') }}"><h1 class=" text-center text-white">KeepPetCool</a>
-                <img alt="" class="" src="images/2emejet.png " style="width:10%;"></h1>
+            <a class="text-decoration-none text-white" href="{{ path('home_page') }}"><h1 class=" text-center ">KeepPetCool
+                <img alt="" class="" src="{{ asset('images/2emejet.png') }}" style="width:10%;"></h1></a>
             <p class="text-center text-white">
                 <i>Vos PetSitters près de chez vous</i>
             </p>

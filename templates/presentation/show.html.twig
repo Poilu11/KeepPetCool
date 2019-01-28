@@ -4,86 +4,161 @@
 
 {% block body %}
 
-    <h2>{{ presentation.title }}
-            {# Informations sur note et prix uniquement si Petsitter #}
-            {% if presentation.user.type == 'petsitter' %}
-            - <i class="fas fa-star"></i> Note : {{ note }}/5 - Prix/heure : {{ presentation.price }}
-            {% endif %}
-    </h2>
-    {% if not presentation.isActive %}
-        <p style="color: red;">Présentation actuellement bloquée</p>
-    {% endif %}
-    {% if is_granted('ROLE_MODO') %}
-    <a href="{{ path('presentation_disable', {'id': presentation.id}) }}"><i class="fas fa-times" style="color: red;"></i> Bloquer/Débloquer cette présentation</a>
-    {% endif %}
-    
-    <h3><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}" style="width: 70px; height:100px;"> Présentation de {{ presentation.user.firstname }} {{ presentation.user.lastname }}</h3>
+{% if is_granted('ROLE_MODO') %}
+<div class=" d-flex justify-content-end">
+    <button class="m-3 btn btn-danger">
+        <a class="text-white" href="{{ path('presentation_disable', {'id': presentation.id}) }}"><i class="text-white fas fa-times"
+                style="color: red;"></i>
+            Bloquer/Débloquer cette présentation</a></button>
+</div>
+{% endif %}
 
-    {# Affichage des espèces et services proposés
-     uniquement si le user de la présentation est un petsitter #}
-    {% if presentation.user.type == 'petsitter' %}
-        <p>Animaux pouvant être gardés : 
-        {% for species in presentation.species %}
-            {{ species.name }}
-        {% else %}
-        NC
-        {% endfor %}
-        </p>
-        <p>Prestations proposées : 
-        {% for service in presentation.services %}
-            {{ service.name }}
-        {% else %}
-        NC
-        {% endfor %}
-        </p>
+<div class="bg-light">
+
+    {% if not presentation.isActive %}
+    <p style="color: red;">Présentation actuellement bloquée</p>
     {% endif %}
+
+
+    <div class="d-flex justify-content-center">
+        <div class="m-2">
+            <h2 class="mb-3"><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}"
+                    alt="" class="mr-3  img-thumbnail float-left" style="width:10%;border-radius: 50%;">
+                {{ presentation.title }}</h2>
+
+            <p class="mb-1">{% if presentation.user.type == 'petsitter' %}
+                {{ presentation.user.firstname}} {{ presentation.user.lastname}}
+                {% if note != 'NC' %}
+                {% for i in 1..note|round %}
+                <i class="fas fa-star"></i>
+                {% endfor %}
+
+                {% if 5-note|round != 0 %}
+                {% for i in 0..5-note|round-1 %}
+                <i class="far fa-star"></i>
+                {% endfor %}
+                {% endif %}
+                {% endif %}
+
+                - (nombre de commentaire)
+                {% endif %}
+            </p>
+            <p class="mb-1">{{presentation.user.city }}
+                ({{presentation.user.zipCode }})</p>
+
+            {# Affichage des espèces et services proposés
+            uniquement si le user de la présentation est un petsitter #}
+            {% if presentation.user.type == 'petsitter' %}
+            <p>Animaux pouvant être gardés :
+                {% for species in presentation.species %}
+                {{ species.name }}
+                {% else %}
+                NC
+                {% endfor %}
+            </p>
+            <p>Prestations proposées :
+                    {% for service in presentation.services %}
+                    {{ service.name }}
+                    {% else %}
+                    NC
+                    {% endfor %}
+                </p>
+                {% endif %}
+
+        </div>
+
+        <div class="row">
+            {% for service in presentation.services %}
+            {% if service.name == "Gardiennage à domicile" %}
+            <div class="m-2 text-center">
+                <i class="h2 fas fa-home"></i><i class="fas fa-sun"></i>
+                <p class="mb-1">Gardiennage jour</p>
+                <p>prix : 15€</p>
+            </div>
+            <div class="m-2 text-center">
+                <i class="h2 fas fa-home"></i>
+                <i class="fas fa-moon"></i>
+                <p class="mb-1">Gardiennage nuit</p>
+                <p>prix : 15€</p>
+            </div>
+            {% else %}
+            {% endif %}
+            {% if service.name == "Promenade" %}
+            <div class="m-2 text-center">
+                <i class="h2 fas fa-walking"></i>
+                <p class="mb-1">Promenade</p>
+                <p>prix : 15€</p>
+            </div>
+            {% else %}
+            {% endif %}
+            {% if service.name == "Transport" %}
+            <div class="m-2 text-center">
+                <i class="h2 fas fa-car"></i>
+                <p class="mb-1">Transport</p>
+                <p>prix : 15€</p>
+            </div>
+            {% else %}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
     
-    {# Communication des coordonnées uniquement si connecté #}
+</div>
+{# Communication des coordonnées uniquement si connecté #}
+
+<div class="container">
+    <h4>A propos de {{ presentation.user.firstname}}</h4>
+    <p>{{ presentation.body|nl2br }}</p>
+
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Coordonnées :</p>
     <ul>
-        <li>Email : {{ presentation.user.email }}</li>
-        <li>Téléphone fixe : {{ presentation.user.phoneNumber }}</li>
+        {# Bouton de messagerie interne #}
+        <li><a href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}" class="btn btn-primary">Envoyer un message</a></li>
         <li>Téléphone portable : {{ presentation.user.cellNumber }}</li>
     </ul>
     {% else %}
     <p style="color: red;">Connectez-vous pour accéder aux coordonnés de cette présentation.</p>
     {% endif %}
 
-    <p>{{ presentation.body|nl2br }}</p>
+
 
     {# Affichage des commentaires uniquement si le user est un petsitter #}
     {% if presentation.user.type == 'petsitter' %}
     <div class="card">
-            <h5 class="card-header">Commentaires</h5>
-            {% for comment in comments %}
-            <div class="card-body">
-                {% if not comment.isActive %}
-                    <p style="color: red;">Commentaire actuellement bloqué</p>
-                {% endif %}
-              <h5 class="card-title">Commentaire écrit le {{ comment.createdAt|date("d/m/Y") }}</h5>
-              <p class="card-text">{{ comment.body|nl2br }}</p>
-              <p class="blockquote-footer">Auteur: {{ comment.owner.username }}</p>
-              {% if is_granted('ROLE_MODO') %}
-              <a href="{{ path('comment_disable', {'id': comment.id}) }}"><i class="fas fa-times" style="color: red;"></i> Bloquer/Débloquer ce commentaire</a>
-              {% endif %}
-            </div>
-            {% else %}
-            <div class="card-body">
-                <p>Aucun commentaire pour le moment</p>
-            </div>
-            {% endfor %}
+        <h5 class="card-header">Commentaires</h5>
+        {% for comment in comments %}
+        <div class="card-body">
+            {% if not comment.isActive %}
+            <p style="color: red;">Commentaire actuellement bloqué</p>
+            {% endif %}
+            <h5 class="card-title">Commentaire écrit le {{ comment.createdAt|date("d/m/Y") }}</h5>
+            <p class="card-text">{{ comment.body|nl2br }}</p>
+            <p class="blockquote-footer">Auteur: {{ comment.owner.username }}</p>
+            {% if is_granted('ROLE_MODO') %}
+            <a href="{{ path('comment_disable', {'id': comment.id}) }}"><i class="fas fa-times" style="color: red;"></i>
+                Bloquer/Débloquer ce commentaire</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="card-body">
+            <p>Aucun commentaire pour le moment</p>
+        </div>
+        {% endfor %}
     </div>
     {% endif %}
+
+
 
     {# Si utilisateur connecté
     et présentation petsitter et utilisateur connecté est un owner #}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        {% if presentation.user.type == 'petsitter' and app.user.type == 'owner' %}
+    {% if presentation.user.type == 'petsitter' and app.user.type == 'owner' %}
 
-            {{ include('comment/_form.html.twig') }}
+    {{ include('comment/_form.html.twig') }}
 
-        {% endif %}
     {% endif %}
-
+    {% endif %}
+</div>
 {% endblock %}

@@ -129,12 +129,27 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="owner")
      */
-    private $comments;
+    private $commentsOwner;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="petsitter")
+     */
+    private $commentsPetsitter;
 
     /**
      * @ORM\Column(type="string", length=32)
      */
     private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="userFrom")
+     */
+    private $messagesFrom;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="userTo")
+     */
+    private $messagesTo;
 
     public function __construct()
     {
@@ -142,7 +157,12 @@ class User implements UserInterface, \Serializable
         $this->isValidated = false;
         $this->createdAt = new DateTime();
 
-        $this->comments = new ArrayCollection();
+        // $this->comments = new ArrayCollection();
+        // $this->messages = new ArrayCollection();
+        $this->messagesFrom = new ArrayCollection();
+        $this->messagesTo = new ArrayCollection();
+        $this->commentsOwner = new ArrayCollection();
+        $this->commentsPetsitter = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -430,37 +450,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getOwner() === $this) {
-                $comment->setOwner(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function __toString(){
         return $this->username;
     }
@@ -476,4 +465,129 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessagesFrom(): Collection
+    {
+        return $this->messagesFrom;
+    }
+
+    public function addMessagesFrom(Message $messagesFrom): self
+    {
+        if (!$this->messagesFrom->contains($messagesFrom)) {
+            $this->messagesFrom[] = $messagesFrom;
+            $messagesFrom->setUserFrom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesFrom(Message $messagesFrom): self
+    {
+        if ($this->messagesFrom->contains($messagesFrom)) {
+            $this->messagesFrom->removeElement($messagesFrom);
+            // set the owning side to null (unless already changed)
+            if ($messagesFrom->getUserFrom() === $this) {
+                $messagesFrom->setUserFrom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessagesTo(): Collection
+    {
+        return $this->messagesTo;
+    }
+
+    public function addMessagesTo(Message $messagesTo): self
+    {
+        if (!$this->messagesTo->contains($messagesTo)) {
+            $this->messagesTo[] = $messagesTo;
+            $messagesTo->setUserTo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessagesTo(Message $messagesTo): self
+    {
+        if ($this->messagesTo->contains($messagesTo)) {
+            $this->messagesTo->removeElement($messagesTo);
+            // set the owning side to null (unless already changed)
+            if ($messagesTo->getUserTo() === $this) {
+                $messagesTo->setUserTo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getCommentsOwner(): Collection
+    {
+        return $this->commentsOwner;
+    }
+
+    public function addCommentsOwner(Comment $commentsOwner): self
+    {
+        if (!$this->commentsOwner->contains($commentsOwner)) {
+            $this->commentsOwner[] = $commentsOwner;
+            $commentsOwner->setCommentsOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentsOwner(Comment $commentsOwner): self
+    {
+        if ($this->commentsOwner->contains($commentsOwner)) {
+            $this->commentsOwner->removeElement($commentsOwner);
+            // set the owning side to null (unless already changed)
+            if ($commentsOwner->getCommentsOwner() === $this) {
+                $commentsOwner->setCommentsOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getCommentsPetsitter(): Collection
+    {
+        return $this->commentsPetsitter;
+    }
+
+    public function addCommentsPetsitter(Comment $commentsPetsitter): self
+    {
+        if (!$this->commentsPetsitter->contains($commentsPetsitter)) {
+            $this->commentsPetsitter[] = $commentsPetsitter;
+            $commentsPetsitter->setCommentsPetsitter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentsPetsitter(Comment $commentsPetsitter): self
+    {
+        if ($this->commentsPetsitter->contains($commentsPetsitter)) {
+            $this->commentsPetsitter->removeElement($commentsPetsitter);
+            // set the owning side to null (unless already changed)
+            if ($commentsPetsitter->getCommentsPetsitter() === $this) {
+                $commentsPetsitter->setCommentsPetsitter(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

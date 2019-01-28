@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un nouveau message{% endblock %}
+
+{% block body %}
+<h2>Envoi d'un message</h2>
+
+<form action="{{ path('message_new') }}" method="POST" style="width: 50%; margin: auto;">
+    <div class="form-group">
+    <label for="userFrom">De : {{ userFrom.username }}</label>
+    <input type="hidden" value="{{ userFrom.id }}" name="userFrom" id="userFrom">
+    </div>
+    <div class="form-group">
+    <label for="userTo">A : {{ userTo.username }}</label>
+    <input type="hidden" value="{{ userTo.id }}" name="userTo" id="userTo">
+    </div>
+        <div class="form-group">
+          <label for="messageObject">Objet de votre message</label>
+          <input type="text" class="form-control" id="messageObject" name="messageObject" placeholder="Objet de votre message">
+        </div>
+        <div class="form-group">
+          <label for="messageBody">Votre message</label>
+          <textarea class="form-control" id="messageBody" name="messageBody" rows="7"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+</form>
+    
+
+{% endblock %}

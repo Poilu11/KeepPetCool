@@ -470,4 +470,38 @@ class UserController extends AbstractController
         return $this->redirectToRoute('dashboard');
     }
 
+    /**
+     * @Route("/user/validate/{id}", name="user_validate", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function validate(User $user, EntityManagerInterface $em)
+    {
+        // On vérifie que l'utilisateur soit connecté
+        $this->denyAccessUnlessGranted('ROLE_MODO');
+
+        if(!$user->getIsValidated())
+        {
+            $user->setIsValidated(true);
+
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Validation de l\'utilisateur ' . $user->getUsername() . ' validée avec succès'
+            );
+        }
+        else
+        {
+            $user->setIsValidated(false);
+
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Dévalidation de l\'utilisateur ' . $user->getUsername() . ' validée avec succès'
+            );
+        }
+
+        return $this->redirectToRoute('status');
+    }
+
 }

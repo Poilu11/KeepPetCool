@@ -1,5 +1,5 @@
 body {
-    font-family:"Space Mono";
+    font-family:"Roboto";
     background-color: whitesmoke;
 }
 /* 
@@ -16,8 +16,11 @@ body {
     align-items : center;
     color: whitesmoke;
 } */
-
+a:hover{
+    text-decoration: none;
+}
  .criteria-active{
+    
     border: 1px solid;
     border-radius: 5px;
     padding: 0px;
