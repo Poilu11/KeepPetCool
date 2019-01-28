@@ -45,6 +45,7 @@ security:
         - { path: ^/species, roles: ROLE_ADMIN }
         - { path: ^/service, roles: ROLE_ADMIN }
         - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/message, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

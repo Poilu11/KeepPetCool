@@ -136,6 +136,11 @@ class User implements UserInterface, \Serializable
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="userFrom")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -143,6 +148,7 @@ class User implements UserInterface, \Serializable
         $this->createdAt = new DateTime();
 
         $this->comments = new ArrayCollection();
+        $this->messages = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -473,6 +479,37 @@ class User implements UserInterface, \Serializable
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUserFrom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getUserFrom() === $this) {
+                $message->setUserFrom(null);
+            }
+        }
 
         return $this;
     }
