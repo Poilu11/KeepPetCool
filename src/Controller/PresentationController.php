@@ -128,7 +128,7 @@ class PresentationController extends AbstractController
      */
     public function disable(Presentation $presentation, Request $request, EntityManagerInterface $em)
     {
-        // On vérifie que l'utilisateur soit admin ou modo
+        // On vérifie que l'utilisateur soit admin ou modo ou le titulaire de sa fiche de présentation
        $this->denyAccessUnlessGranted(['IS_AUTHENTICATED_FULLY']);
 
        $currentUser = $this->getUser();

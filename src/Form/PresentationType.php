@@ -24,6 +24,7 @@ class PresentationType extends AbstractType
     {
         // TRES IMPORTANT
         // Permet d'accéder aux informations du User connecté
+        // https://symfony.com/doc/current/security/entity_provider.html#using-a-custom-query-to-load-the-user
         $this->security = $security;
     }
     
