@@ -16,11 +16,19 @@
         </div>
         <div class="col-4">
           <label for="roleuser{{ user.id }}">{{ user.role.name }} - 
+            
             {% if user.isActive %}
-              Actif
+              Actif - 
             {% else %}
-              <span style="color: red;">Désactivé</span>
+              <span style="color: red;">Désactivé</span> - 
             {% endif %}
+            
+            {% if user.isValidated %}
+              <span style="color: blue;">Validé</span>
+            {% else %}
+              Non validé
+            {% endif %}
+            
           </label>
           {# <input type="text" class="form-control" placeholder="State"> #}
         </div>
@@ -37,6 +45,7 @@
     </div>
     <div class="col-2">
       <a href="{{ path('profile_disable', {'id': user.id}) }}" style="color: red;"><i class="fas fa-times"></i> Dé/Bloquer</a>
+      <a href="{{ path('user_validate', {'id': user.id}) }}"><i class="fas fa-trophy"></i> Dé/Valider</a>
     </div>
   </div>
 </form>
