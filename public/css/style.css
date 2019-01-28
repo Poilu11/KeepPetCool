@@ -54,7 +54,7 @@ ap-input {
 
 
 /* CSS barre SEARCH */
-
+/*
 #input-styling-address input {
   display: inline-block;
   border: 1px solid #d9d9d9;
@@ -91,3 +91,12 @@ ap-input {
 #input-styling-address input:hover { border-color: silver; }
 #input-styling-address input::placeholder { color: #aaaaaa; }
 #input-styling-address .ap-nostyle-suggestion { border-bottom: 1px solid #efefef; }
+*/
+
+.ap-with-places{
+    color: black;
+}
+
+.ap-footer{
+    display: none;
+}

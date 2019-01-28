@@ -105,7 +105,9 @@
             }
             }
         }).configure({
-            zipcodes: ['fr']
+            zipcodes: ['fr'],
+            aroundLatLngViaIP: true,
+            hitsPerPage: 10,
         });
 
         placesAutocomplete.on('change', function resultSelected(e) {

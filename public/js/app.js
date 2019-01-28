@@ -47,23 +47,20 @@ var searchButton =
 
         var relativeLink = target.dataset.route;
 
-        // Le relative link dispose de deux tirets à la fin, ceux-ci gène pour concaténer les paramètres de la routes search. Je les retire grâce à substring.
-        var length = relativeLink.length;
-        relativeLink = relativeLink.substring(0, length-3);
-
-        console.log(relativeLink);
-
         var userType = document.querySelector('.criteria-active').dataset.usertype;
 
-        var city = document.querySelector('#zipcode').value.replace('-','_');
+        var adress = document.querySelector('#zipcode').value.replace(/ /g, '+');
 
         var radius = document.querySelector('#radius').value;
 
         var latitude = document.querySelector('#search-latitude').value;
-
         var longitude = document.querySelector('#search-longitude').value;
 
-        relativeLink += userType+'-'+city+'-'+radius+'-'+latitude+'+'+longitude;
+        relativeLink = relativeLink.replace('userType', userType);
+        relativeLink = relativeLink.replace('adress', adress);
+        relativeLink = relativeLink.replace('radius', radius);
+        relativeLink = relativeLink.replace('latAndLong', latitude+'_'+longitude);
+
 
         console.log(relativeLink);
         window.location.href = relativeLink;
