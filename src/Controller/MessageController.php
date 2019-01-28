@@ -120,7 +120,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/conversation/{user1Id}/{user2Id}", name="conversation", methods={"GET", "POST"}, requirements={"user1"="\d+", "user2"="\d+"})
      */
-    public function conversation($user1Id, $user2Id, UserRepository $userRepository, MessageRepository $messageRepository)
+    public function conversation($user1Id, $user2Id, UserRepository $userRepository, MessageRepository $messageRepository, EntityManagerInterface $em)
     {
 
         $user1Id = intval($user1Id);
@@ -150,6 +150,15 @@ class MessageController extends AbstractController
         // Requête custom pour rechercher l'ensemble des messages
         // associés à la conversation
         $messages = $messageRepository->conversationBetween($user1, $user2);
+
+        // Tous les messages de la conversation sont settés
+        // comme étant lus
+        foreach($messages as $message)
+        {
+            $message->setReaden(true);
+        }
+
+        $em->flush();
 
         return $this->render('message/conversation.html.twig', [
             'user1' => $user1,
