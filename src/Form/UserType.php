@@ -206,7 +206,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('cellNumber', TextType::class, [
-                'label' => 'Numéro téléphone mobile',
+                'label' => 'Numéro téléphone mobile (visible sur le site)',
                 'required' => false,
                 'attr' => [
                     'placeholder' => '07-20-30-40-50'

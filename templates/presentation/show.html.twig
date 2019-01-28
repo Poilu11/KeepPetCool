@@ -42,8 +42,8 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Coordonnées :</p>
     <ul>
-        <li>Email : {{ presentation.user.email }}</li>
-        <li>Téléphone fixe : {{ presentation.user.phoneNumber }}</li>
+        {# Bouton de messagerie interne #}
+        <li><a href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}" class="btn btn-primary">Envoyer un message</a></li>
         <li>Téléphone portable : {{ presentation.user.cellNumber }}</li>
     </ul>
     {% else %}

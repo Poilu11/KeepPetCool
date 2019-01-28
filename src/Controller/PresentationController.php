@@ -265,6 +265,7 @@ class PresentationController extends AbstractController
         return $this->render('presentation/show.html.twig', [
             'presentation' => $presentation,
             'comments' => $comments,
+            'nbComments' => count($comments),
             'note' => $noteResolver->getUserNoteFromPres($presentation)
         ]);
     }
