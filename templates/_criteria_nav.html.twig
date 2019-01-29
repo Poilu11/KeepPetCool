@@ -60,6 +60,7 @@
         <input id="search-latitude" name="search[latitude]" type="hidden" value="">
         <input id="search-longitude" name="search[longitude]" type="hidden" value="">
         <button class="btn btn-link " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
+        <!-- je remplis chaque champ de la route avec un placeholder afin de faciliter le traitement en js -->
             <i class="text-white fas fa-search"></i>
         </button>
     </div>

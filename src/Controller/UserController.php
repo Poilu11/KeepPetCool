@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Util\CoordResolver;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
@@ -54,7 +55,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET", "POST"})
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $encoder)
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv)
     {
         // Si connecté,
         // On redirige sur la page dashboard
@@ -109,11 +110,30 @@ class UserController extends AbstractController
             $defaultRole = $this->getDoctrine()->getRepository(Role::class)->findOneBy(['code' => 'ROLE_USER']);
             $user->setRole($defaultRole);
 
-            // Si longitude ou latitude vide(s)
-            if(empty($user->getLongitude()) || empty($user->getLatitude()))
+            // preg_match renvoit 1 si il y a correspondance entre la regex et la valeur de test. Ainsi la multiplication du retour des deux test sera forcément égal à 1 si les deux tests sont ok. Réciproquement, si l'une des valeur ne correspond pas à la regex, alors la multiplication des deux tests sera différente de 1.
+            $AreCoordValid = preg_match('/(\d+\.?\d*)/', $user->getLongitude());
+            $AreCoordValid *= preg_match('/(\d+\.?\d*)/', $user->getLatitude());
+
+            if($AreCoordValid !== 1)
             {
-                $user->setLongitude(-147.349);
-                $user->setLatitude(64.751);
+                $adress = str_replace(' ', '+', $user->getAddress());
+                $adress .= '+'.str_replace(' ', '+', $user->getZipCode());
+                $adress .= '+'.str_replace(' ', '+', $user->getCity());
+
+                $coords = $coordResolv->getCoords($adress);
+
+                if($coords[0] === 'NC' || $coords[1] === 'NC')
+                {
+                    $this->addFlash('danger', 'Impossible de géolocaliser votre adresse. Celle-ci étant nécessaire à l\'utilisation de nos service, nous vous conseillons d\'éditer vos informations personnelles avec une adresse valide.');
+
+                    $user->setLongitude(-147.349);
+                    $user->setLatitude(64.751);
+                }
+                else
+                {
+                    $user->setLatitude(floatval($coords[0]));
+                    $user->setLongitude(floatval($coords[1]));
+                }
             }
 
             $em = $this->getDoctrine()->getManager();
@@ -137,14 +157,18 @@ class UserController extends AbstractController
     /**
      * @Route("/profile/{id}/edit", name="profile_edit", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function edit($id, User $user, Request $request, UserPasswordEncoderInterface $encoder)
+    public function edit($id, User $user, Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // Je récupere les informations de l'user connecté
         $currentUser = $this->getUser();
-
+        $oldAdress = $currentUser->getAddress();
+        $oldZipCode = $currentUser->getZipCode();
+        $oldCity = $currentUser->getCity();
+        $oldLatitude = $currentUser->getLatitude();
+        $oldLongitude = $currentUser->getLongitude();
         // Si les données de l'user connecté sont différentes des données de l'user qu'on cherche à éditer, on éjecte et on redirige vers dashboard
         if($currentUser->getId() !== $user->getId())
         {
@@ -248,16 +272,43 @@ class UserController extends AbstractController
                     // fonctionner de manière optimale sans le Blank()
                     return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
                 }
-                
             }
             
             $user->setPassword($encodedPassword);
 
-            // Si longitude ou latitude vide(s)
-            if(is_null($user->getLongitude()) || is_null($user->getLatitude()))
-            {
-                $user->setLongitude(-147.349);
-                $user->setLatitude(64.751);
+            $isAdressModified = false;
+            $isAdressModified = ($oldAdress != $user->getAddress()) ? true : $isAdressModified;
+            $isAdressModified = ($oldZipCode != $user->getZipCode()) ? true : $isAdressModified;
+            $isAdressModified = ($oldCity != $user->getCity()) ? true : $isAdressModified;
+
+            $areCoordModified = false;
+            $areCoordModified = ($oldLatitude != $user->getLatitude()) ? true : $areCoordModified;
+            $areCoordModified = ($oldLongitude != $user->getLongitude()) ? true : $areCoordModified;
+
+            // preg_match renvoit 1 si il y a correspondance entre la regex et la valeur de test. Ainsi la multiplication du retour des deux test sera forcément égal à 1 si les deux tests sont ok. Réciproquement, si l'une des valeur ne correspond pas à la regex, alors la multiplication des deux tests sera différente de 1.
+            $areCoordValid = preg_match('/(\d+\.?\d*)/', $user->getLongitude());
+            $areCoordValid *= preg_match('/(\d+\.?\d*)/', $user->getLatitude());
+
+            if( ($isAdressModified && !$areCoordModified) || $areCoordValid !== 1)
+            {   
+                $adress = str_replace(' ', '+', $user->getAddress());
+                $adress .= '+'.str_replace(' ', '+', $user->getZipCode());
+                $adress .= '+'.str_replace(' ', '+', $user->getCity());
+
+                $coords = $coordResolv->getCoords($adress);
+
+                if($coords[0] === 'NC' || $coords[1] === 'NC')
+                {
+                    $this->addFlash('danger', 'Impossible de géolocaliser votre adresse. Celle-ci étant nécessaire à l\'utilisation de nos service, nous vous conseillons d\'éditer vos informations personnelles avec une adresse valide.');
+
+                    $user->setLongitude(-147.349);
+                    $user->setLatitude(64.751);
+                }
+                else
+                {
+                    $user->setLatitude(floatval($coords[0]));
+                    $user->setLongitude(floatval($coords[1]));
+                }
             }
 
             $this->getDoctrine()->getManager()->flush();

@@ -16,6 +16,7 @@ class CoordResolver{
     public function getCoords($adress)
     {
         $request = '&q='.$adress.'&countrycodes=fr&format=json';
+        // Le deuxième paramètre sert à transformer en tableau associatif.
         $responses = json_decode($this->getApiResponse($request), true);
 
         

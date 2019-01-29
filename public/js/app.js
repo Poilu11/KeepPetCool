@@ -4,6 +4,7 @@ var userCheckboxes =
 
     init: function()
     {
+        // Je recupèremes deux checkbox afin de leur appliquer un listener
         userCheckboxes.checkboxes = document.querySelectorAll(".user-checkbox");
 
         for(var checkbox of userCheckboxes.checkboxes)
@@ -17,6 +18,7 @@ var userCheckboxes =
         var target = e.currentTarget;
         var otherCheckbox = null;
 
+        // Je recupère l'autre checkbox afin de la gerder en référence.
         for(var checkbox of userCheckboxes.checkboxes)
         {
             if(checkbox != target)
@@ -56,13 +58,12 @@ var searchButton =
         var latitude = document.querySelector('#search-latitude').value;
         var longitude = document.querySelector('#search-longitude').value;
 
+        // J'utilise les placeholder dans ma route afin d'insérer des valeurs dans ma route.
         relativeLink = relativeLink.replace('userType', userType);
         relativeLink = relativeLink.replace('adress', adress);
         relativeLink = relativeLink.replace('radius', radius);
         relativeLink = relativeLink.replace('latAndLong', latitude+'_'+longitude);
 
-
-        console.log(relativeLink);
         window.location.href = relativeLink;
     },
 

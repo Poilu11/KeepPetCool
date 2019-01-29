@@ -94,13 +94,16 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/search/{userType}|{adress}|{radius}|{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "adress"="([\w\+\-\']*)|(adress)", "radius"="[0-9]*|(radius)", "latAndLong" = "(\d*\.?\d*)_(\d*\.?\d*)|(latAndLong)"})
+     * @Route("/search/{userType}|{adress}|{radius}|{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "adress"="([\w\+\-\',]*)|(adress)", "radius"="[0-9]*|(radius)", "latAndLong" = "(\d*\.?\d*)_(\d*\.?\d*)|(latAndLong)"})
      */
     public function search($userType, $adress, $radius, $latAndLong, UserRepository $userRepo, PresentationRepository $presRepo, NoteResolver $noteResolv, CoordResolver $coordResolv)
     {
-
-        
+        if (!$adress) {
+            throw $this->createNotFoundException('Adresse non trouvée');
+        }
         // Je check si les informations de la search bar sont vides, si c'est la cas je rajoute des flash messages et je redirige vers la home.
+        
+
         if(empty($userType) || $adress==='' || $radius==='')
         {
             if(empty($userType))
@@ -123,6 +126,7 @@ class DefaultController extends AbstractController
 
 
         // Je vérifie que les latitudes et longitudes sorties par la route sont bien conformes.
+        // preg_match retourne 1 si ok, 0 si pas ok, false si error.
         if(preg_match('/(\d+\.?\d*)_(\d+\.?\d*)/', $latAndLong) !== 1)
         {
             //Si les latitudes et longitudes ne sont pas conformes, alors que récupère les latitude et longitude sur locationiq.
@@ -143,7 +147,7 @@ class DefaultController extends AbstractController
         }
 
 
-        // On récupère les présentations des users alentours.
+        // On récupère les présentations des users alentours. Ici s'effectue le calcul de la distance.
         $users = $userRepo->findUserNear($userType, $coords[0], $coords[1], $radius);
         $presentations = [];
         foreach($users as $user)

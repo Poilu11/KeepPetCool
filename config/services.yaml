@@ -35,7 +35,7 @@ services:
         arguments:
             $toLower: '%slugger_to_lower%'
     
-    # valeur par defaut si type-hint utilisé dans une fonction (controller) ou un constructeur
+    # valeur par defaut si type-hint utilisé dans une fonction (controller) ou un constructeur (nécessaire)
     App\Util\Slugger: '@petsitting_service.slugger'
 
 
