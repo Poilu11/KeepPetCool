@@ -5,8 +5,6 @@ namespace App\DataFixtures\Faker;
 class SpeciesProvider extends \Faker\Provider\Base
 {
     private $species = [
-        'Chien',
-        'Chat',
         'Poisson',
         'Oiseau',
         'Serpent',
