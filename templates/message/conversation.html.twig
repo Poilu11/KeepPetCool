@@ -3,14 +3,19 @@
 {% block title %}Conversation{% endblock %}
 
 {% block body %}
+<div class="container">
 
-<div style="width: 50%; margin: auto;">
-<h2>Conversation {{ user1.username }} / {{ user2.username }}</h2>
-<p><a href="{{ path('messenging') }}">Retour messagerie</a></p>
-<h3>Nouveau message</h3>
-</div>
+<h2 class="text-center">Conversation {{ user1.username }} / {{ user2.username }}</h2>
 
-<form action="{{ path('message_new') }}" method="POST" style="width: 50%; margin: auto; margin-bottom: 1rem;">
+<button class="btn btn-dark"><a class="text-white"href="{{ path('messenging') }}">Retour messagerie</a></button>
+
+
+<div class="card mt-4 mb-4 mr-auto ml-auto ">
+  <div class="card-header bg-dark">
+      <h3 class="text-white">Nouveau message</h3>
+  </div>
+    <div class="card-body">
+<form action="{{ path('message_new') }}" method="POST" >
   <div class="form-group">
   <label for="userFrom" class="mb-0">De : {{ app.user.username }}</label>
   <input type="hidden" value="{{ app.user.id }}" name="userFrom" id="userFrom">
@@ -45,9 +50,11 @@
       </div>
       <button class="btn btn-primary" type="submit">Envoyer</button>
 </form>
+</div>
+</div>
 
 {% for message in messages %}
-<div class="card" style="width: 50%; margin: auto;">
+<div class="card" >
   <div class="card-body">
     <h5 class="card-title">De : {{ message.userFrom.username }}</h5>
     <h5 class="card-title">A : {{ message.userTo.username }}</h5>
@@ -58,4 +65,5 @@
 </div>
 {% endfor %}
 <p style="width: 50%; margin: auto;" class="my-2"><a href="{{ path('messenging') }}">Retour messagerie</a></p>
+</div>
 {% endblock %}

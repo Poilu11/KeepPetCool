@@ -1,6 +1,6 @@
 <nav class="bg-dark border border-dark criteria-nav text-white fixed-top row justify-content-between m-0">
     <div class="row">
-        <a class="text-decoration-none nav-link" href="{{ path('home_page') }}"><img class="m-1 mr-3 border-right " src="{{ asset('images/logo.png') }}"
+        <a class="pb-0  text-decoration-none nav-link" href="{{ path('home_page') }}"><img class="mr-3 border-right " src="{{ asset('images/logonavbar2.png') }}"
                 alt=""></a>
         <nav class="row d-flex align-items-center">
             {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -55,7 +55,7 @@
         <p class="mb-0">sur</p>
         <div class="d-flex align-items-center col-lg-2 col-md-3">
             <input class="form-control" id="radius" type="number">
-            <p class="pl-1 mb-0">Km</p>
+            <p id="km" class="pl-1 mb-0">Km</p>
         </div>
         <input id="search-latitude" name="search[latitude]" type="hidden" value="">
         <input id="search-longitude" name="search[longitude]" type="hidden" value="">

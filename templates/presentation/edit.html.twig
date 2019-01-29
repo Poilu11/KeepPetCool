@@ -3,7 +3,11 @@
 {% block title %}Edition fiche de présentation{% endblock %}
 
 {% block body %}
-<h2>Edition fiche de présentation</h2>
+<div class="card mt-4 mb-4 mr-auto ml-auto col-6 p-0  ">
+        <div class="card-header bg-dark">
+          <h2 class="text-center text-white">Edition fiche de présentation</h2>
+        </div>
+      <div class="card-body">
 {% if presentation.isActive %}
 <p style="color: blue;">Publication actuellement activée : <a href="{{ path('presentation_disable', {'id': presentation.id}) }}">Désactiver</a></p>
 {% else %}
@@ -11,4 +15,7 @@
 {% endif %}
 
 {{ include('presentation/_form.html.twig') }}
+
+</div>
+</div>
 {% endblock %}

@@ -55,6 +55,9 @@ ap-input {
     color:dark;
 }
 
+#presentationBody{
+    word-break: break-all;
+  }
 
 
 

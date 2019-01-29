@@ -1,10 +1,10 @@
 <div class="card mr-auto ml-auto col-8 m-2">
-    <div class="card-body d-flex flex-row ">
+    <div class="card-body d-flex align-items-start">
 
-        <div class="card-header col-3 m-1 border bg-secondary rounded">
+        <div class="card-header col-3 m-1 border bg-secondary overflow-hidden" style="border-radius:40%;">
             <div class="text-center ">
-                <img class="rounded" style="width:50%;" src="{{ asset('avatar/' ~ presentation.user.avatar) }}" alt="">
-                <h5 class="d-block card-title text-white mt-5">{{ presentation.user.firstname}} {{ presentation.user.lastname}}</h5>
+                <img class="" style="width:50%;" src="{{ asset('avatar/' ~ presentation.user.avatar) }}" alt="">
+                <h5 class="d-block card-title text-white m-2">{{ presentation.user.firstname}} {{ presentation.user.lastname}}</h5>
                 {% set note = notes[presentation.user.id]%}
 
             {% if note != 'NC' %}
@@ -25,7 +25,7 @@
         <div class="col-8 m-auto">
             {% if presentation.user.type == 'petsitter' %}
             <div class="m-2 d-flex justify-content-end">
-            <button class="btn btn-info btn-sm">Je garde vos animaux de compagnie</button>
+            <span class="p-2 badge badge-pill badge-info">Je garde vos animaux de compagnie</span>
             </div>
             {% elseif presentation.user.type == 'owner'%}
             <div class="m-2 d-flex justify-content-end">

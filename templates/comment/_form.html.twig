@@ -1,4 +1,4 @@
-<p class="mt-5" style="font-size: 1.1em; font-weight: bold;">Laisser un commentaire</p>
+<p class="h3 font-weight-bold" >Laisser un commentaire</p>
 <form action="{{ path('comment_new', {'idPetsitter': presentation.user.id, 'idOwner': app.user.id}) }}" method="POST">
     <div class="form-group">
         <label for="bodyForm">Votre avis</label>
@@ -14,5 +14,5 @@
             <option value="5" selected>5</option>
           </select>
           </div>
-          <input type="submit" value="Valider">
+          <button class="btn btn-info" type="submit" value="Valider">Valider</button>
 </form>
