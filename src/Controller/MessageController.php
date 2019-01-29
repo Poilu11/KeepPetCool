@@ -155,7 +155,12 @@ class MessageController extends AbstractController
         // comme étant lus
         foreach($messages as $message)
         {
-            $message->setReaden(true);
+            // Ne passe en lu uniquement si c'est le 
+            // destinataire du message qui le lit
+            if($currentUser === $message->getUserTo())
+            {
+                $message->setReaden(true);
+            }
         }
 
         $em->flush();
