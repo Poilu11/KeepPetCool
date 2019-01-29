@@ -156,9 +156,6 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->isValidated = false;
         $this->createdAt = new DateTime();
-
-        // $this->comments = new ArrayCollection();
-        // $this->messages = new ArrayCollection();
         $this->messagesFrom = new ArrayCollection();
         $this->messagesTo = new ArrayCollection();
         $this->commentsOwner = new ArrayCollection();
@@ -589,5 +586,4 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
 }
