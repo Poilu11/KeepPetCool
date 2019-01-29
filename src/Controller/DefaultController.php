@@ -25,7 +25,7 @@ class DefaultController extends AbstractController
 
         // Si utisateur non connecté
         // accès à toutes les présentations petsitter actives
-        $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
+        $presentations = $presentationRepository->findBy(['isActive' => true], ['createdAt' => 'DESC']);
 
         // On récupère les infos de l'utilisateur connecté (si connecté)
         $currentUser = $this->getUser();
