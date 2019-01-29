@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "632c7b7bd24179f33f84e73de24f7b2f",
+    "content-hash": "62ce983e793710d8f131312c2520bb58",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
-            "version": "v1.1.5",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/beberlei/DoctrineExtensions.git",
-                "reference": "469f65355b034b21c9c755e2d46ff2c06164567b"
+                "reference": "69eae9e613afc24c9282517bf84eb9e16b59d730"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/469f65355b034b21c9c755e2d46ff2c06164567b",
-                "reference": "469f65355b034b21c9c755e2d46ff2c06164567b",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/69eae9e613afc24c9282517bf84eb9e16b59d730",
+                "reference": "69eae9e613afc24c9282517bf84eb9e16b59d730",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2018-09-26T16:18:17+00:00"
+            "time": "2019-01-29T06:15:22+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2172,28 +2172,6 @@
                 "mailer"
             ],
             "time": "2018-09-11T07:12:52+00:00"
-        },
-        {
-            "name": "symfony/apache-pack",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/apache-pack.git",
-                "reference": "3aa5818d73ad2551281fc58a75afd9ca82622e6c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/apache-pack/zipball/3aa5818d73ad2551281fc58a75afd9ca82622e6c",
-                "reference": "3aa5818d73ad2551281fc58a75afd9ca82622e6c",
-                "shasum": ""
-            },
-            "type": "symfony-pack",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A pack for Apache support in Symfony",
-            "time": "2017-12-12T01:46:35+00:00"
         },
         {
             "name": "symfony/asset",
