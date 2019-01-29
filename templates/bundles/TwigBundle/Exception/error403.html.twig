@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home {% endblock %}
+
+{% block body %}
+<div style="width: 80%; margin: auto;">
+<h2>Accès refusé / interdit</h2>
+<p>Vous ne pouvez pas accéder à cette page. <i class="fas fa-hand-paper"></i></p>
+<p>Pour retourner à l'accueil de notre site KeepPetCool : <a href="{{ path('home_page') }}">Cliquez-ici</a> <i class="fas fa-dog"></i> <i class="fas fa-dog"></i> <i class="fas fa-dog"></i></p>
+<p style="font-style: italic;">Code Erreur : {{ status_text }} - {{ status_code }}</p>
+</div>
+{% endblock %}
+
+{# https://symfony.com/doc/current/controller/error_pages.html #}

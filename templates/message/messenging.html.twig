@@ -10,9 +10,18 @@
     <ul class="list-group mt-2 mb-5">
     {% for message in messages %}
 
-        <li class="list-group-item list-group-item-{{ cycle(['secondary', 'light'], loop.index0) }}">Envoyé le {{ message.createdAt|date("d/m/Y \\à H:i:s") }} - De {{ message.userTo.username }} à  {{ message.userFrom.username }} - Objet : {{ message.object }} <a href="{{ path('conversation', {'user1Id': message.userFrom.id, 'user2Id': message.userTo.id}) }}"><i class="fas fa-arrow-circle-right"></i></a></li>
+        <li class="list-group-item list-group-item-{{ cycle(['secondary', 'light'], loop.index0) }}">
+                {# Traitement afficaheg si message non lu #}
+                {% if not message.readen %}
+                <span style="color: red; font-weight: bold;"><i class="fas fa-info-circle"></i> new</span>
+                {% endif %}
+            Envoyé le {{ message.createdAt|date("d/m/Y \\à H:i:s") }} - De {{ message.userTo.username }} à  {{ message.userFrom.username }} - Objet : {{ message.object }} <a href="{{ path('conversation', {'user1Id': message.userFrom.id, 'user2Id': message.userTo.id}) }}"><i class="fas fa-arrow-circle-right"></i></a>
+        </li>
+
         {% else %}
+
         <li class="list-group-item list-group-item-secondary">Aucun message pour le moment.</li>
+
     {% endfor %}
     </ul>
 </div>

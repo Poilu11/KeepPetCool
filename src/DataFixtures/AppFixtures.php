@@ -156,6 +156,17 @@ class AppFixtures extends Fixture
 
         $em->persist($service5);
         
+        // Deux espèces settés par défaut
+        $species1 = new Species();
+        $species1->setName('Chien');
+
+        $em->persist($species1);
+
+        $species2 = new Species();
+        $species2->setName('Chat');
+
+        $em->persist($species2);
+        
         // On enregistre toutes les nouvelles entrées en BDD
         $em->flush();
 
