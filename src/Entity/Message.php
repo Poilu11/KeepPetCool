@@ -38,12 +38,12 @@ class Message
     private $readen;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messagesFrom")
      */
     private $userFrom;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messagesTo")
      */
     private $userTo;
 
