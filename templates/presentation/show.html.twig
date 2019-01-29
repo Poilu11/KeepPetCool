@@ -61,12 +61,12 @@
                 {% endif %}
             </p>
             <p class="mb-1">{{presentation.user.city }}
-                ({{presentation.user.zipCode }})</p>
+                ({{presentation.user.zipCode }}) / Utilisateur : {{ presentation.user.username }}</p>
 
-            <p> Prix /h : {{ presentation.price }}</p>
             {# Affichage des espèces et services proposés
             uniquement si le user de la présentation est un petsitter #}
             {% if presentation.user.type == 'petsitter' %}
+            <p> Prix /h : {{ presentation.price }}</p>
             <p>
                 {% for species in presentation.species %}
 

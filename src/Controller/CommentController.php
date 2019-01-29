@@ -220,4 +220,20 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('dashboard');
     }
+
+    /**
+     * @Route("/comment/disablelist", name="comment_disable_list", methods={"GET"})
+     */
+    public function disableListComment(CommentRepository $commentRepository)
+    {
+        // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+
+       // On récupère la liste de tous les commentaires désactivés
+       $comments = $commentRepository->findBy(['isActive' => false], ['createdAt' => 'DESC']);
+
+       return $this->render('comment/listDisableComments.html.twig', [
+            'comments' => $comments
+        ]);
+    }
 }

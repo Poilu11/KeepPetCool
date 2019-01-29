@@ -88,6 +88,24 @@
     </table>
     {% endif %}
 
+    {# si utilisateur connecté ET ayant un rôle de modo ou admin
+        (admin englobe modo) #}
+    {% if is_granted('ROLE_MODO') %}
+
+    <div class="m-3">
+        <h3 style="color: #6C757D; font-weight: bold;">Menu de modération du site</h3>
+        <ul class="list-group">
+            <a class="text-decoration-none text-dark " href="{{ path('comment_disable_list') }}">
+                <li class="list-group-item" aria-disabled="true">Liste des commentaires bloqués</li>
+            </a>
+            <a class="text-decoration-none text-dark " href="{{ path('presentation_disable_list') }}">
+                <li class="list-group-item" aria-disabled="true">Liste des présentations bloquées</li>
+            </a>
+        </ul>
+    </div>
+
+    {% endif %}
+
     {# si utilisateur connecté ET ayant un rôle d'admin #}
     {% if is_granted('IS_AUTHENTICATED_FULLY') and (app.user.role.code == 'ROLE_ADMIN') %}
 

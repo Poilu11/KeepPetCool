@@ -45,6 +45,8 @@ security:
         - { path: ^/species, roles: ROLE_ADMIN }
         - { path: ^/service, roles: ROLE_ADMIN }
         - { path: ^/user/validate, roles: ROLE_ADMIN }
+        - { path: ^/comment/disablelist, roles: ROLE_MODO }
+        - { path: ^/presentation/disablelist, roles: ROLE_MODO }
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/message, roles: ROLE_USER }
         # - { path: ^/admin, roles: ROLE_ADMIN }

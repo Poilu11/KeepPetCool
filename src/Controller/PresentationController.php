@@ -269,4 +269,20 @@ class PresentationController extends AbstractController
             'note' => $noteResolver->getUserNoteFromPres($presentation)
         ]);
     }
+
+    /**
+     * @Route("/presentation/disablelist", name="presentation_disable_list", methods={"GET"})
+     */
+    public function disableListPresentation(PresentationRepository $presentationRepository)
+    {
+        // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+
+       // On récupère la liste de tous les publications désactivées
+       $presentations = $presentationRepository->findBy(['isActive' => false], ['createdAt' => 'DESC']);
+
+       return $this->render('presentation/listDisablePresentations.html.twig', [
+            'presentations' => $presentations
+        ]);
+    }
 }

@@ -217,7 +217,7 @@ class AppFixtures extends Fixture
             'body' => function() use ($generator) { return $generator->sentence($nbWords = 50, $variableNbWords = true); },
             'note' => function() use ($generator) { return $generator->randomNote(); },
             'isActive' => true,
-            'isValidated' => false,
+            'isValidated' => true,
             'isDisplayed' => true
           ));
         

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentaires bloqués{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="text-center">Liste des commentaires bloqués</h2>
+
+    <button class="btn btn-dark"><a class="text-white"href="{{ path('dashboard') }}">Retour tableau de bord</a></button>
+
+    <ul class="list-group mt-3 mb-5">
+    {% for comment in comments %}
+
+        <li class="d-flex justify-content-between list-group-item list-group-item-{{ cycle(['secondary', 'light'], loop.index0) }}">
+          Commentaire de {{ comment.owner.username }} créé le {{ comment.createdAt|date("d/m/Y \\à H:i:s") }} pour {{ comment.petsitter.username }} <a href="{{ path('comment_disable', {'id': comment.id}) }}"><i class="fas fa-lock-open"></i></a>
+        </li>
+
+        {% else %}
+
+        <li class="list-group-item list-group-item-secondary">Aucun commentaire bloqué.</li>
+
+    {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
