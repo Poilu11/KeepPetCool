@@ -104,3 +104,12 @@ ap-input {
 .ap-with-places{
     color: black;
 }
+
+.avatar{
+    display:block;
+    margin-top: 1em;
+    height: 7em;
+    width:7em;
+    background-size: cover;
+    border-radius: 3.5em;
+}

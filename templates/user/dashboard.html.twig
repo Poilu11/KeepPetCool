@@ -10,6 +10,8 @@
             <div>
                 <img class="mr-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
                     style="width: 100px; height:150px;">
+
+                <div class="avatar" style="background-image:url('{{ asset('avatar/' ~ presentation.user.avatar) }}');"></div>
             </div>
             <div>
                 <button class="btn btn-sm btn-danger"><a class="text-white" href="{{ path('avatar_delete', {'id': user.id}) }}"><i
