@@ -20,13 +20,18 @@
   </div>
         <div class="form-group">
           <label for="messageObject">Objet de votre message</label>
-          <input type="text" class="form-control" id="messageObject" name="messageObject" placeholder="Objet de votre message" value="Demande pour [Insérer votre demande] ">
+          <input type="text" class="form-control" id="messageObject" name="messageObject" placeholder="Objet de votre message">
         </div>
         <div class="form-group">
           <label for="messageBody">Votre message</label>
-<textarea class="form-control" id="messageBody" name="messageBody" rows="7">Bonjour, 
-  
-Je vous contact afin de [Insérer votre demande]]</textarea>
+<textarea class="form-control" id="messageBody" name="messageBody" rows="7">
+{% if app.user.type == 'owner' %}
+Quel animal je souhaite faire garder :
+Pour quelle période et/ou durée :
+{% endif %}
+Bonjour,
+
+</textarea>
         </div>
         <button class="btn btn-primary" type="submit">Envoyer</button>
 </form>
