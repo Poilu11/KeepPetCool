@@ -39,6 +39,17 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('dashboard');
         }
 
+        // Contrôle sur l'identité de l'auteur du commentaire
+        if($user->getId() !== intval($idOwner))
+        {
+            $this->addFlash(
+                'danger',
+                'Vous n\'êtes pas autorisé à laisser un commentaire à la place d\'un tiers'
+            );
+
+            return $this->redirectToRoute('dashboard');
+        }
+
         $petsitter = $userRepository->find($idPetsitter);
         $owner = $userRepository->find($idOwner);
 
