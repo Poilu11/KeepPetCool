@@ -37,7 +37,7 @@
         {% set petsitterClass = "criteria-active"%}
         {% set ownerClass = ""%}
         {% endif %}
-        <div class="pl-5 pr-0 col-2  d-xl-block  d-none">
+        <div class="p-0 d-xl-block  d-none">
             Je cherche :
         </div>
         <div class="p-0 m-1 col-lg-1 col-md-2 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
@@ -50,18 +50,25 @@
         </div>
         <p class="ml-1 mb-0">à</p>
         <div class="col-3 col-md-4">
-            <input class="text-dark" id="zipcode" placeholder="Adresse"></input>
+            <input class="text-dark" id="zipcode" placeholder="Adresse">
         </div>
         <p class="mb-0">sur</p>
-        <div class="d-flex align-items-center col-lg-2 col-md-3">
-            <input class="form-control" id="radius" type="number">
+        <div class="d-flex align-items-center p-2 col-lg-auto col-md-2" >
+            <select class="form-control"  id="radius" type="number">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
             <p id="km" class="pl-1 mb-0">Km</p>
         </div>
         <input id="search-latitude" name="search[latitude]" type="hidden" value="">
         <input id="search-longitude" name="search[longitude]" type="hidden" value="">
-        <button class="btn btn-link " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
+        <button class="btn btn-outline-secondary text-white text-none-decoration " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
         <!-- je remplis chaque champ de la route avec un placeholder afin de faciliter le traitement en js -->
-            <i class="text-white fas fa-search"></i>
+           <i class="text-white fas fa-search"></i> Recherche
         </button>
     </div>
 </nav>

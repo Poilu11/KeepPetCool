@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello {{ user.username }}{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -8,15 +8,15 @@
     <div class="row">
         <div class="col-2 m-auto mr-auto ml-auto">
             <div>
-                <img class="mr-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
+                <img class="ml-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
                     style="width: 100px; height:150px;">
             </div>
             <div>
-                <a class="btn btn-sm btn-danger text-white" "role="button" href="{{ path('avatar_delete',{'id': user.id})}}><i class="text-white fas fa-times" style="color: red;"></i></a>
+                <a class="btn btn-sm btn-danger text-white" role="button" href="{{ path('avatar_delete',{'id': user.id})}}"> <i class="text-white fas fa-times" style="color: red;"></i></a>
             </div>
         </div>
         <div class="col-10">
-            <table class="table my-3" style="width: 70%; margin: auto;">
+            <table class="table my-3">
 
                 <tbody>
                     {# <tr>

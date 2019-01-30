@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PresentationType extends AbstractType
@@ -87,8 +88,11 @@ class PresentationType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
             ])
-            ->add('price', TextType::class, [
-                'label' => 'Prix / heure'
+            ->add('price', IntegerType::class, [
+                'label' => 'Prix / heure',
+                    'attr' => [
+                    'placeholder' => 'Exemple : 15€'
+                ],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, $listener)
             ;
