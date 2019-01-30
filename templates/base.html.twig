@@ -20,9 +20,13 @@
 </head>
 
 <body>
-    <header class="bg-secondary pb-0 pt-5 mt-5 mb-4">
+    <header id="parentMessage" class="bg-secondary pb-0 pt-5 mt-5 mb-4">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p id="message" class="text-white"> Bienvenue {{ app.user.username }} !</p>
+        {% endif %}
         <div>
-            <h1 class="text-center"><a class="text-decoration-none text-white" href="{{ path('home_page') }}">KeepPetCool<img alt="" class="" src="{{ asset('images/logo2KeepPetCool.png') }}" style="width:10%;">
+            <h1 class="text-center"><a class="text-decoration-none text-white" href="{{ path('home_page') }}">KeepPetCool<img
+                        alt="" class="" src="{{ asset('images/logo2KeepPetCool.png') }}" style="width:10%;">
                 </a></h1>
         </div>
         {# <nav class="row justify-content-end mt-4">
@@ -62,18 +66,20 @@
     {# gestion des messages flash #}
     {% for index, messages in app.flashes %}
     {% for message in messages %}
-    <div class="alert alert-{{ index }}" role="alert">
-        {{ message }}
+    <div class="m-auto col-6 alert alert-{{ index }}">
+        <button type="button" role="alert" class="close" data-dismiss="alert">&times;</button>
+        <p class="mb-0">{{ message }}</p>
     </div>
     {% endfor %}
     {% endfor %}
 
+
     {% block body %}{% endblock %}
 
 
-    <footer class="fixed-bottom bg-dark text-center p-2">
+    <footer class="bg-dark text-center p-2 mt-5" style="">
         <span class="col-4">
-            <a class="text-white text-decoration-none" href="{{path('faq')}}">Faq</a>
+            <a class="text-white text-decoration-none" href="{{path('faq')}}">FAQ</a>
         </span>
         <span class="text-white col-4">
             <a class="text-white text-decoration-none" href="{{path('mention')}}">Mentions légales</a>
@@ -82,7 +88,7 @@
             <a class="text-white text-decoration-none" href="{{path('contact')}}">Contact</a>
         </span>
     </footer>
-    
+
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -92,27 +98,27 @@
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.15.4"></script>
     <script src="{{asset('js/app.js')}}"></script>
     <script>
-        (function() {
-        var placesAutocomplete = places({
-            appId: 'plGC46KI2VZT',
-            apiKey: '55c75f3e4182a21915613e93a7e52924',
-            container: document.querySelector('#zipcode'),
-            templates: {
-            value: function(suggestion) {
-                return suggestion.name;
-            }
-            }
-        }).configure({
-            zipcodes: ['fr'],
-            aroundLatLngViaIP: true,
-            hitsPerPage: 10,
-        });
+        (function () {
+            var placesAutocomplete = places({
+                appId: 'plGC46KI2VZT',
+                apiKey: '55c75f3e4182a21915613e93a7e52924',
+                container: document.querySelector('#zipcode'),
+                templates: {
+                    value: function (suggestion) {
+                        return suggestion.name;
+                    }
+                }
+            }).configure({
+                zipcodes: ['fr'],
+                aroundLatLngViaIP: true,
+                hitsPerPage: 10,
+            });
 
-        placesAutocomplete.on('change', function resultSelected(e) {
-            document.querySelector('#search-latitude').value = e.suggestion.latlng.lat;
-            document.querySelector('#search-longitude').value = e.suggestion.latlng.lng;
-            console.log(placesAutocomplete);
-        });
+            placesAutocomplete.on('change', function resultSelected(e) {
+                document.querySelector('#search-latitude').value = e.suggestion.latlng.lat;
+                document.querySelector('#search-longitude').value = e.suggestion.latlng.lng;
+                console.log(placesAutocomplete);
+            });
 
         })();
     </script>

@@ -1,6 +1,79 @@
+html {
+    height: 100%;
+  }
+
 body {
     font-family:"Roboto";
     background-color: whitesmoke;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-bottom: 3em;
+}
+
+*
+{
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+footer {
+  
+    position: absolute;
+   bottom: 0;
+   left: 0;
+   right:0;
+}
+
+a:hover{
+    text-decoration: none;
+}
+ .criteria-active{
+    
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 0px;
+} 
+
+#radius{
+    padding : 0px;
+}
+
+
+ap-input {
+    color:dark;
+}
+
+#presentationBody{
+    word-break: break-all;
+  }
+
+.ap-with-places{
+    color: black;
+}
+
+.avatar{
+    display:block;
+    margin-top: 1em;
+    height: 7em;
+    width:7em;
+    background-size: cover;
+    border-radius: 3.5em;
+}
+
+.stars i{
+    font-size: 0.7em;
+}
+
+#parentMessage {
+    position: relative;
+}
+
+#message {
+    position:absolute;
+    top: 80%;
+    left: 10px;
 }
 /* 
 .criteria-nav{
@@ -17,16 +90,6 @@ body {
     color: whitesmoke;
 } */
 
-
-a:hover{
-    text-decoration: none;
-}
- .criteria-active{
-    
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 0px;
-} 
 /* 
 criteria-nav > div{
      display: flex; 
@@ -45,21 +108,6 @@ criteria-nav > div{
     width: 100;
     padding: 0px;
 } */
-
-#radius{
-    padding : 0px;
-}
-
-
-ap-input {
-    color:dark;
-}
-
-#presentationBody{
-    word-break: break-all;
-  }
-
-
 
 /* CSS barre SEARCH */
 /*

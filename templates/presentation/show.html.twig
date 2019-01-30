@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PresentationController!{% endblock %}
+{% block title %} Presentation {% endblock %}
 
 {% block body %}
 
@@ -9,38 +9,37 @@
 
 
 <div class="container border-left  border-dark">
-        {% if is_granted('ROLE_MODO') %}
-        <div class=" d-flex justify-content-end">
-            <button class="m-3 btn btn-danger">
-                <a class="text-white" href="{{ path('presentation_disable', {'id': presentation.id}) }}"><i class="text-white fas fa-times"
-                        style="color: red;"></i>
-                    Bloquer/Débloquer cette présentation</a></button>
-        </div>
-        {% endif %}
+    {% if is_granted('ROLE_MODO') %}
+    <div class=" d-flex justify-content-end">
+        <a class="m-3 btn btn-danger text-white" href="{{ path('presentation_disable', {'id': presentation.id}) }}"
+            role="button"><i class="text-white fas fa-times" style="color: red;"></i>Bloquer/Débloquer cette
+            présentation</a>
+    </div>
+    {% endif %}
 
     {% if presentation.user.type == 'petsitter' %}
-            <div class="m-5 d-flex justify-content-end">
-            <span class="p-2 badge badge-pill badge-info">Je garde vos animaux de compagnie</span>
-            </div>
-            {% elseif presentation.user.type == 'owner'%}
-            <div class="m-5 d-flex justify-content-end">
-                    <button class="btn btn-success btn-sm">J'ai un animal à faire garder</button>
-                </div>
-            {% else %}
-            <div class="m-5 d-flex justify-content-end">
-                    <button class="btn btn-danger btn-sm">ADMIN</button>
-                </div>
-            {% endif %}
+    <div class="m-5 d-flex justify-content-end">
+        <span class="p-2 badge badge-pill badge-info">Je garde vos animaux de compagnie</span>
+    </div>
+    {% elseif presentation.user.type == 'owner'%}
+    <div class="m-5 d-flex justify-content-end">
+        <span class="p-2 badge badge-pill badge-success">J'ai un animal à faire garder</span>
+    </div>
+    {% else %}
+    <div class="m-5 d-flex justify-content-end">
+        <button class="btn btn-danger btn-sm">ADMIN</button>
+    </div>
+    {% endif %}
 
     {% if not presentation.isActive %}
     <p style="color: red;">Présentation actuellement bloquée</p>
     {% endif %}
 
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-between">
         <div class="m-2">
             <h2 class="mb-3"><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}"
-                    alt="" class="mr-3  img-thumbnail float-left" style="width:10%;border-radius: 50%;">
+                    alt="" class="mr-3  img-thumbnail float-left" style="width:15%;border-radius:40%;">
                 {{ presentation.title }}</h2>
 
             <p class="mb-1">{% if presentation.user.type == 'petsitter' %}
@@ -57,7 +56,7 @@
                 {% endif %}
                 {% endif %}
 
-                - {{ nbComments }} Commentaire(s)
+                <p>{{ nbComments }} Commentaire(s)</p>
                 {% endif %}
             </p>
             <p class="mb-1">{{presentation.user.city }}
@@ -66,7 +65,10 @@
             {# Affichage des espèces et services proposés
             uniquement si le user de la présentation est un petsitter #}
             {% if presentation.user.type == 'petsitter' %}
-            <p> Prix /h : {{ presentation.price }}</p>
+            {% if not (presentation.price) %}
+            {% else %}
+            <p> Prix /h : {{ presentation.price }} €</p>
+            {% endif %}
             <p>
                 {% for species in presentation.species %}
 
@@ -76,13 +78,13 @@
                 {% endfor %}
             </p>
             {# <p>Prestations proposées :
-                    {% for service in presentation.services %}
-                    {{ service.name }}
-                    {% else %}
-                    NC
-                    {% endfor %}
-                </p> #}
-                {% endif %} 
+                {% for service in presentation.services %}
+                {{ service.name }}
+                {% else %}
+                NC
+                {% endfor %}
+            </p> #}
+            {% endif %}
 
         </div>
 
@@ -92,13 +94,13 @@
             <div class="m-2 text-center">
                 <i class="h2 fas fa-home"></i><i class="fas fa-sun"></i>
                 <p class="mb-1">Gardiennage jour</p>
-            
+
             </div>
             <div class="m-2 text-center">
                 <i class="h2 fas fa-home"></i>
                 <i class="fas fa-moon"></i>
                 <p class="mb-1">Gardiennage nuit</p>
-                
+
             </div>
             {% else %}
             {% endif %}
@@ -106,7 +108,7 @@
             <div class="m-2 text-center">
                 <i class="h2 fas fa-walking"></i>
                 <p class="mb-1">Promenade</p>
-              
+
             </div>
             {% else %}
             {% endif %}
@@ -114,7 +116,7 @@
             <div class="m-2 text-center">
                 <i class="h2 fas fa-walking"></i>
                 <p class="mb-1">Visite</p>
-              
+
             </div>
             {% else %}
             {% endif %}
@@ -130,7 +132,7 @@
         </div>
     </div>
 
-    
+
 </div>
 {# Communication des coordonnées uniquement si connecté #}
 
@@ -138,19 +140,23 @@
     <h4>A propos de {{ presentation.user.firstname}}</h4>
     <p id="presentationBody">{{ presentation.body|nl2br }}</p>
 
-    
+
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Coordonnées :</p>
     <ul>
-        
-        <li>Téléphone portable : {% if presentation.user.cellNumber %} {{ presentation.user.cellNumber }} {% else %} NC {% endif %} </li>
+
+        <li>Téléphone portable : {% if presentation.user.cellNumber %} {{ presentation.user.cellNumber }} {% else %} NC
+            {% endif %} </li>
     </ul>
-        {# Bouton de messagerie interne #}
-        <button class="m-2 btn btn-info"><a class="text-decoration-none text-white"href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}">Envoyer un message</a></button>
-    
+    {# Bouton de messagerie interne #}
+
+    <a class="m-2 btn btn-info text-decoration-none text-white" href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}"
+        role="button">Envoyer un message</a>
     {% else %}
-    <p style="color: red;">Connectez-vous pour accéder aux coordonnés de cette présentation.</p>
+    <p style="color: red;"><a class="text-danger" href="{{ path('login') }}"> Connectez-vous pour accéder aux coordonnés de cette
+        présentation. </a> 
+    </p>
     {% endif %}
 
 
@@ -165,6 +171,12 @@
             <p style="color: red;">Commentaire actuellement bloqué</p>
             {% endif %}
             <h5 class="card-title">Commentaire écrit le {{ comment.createdAt|date("d/m/Y") }}</h5>
+            <p> {% if comment.note != 'NC' %}
+                {% for i in 1..note|round %}
+                <i class="fas fa-star"></i>
+                {% endfor %}
+                {% endif %}
+            </p>
             <p class="card-text">{{ comment.body|nl2br }}</p>
             <p class="blockquote-footer">Auteur: {{ comment.owner.username }}</p>
             {% if is_granted('ROLE_MODO') %}
@@ -189,8 +201,8 @@
 
     <div class="card mt-4 mb-4">
         <div class="card-body">
-    {{ include('comment/_form.html.twig') }}
-</div>
+            {{ include('comment/_form.html.twig') }}
+        </div>
     </div>
     {% endif %}
     {% endif %}

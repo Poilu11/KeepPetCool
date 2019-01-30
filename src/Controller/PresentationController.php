@@ -12,6 +12,7 @@ use App\Repository\PresentationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PresentationController extends AbstractController
@@ -176,8 +177,14 @@ class PresentationController extends AbstractController
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
-    public function show($id, Presentation $presentation, CommentRepository $commentRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
+    public function show($id, $slug, Presentation $presentation, PresentationRepository $presentationRepository, CommentRepository $commentRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
     {
+        // On vérifie que le slug est égal au slug de la présentation recherché par l'id
+        if($slug !== $presentationRepository->find($id)->getSlug())
+        {
+            throw $this->createNotFoundException('Présentation non trouvée');
+        }
+
         $currentUser = $this->getUser();
 
         if(!$presentation->getIsActive())

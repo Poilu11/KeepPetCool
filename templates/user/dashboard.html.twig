@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello {{ user.username }}{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -8,16 +8,15 @@
     <div class="row">
         <div class="col-2 m-auto mr-auto ml-auto">
             <div>
-                <img class="mr-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
+                <img class="ml-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
                     style="width: 100px; height:150px;">
             </div>
             <div>
-                <button class="btn btn-sm btn-danger"><a class="text-white" href="{{ path('avatar_delete', {'id': user.id}) }}"><i
-                            class="text-white fas fa-times" style="color: red;"></i></a></button>
+                <a class="btn btn-sm btn-danger text-white" role="button" href="{{ path('avatar_delete',{'id': user.id})}}"> <i class="text-white fas fa-times" style="color: red;"></i></a>
             </div>
         </div>
         <div class="col-10">
-            <table class="table my-3" style="width: 70%; margin: auto;">
+            <table class="table my-3">
 
                 <tbody>
                     {# <tr>
@@ -47,15 +46,14 @@
                     </tr>
                 </tbody>
             </table>
-
-            <button class="btn btn-secondary"><a class="text-white" href="{{ path('home_page') }}">Aller à l'accueil</a></button>
-            <button class="btn btn-secondary"><a class="text-white" href="{{ path('profile_edit', {'id': user.id}) }}">Editer
-                    mon profil</a></button>
-            <button class="btn btn-secondary"><a class="text-white" href="{{ path('presentation_new') }}">Créer/Editer
-                    ma fiche de
-                    présentation</a></button> 
-            <button class="btn btn-secondary"><a class="text-white" href="{{ path('messenging') }}">Messagerie</a></button>
-        </div>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
+                <a class="btn btn-secondary text-white"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
+                {% if presentation %}
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
+                {% endif %}
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('messenging') }}">Messagerie </a>
+           </div>
     </div>
     {# Liste des commentaires à valider
     uniquement si le user est de type "petsitter" #}
