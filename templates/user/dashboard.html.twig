@@ -12,7 +12,7 @@
                     style="width: 100px; height:150px;">
             </div>
             <div>
-                <a class="btn btn-sm btn-danger" href="{{ path('avatar_delete', {'id': user.id}) }}" class="text-white" role="button"><i class="text-white fas fa-times" style="color: red;"></i></a>
+                <a class="btn btn-sm btn-danger text-white" "role="button" href="{{ path('avatar_delete',{'id': user.id})}}><i class="text-white fas fa-times" style="color: red;"></i></a>
             </div>
         </div>
         <div class="col-10">
@@ -46,10 +46,13 @@
                     </tr>
                 </tbody>
             </table>
-                <a class="btn btn-secondary" href="{{ path('home_page') }}" class="text-white" role="button">Aller à l'accueil</a>
-                <a class="btn btn-secondary" href="{{ path('profile_edit', {'id': user.id}) }}" class="text-white" role="button">Editer mon profil</a>
-                <a class="btn btn-secondary" href="{{ path('presentation_new') }}" class="text-white" role="button">Créer/Editer ma fiche de présentation</a>
-                <a class="btn btn-secondary" href="{{ path('messenging') }}" class="text-white" role="button">Messagerie</a>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
+                <a class="btn btn-secondary text-white"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
+                {% if presentation %}
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
+                {% endif %}
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('messenging') }}">Messagerie </a>
            </div>
     </div>
     {# Liste des commentaires à valider

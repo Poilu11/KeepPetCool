@@ -24,7 +24,7 @@ class UserController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard", methods={"GET"})
      */
-    public function dashboard(CommentRepository $commentRepository, EntityManagerInterface $em)
+    public function dashboard(CommentRepository $commentRepository, PresentationRepository $presentationRepository, EntityManagerInterface $em)
     {
         // On vérifie que l'utilisateur soit connecté
          $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -46,9 +46,18 @@ class UserController extends AbstractController
         // Récupération des commentaires à valider
         $commentsToValidate = $commentRepository->findBy(['petsitter' => $user, 'isValidated' => false, 'isDisplayed' =>true], ['createdAt' => 'DESC']);
 
+        // Vérification si une présentation existe pour le user connecté
+        $presentation = $presentationRepository->findOneBy(['user' => $user]);
+        // Si pas de présentation
+        if(is_null($presentation))
+        {
+            $presentation = false;
+        }
+
         return $this->render('user/dashboard.html.twig', [
             'user' => $user,
-            'comments' => $commentsToValidate
+            'comments' => $commentsToValidate,
+            'presentation' => $presentation
         ]);
     }
 
