@@ -13,7 +13,7 @@
         <li class="d-flex justify-content-between list-group-item list-group-item-{{ cycle(['secondary', 'light'], loop.index0) }}">
                 {# Traitement afficaheg si message non lu #}
                 {% if not message.readen %}
-                <span style="color: red; font-weight: bold;"><i class="fas fa-bell"></i> new</span>
+                <span style="color: red; font-weight: bold;"><i class="fas fa-bell"></i> non lu</span>
                 {% endif %}
             Envoyé le {{ message.createdAt|date("d/m/Y \\à H:i:s") }} - De {{ message.userTo.username }} à  {{ message.userFrom.username }} - Objet : {{ message.object }} <a href="{{ path('conversation', {'user1Id': message.userFrom.id, 'user2Id': message.userTo.id}) }}"><i class="fas fa-arrow-circle-right"></i></a>
         </li>

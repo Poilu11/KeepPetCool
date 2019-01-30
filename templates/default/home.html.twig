@@ -6,12 +6,20 @@
 
 <div class="container-fluid">
 
+    <div class="navigation">
+        {{ knp_pagination_render(presentations) }}
+    </div>
+
 {% for presentation in presentations %}
 
 
 {{ include('presentation/_card.html.twig') }}
 
 {% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(presentations) }}
+    </div>
 
 </div>
 

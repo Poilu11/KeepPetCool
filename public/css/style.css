@@ -1,9 +1,9 @@
 html {
     height: 100%;
-  }
+}
 
 body {
-    font-family:"Roboto";
+    font-family: "Roboto";
     background-color: whitesmoke;
     min-height: 100%;
     margin: 0;
@@ -12,57 +12,57 @@ body {
     padding-bottom: 3em;
 }
 
-*
-{
-    -moz-box-sizing: border-box; 
+* {
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 footer {
-  
+
     position: absolute;
-   bottom: 0;
-   left: 0;
-   right:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
- .criteria-active{
-    
+
+.criteria-active {
+
     border: 1px solid;
     border-radius: 5px;
     padding: 0px;
-} 
+}
 
-#radius{
-    padding : 0px;
+#radius {
+    padding: 0px;
 }
 
 
 ap-input {
-    color:dark;
+    color: dark;
 }
 
-#presentationBody{
+#presentationBody {
     word-break: break-all;
-  }
+}
 
-.ap-with-places{
+.ap-with-places {
     color: black;
 }
 
-.avatar{
-    display:block;
+.avatar {
+    display: block;
     margin-top: 1em;
     height: 7em;
-    width:7em;
+    width: 7em;
     background-size: cover;
     border-radius: 3.5em;
 }
 
-.stars i{
+.stars i {
     font-size: 0.7em;
 }
 
@@ -71,10 +71,11 @@ ap-input {
 }
 
 #message {
-    position:absolute;
+    position: absolute;
     top: 80%;
     left: 10px;
 }
+
 /* 
 .criteria-nav{
     z-index: 100;
@@ -149,15 +150,42 @@ criteria-nav > div{
 #input-styling-address .ap-nostyle-suggestion { border-bottom: 1px solid #efefef; }
 */
 
-.ap-with-places{
+.ap-with-places {
     color: black;
 }
 
-.avatar{
-    display:block;
+.avatar {
+    display: block;
     margin-top: 1em;
     height: 7em;
-    width:7em;
+    width: 7em;
     background-size: cover;
     border-radius: 3.5em;
+}
+
+
+/* CSS de la pagination */
+
+.navigation {
+    width: 10%;
+    margin: auto;
+}
+
+.first,
+.previous,
+.current,
+.page,
+.next,
+.last {
+    color: #17A2B8;
+    font-weight: 700;
+}
+
+.first a,
+.previous a,
+.current a,
+.page a,
+.next a,
+.last a {
+    color: #17A2B8;
 }

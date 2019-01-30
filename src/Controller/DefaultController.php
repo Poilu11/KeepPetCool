@@ -10,6 +10,8 @@ use App\Entity\Presentation;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PresentationRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -18,14 +20,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="home_page", methods={"GET"})
      */
-    public function home(NoteResolver $noteResolver)
+    public function home(NoteResolver $noteResolver, PaginatorInterface $paginator, Request $request)
     {
-
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
 
         // Si utisateur non connecté
         // accès à toutes les présentations petsitter actives
-        $presentations = $presentationRepository->findBy(['isActive' => true], ['createdAt' => 'DESC']);
+        $allPresentations = $presentationRepository->findBy(['isActive' => true], ['createdAt' => 'DESC']);
 
         // On récupère les infos de l'utilisateur connecté (si connecté)
         $currentUser = $this->getUser();
@@ -35,24 +36,36 @@ class DefaultController extends AbstractController
         {
             if($currentUser->getType() == 'owner')
             {
-                $presentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
+                $allPresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
             }
 
             if($currentUser->getType() == 'petsitter')
             {
-                $presentations = $presentationRepository->findActivePresentationsByUserType('owner');
+                $allPresentations = $presentationRepository->findActivePresentationsByUserType('owner');
             }
 
             if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
             {
-                $presentations = $presentationRepository->findBy([], ['createdAt' => 'DESC']);
+                $allPresentations = $presentationRepository->findBy([], ['createdAt' => 'DESC']);
             }
         }
 
         // DEBUT calcul moyenne des notes de tous les petsitters
-        $arrayNote = $noteResolver->getUsersNotesFromPres($presentations);
+        $arrayNote = $noteResolver->getUsersNotesFromPres($allPresentations);
         // FIN calcul moyenne des notes de tous les petsitterse
 
+        // PAGINATION
+        // Pour la pagination, injection des services PaginatorInterface et Request
+        // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
+
+        $presentations = $paginator->paginate(
+            // Doctrine Query, not results
+            $allPresentations,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            7
+        );
 
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
@@ -96,7 +109,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/search/{userType}|{adress}|{radius}|{latAndLong}", name="search", methods={"GET", "POST"}, requirements={"userType"="\w*", "adress"="([\w\+\-\',]*)|(adress)", "radius"="[0-9]*|(radius)", "latAndLong" = "(\d*\.?\d*)_(\d*\.?\d*)|(latAndLong)"})
      */
-    public function search($userType, $adress, $radius, $latAndLong, UserRepository $userRepo, PresentationRepository $presRepo, NoteResolver $noteResolv, CoordResolver $coordResolv)
+    public function search($userType, $adress, $radius, $latAndLong, UserRepository $userRepo, PresentationRepository $presRepo, NoteResolver $noteResolv, CoordResolver $coordResolv, PaginatorInterface $paginator, Request $request)
     {
 
         // Je check si les informations de la search bar sont vides, si c'est la cas je rajoute des flash messages et je redirige vers la home.
@@ -169,6 +182,19 @@ class DefaultController extends AbstractController
 
         // Les notes moyennes des notes pour chaque user à partir des présentations
         $notes = $noteResolv->getUsersNotesFromPres($presentations);
+
+        // PAGINATION
+        // Pour la pagination, injection des services PaginatorInterface et Request
+        // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
+
+        $presentations = $paginator->paginate(
+            // Doctrine Query, not results
+            $presentations,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            7
+        );
         
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
