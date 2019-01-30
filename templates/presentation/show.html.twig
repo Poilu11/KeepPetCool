@@ -11,7 +11,7 @@
 <div class="container border-left  border-dark">
         {% if is_granted('ROLE_MODO') %}
         <div class=" d-flex justify-content-end">            
-        <a class="m-3 btn btn-danger" href="{{ path('presentation_disable', {'id': presentation.id}) }}" class="text-white" role="button"><i class="text-white fas fa-times" style="color: red;"></i>Bloquer/Débloquer cette présentation</a>                 
+        <a class="m-3 btn btn-danger text-white" href="{{ path('presentation_disable', {'id': presentation.id}) }}" role="button"><i class="text-white fas fa-times" style="color: red;"></i>Bloquer/Débloquer cette présentation</a>                 
         </div>
         {% endif %}
 
@@ -34,10 +34,10 @@
     {% endif %}
 
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-between">
         <div class="m-2">
             <h2 class="mb-3"><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}"
-                    alt="" class="mr-3  img-thumbnail float-left" style="width:10%;border-radius: 50%;">
+                    alt="" class="mr-3  img-thumbnail float-left" style="width:15%;border-radius:40%;">
                 {{ presentation.title }}</h2>
 
             <p class="mb-1">{% if presentation.user.type == 'petsitter' %}

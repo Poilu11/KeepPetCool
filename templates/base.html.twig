@@ -20,7 +20,10 @@
 </head>
 
 <body>
-    <header class="bg-secondary pb-0 pt-5 mt-5 mb-4">
+    <header id="parentMessage"  class="bg-secondary pb-0 pt-5 mt-5 mb-4">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <p id="message" class="text-white"> Bienvenue {{ app.user.username }} !</p>
+            {% endif %}
         <div>
             <h1 class="text-center"><a class="text-decoration-none text-white" href="{{ path('home_page') }}">KeepPetCool<img alt="" class="" src="{{ asset('images/logo2KeepPetCool.png') }}" style="width:10%;">
                 </a></h1>

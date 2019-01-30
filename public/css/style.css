@@ -65,6 +65,16 @@ ap-input {
 .stars i{
     font-size: 0.7em;
 }
+
+#parentMessage {
+    position: relative;
+}
+
+#message {
+    position:absolute;
+    top: 80%;
+    left: 10px;
+}
 /* 
 .criteria-nav{
     z-index: 100;

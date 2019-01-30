@@ -1,23 +1,23 @@
 <div class="card mr-auto ml-auto col-8 m-2">
     <div class="card-body d-flex align-items-start">
 
-        <div class="card-header col-3 m-1 border bg-secondary overflow-hidden" style="border-radius:40%;">
+        <div class="card-header col-3 m-1 border bg-light overflow-hidden" >
             <div class="text-center d-flex flex-column align-items-center">
 
                 <div class="avatar" style="background-image:url('{{ asset('avatar/' ~ presentation.user.avatar) }}');"></div>
 
-                <h5 class="d-block card-title text-white m-2">{{ presentation.user.firstname}} {{ presentation.user.lastname}}</h5>
+                <h5 class="d-block card-title  m-2">{{ presentation.user.firstname}} {{ presentation.user.lastname}}</h5>
                 {% set note = notes[presentation.user.id]%}
 
                 <div class="stars">
                 {% if note != 'NC' %}
                     {% for i in 1..note|round %}
-                    <i class="text-white fas fa-star"></i>                
+                    <i class=" fas fa-star"></i>                
                     {% endfor %}
 
                     {% if 5-note|round != 0 %}
                         {% for i in 0..5-note|round-1 %}
-                        <i class="text-white far fa-star"></i>
+                        <i class=" far fa-star"></i>
                         {% endfor %}
                     {% endif %}
                 {% endif %}
