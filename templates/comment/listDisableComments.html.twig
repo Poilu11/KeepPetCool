@@ -6,7 +6,7 @@
 <div class="container">
     <h2 class="text-center">Liste des commentaires bloqués</h2>
 
-    <button class="btn btn-dark"><a class="text-white"href="{{ path('dashboard') }}">Retour tableau de bord</a></button>
+    <a class="btn btn-dark" href="{{ path('dashboard') }}" class="text-white" role="button">Retour tableau de bord</a>
 
     <ul class="list-group mt-3 mb-5">
     {% for comment in comments %}

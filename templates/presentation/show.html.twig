@@ -10,11 +10,8 @@
 
 <div class="container border-left  border-dark">
         {% if is_granted('ROLE_MODO') %}
-        <div class=" d-flex justify-content-end">
-            <button class="m-3 btn btn-danger">
-                <a class="text-white" href="{{ path('presentation_disable', {'id': presentation.id}) }}"><i class="text-white fas fa-times"
-                        style="color: red;"></i>
-                    Bloquer/Débloquer cette présentation</a></button>
+        <div class=" d-flex justify-content-end">            
+        <a class="m-3 btn btn-danger" href="{{ path('presentation_disable', {'id': presentation.id}) }}" class="text-white" role="button"><i class="text-white fas fa-times" style="color: red;"></i>Bloquer/Débloquer cette présentation</a>                 
         </div>
         {% endif %}
 
@@ -147,10 +144,10 @@
         <li>Téléphone portable : {% if presentation.user.cellNumber %} {{ presentation.user.cellNumber }} {% else %} NC {% endif %} </li>
     </ul>
         {# Bouton de messagerie interne #}
-        <button class="m-2 btn btn-info"><a class="text-decoration-none text-white"href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}">Envoyer un message</a></button>
-    
+        
+<a class="m-2 btn btn-info" href="{{ path('message_new', {'userFrom': app.user.id, 'userTo': presentation.user.id}) }}" class="text-decoration-none text-white" role="button">Envoyer un message</a>
     {% else %}
-    <p style="color: red;">Connectez-vous pour accéder aux coordonnés de cette présentation.</p>
+<p style="color: red;"><a href='{{ path('login')}}'>Connectez-vous</a> pour accéder aux coordonnés de cette présentation.</p>
     {% endif %}
 
 
