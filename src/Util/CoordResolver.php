@@ -41,7 +41,7 @@ class CoordResolver{
             $validResponse = null;
         }
         
-        dump($validResponse);
+        // dump($validResponse);
 
         // Si validResponse est null alors il est impossible de récupérer des latitudes et des longitudes. Auquel cas on leur donne des valeurs erronnées afin d'effectuer une vérification dans le controller.
         $coords[0] = (!is_null($validResponse)) ? $validResponse['lat'] : 'NC';
