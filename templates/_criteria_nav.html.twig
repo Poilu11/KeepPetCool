@@ -25,18 +25,36 @@
     </div>
 
     <div class="d-flex align-items-center d-flex justify-content-end col-8">
-        {% if app.user %}
-        {% if app.user.type == 'petsitter' %}
-        {% set petsitterClass = ""%}
-        {% set ownerClass = "criteria-active"%}
+        
+        {%if userType is not defined or userType == null %}
+            {% if app.user %}
+                {% if app.user.type == 'petsitter' %}
+                    {% set petsitterClass = ""%}
+                    {% set ownerClass = "criteria-active"%}
+                {% else %}
+                    {% set petsitterClass = "criteria-active"%}
+                    {% set ownerClass = ""%}
+                {% endif %}
+            {% else %}
+                {% set petsitterClass = "criteria-active"%}
+                {% set ownerClass = ""%}
+            {% endif %}
+        {% elseif userType == 'owner' %}
+            {% set petsitterClass = ""%}
+            {% set ownerClass = "criteria-active"%}
         {% else %}
-        {% set petsitterClass = "criteria-active"%}
-        {% set ownerClass = ""%}
+            {% set petsitterClass = "criteria-active"%}
+            {% set ownerClass = "" %}
         {% endif %}
+
+        {% if adress is defined %}
+            {% set adressValue = adress %}
+        {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% set adressValue = app.user.zipcode %}
         {% else %}
-        {% set petsitterClass = "criteria-active"%}
-        {% set ownerClass = ""%}
+            {% set adressValue = '' %}
         {% endif %}
+        
         <div class="pl-5 pr-0 col-2  d-xl-block  d-none">
             Je cherche :
         </div>
@@ -50,7 +68,7 @@
         </div>
         <p class="ml-1 mb-0">à</p>
         <div class="col-3 col-md-4">
-            <input class="text-dark" id="zipcode" placeholder="Adresse"></input>
+            <input class="text-dark" id="zipcode" placeholder="Adresse" value="{{adressValue}}"></input>
         </div>
         <p class="mb-0">sur</p>
         <div class="d-flex align-items-center col-lg-2 col-md-3">

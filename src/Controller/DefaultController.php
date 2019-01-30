@@ -98,12 +98,8 @@ class DefaultController extends AbstractController
      */
     public function search($userType, $adress, $radius, $latAndLong, UserRepository $userRepo, PresentationRepository $presRepo, NoteResolver $noteResolv, CoordResolver $coordResolv)
     {
-        if (!$adress) {
-            throw $this->createNotFoundException('Adresse non trouvée');
-        }
-        // Je check si les informations de la search bar sont vides, si c'est la cas je rajoute des flash messages et je redirige vers la home.
-        
 
+        // Je check si les informations de la search bar sont vides, si c'est la cas je rajoute des flash messages et je redirige vers la home.
         if(empty($userType) || $adress==='' || $radius==='')
         {
             if(empty($userType))
@@ -176,7 +172,10 @@ class DefaultController extends AbstractController
         
         return $this->render('default/home.html.twig', [
             'presentations' => $presentations,
-            'notes' => $notes
+            'notes' => $notes,
+            'adress' => $adress,
+            'radius' => $radius,
+            'userType' => $userType
         ]);
     }
 }
