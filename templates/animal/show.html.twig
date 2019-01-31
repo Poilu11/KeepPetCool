@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Animal{% endblock %}
+
+{% block body %}
+    <h1>Animal</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Propriétaire</th>
+                <td>{{ animal.user.username }} - {{ animal.user.firstname }} {{ animal.user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ animal.title }}</td>
+            </tr>
+            <tr>
+                <th>Nom de mon animal</th>
+                <td>{{ animal.name }}</td>
+            </tr>
+            <tr>
+                <th>Detail</th>
+                <td>{{ animal.detail }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ animal.sex }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ animal.age }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ animal.body }}</td>
+            </tr>
+            <tr>
+                <th>Picture1</th>
+                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}"
+                    style="width: 100px; height:150px;"></td>
+            </tr>
+            <tr>
+                <th>Picture2</th>
+                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}"
+                    style="width: 100px; height:150px;"></td>
+            </tr>
+            <tr>
+                <th>Picture3</th>
+                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}"
+                    style="width: 100px; height:150px;"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('animal_list_index') }}">back to list</a>
+
+    <a href="{{ path('animal_edit', {'id': animal.id}) }}">edit</a>
+
+    {{ include('animal/_delete_form.html.twig') }}
+{% endblock %}
+{# 
+
+<img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture1 ?: 'default-picture.png')) }}"
+                    style="width: 100px; height:150px;">
+
+                    <img class="ml-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
+                    style="width: 100px; height:150px;"> #}

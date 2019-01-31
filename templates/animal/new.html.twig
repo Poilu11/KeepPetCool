@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche animal - Création{% endblock %}
+
+{% block body %}
+    <h1>Créez une fiche pour votre animal</h1>
+
+    {{ include('animal/_form.html.twig') }}
+
+    {# <a href="{{ path('animal_index') }}">back to list</a> #}
+{% endblock %}

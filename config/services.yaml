@@ -7,6 +7,7 @@ parameters:
     locale: 'en'
     slugger_to_lower: true
     avatar_directory: '%kernel.project_dir%/public/avatar'
+    picture_directory: '%kernel.project_dir%/public/images/animal'
     locationiq_key: '%env(LOCATIONIQ_KEY)%'
 
 services:

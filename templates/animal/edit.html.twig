@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche animal - Edition{% endblock %}
+
+{% block body %}
+    <h1>Mettre à jour la fiche de mon animal</h1>
+
+    {{ include('animal/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('animal_list_index') }}">back to list</a>
+
+    <a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
+{% endblock %}

@@ -152,6 +152,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
      */
     private $messagesTo;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Animal", mappedBy="user")
+     */
+    private $animals;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -161,6 +166,7 @@ class User implements UserInterface, \Serializable, EquatableInterface
         $this->messagesTo = new ArrayCollection();
         $this->commentsOwner = new ArrayCollection();
         $this->commentsPetsitter = new ArrayCollection();
+        $this->animals = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -603,5 +609,36 @@ class User implements UserInterface, \Serializable, EquatableInterface
         }
         
         return true;
+    }
+
+    /**
+     * @return Collection|Animal[]
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): self
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals[] = $animal;
+            $animal->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): self
+    {
+        if ($this->animals->contains($animal)) {
+            $this->animals->removeElement($animal);
+            // set the owning side to null (unless already changed)
+            if ($animal->getUser() === $this) {
+                $animal->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -41,6 +41,18 @@
                         <td>{{ user.lastname }}</td>
                     </tr>
                     <tr>
+                        <th scope="row">Adresse</th>
+                        <td>{{ user.address }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ville (CP)</th>
+                        <td>{{ user.city }} ({{ user.zipCode }})</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Téléphones</th>
+                        <td>Fixe : {{ user.phoneNumber }} / Mobile : {{ user.cellNumber }}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">Rôle / Type</th>
                         <td>{{ user.role.name }} / {{ user.type }}</td>
                     </tr>
@@ -52,7 +64,8 @@
                 {% if presentation %}
                 <a class="btn btn-secondary text-white" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
                 {% endif %}
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('messenging') }}">Messagerie </a>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('animal_list_index') }}">Mes animaux</a>
+                <a class="btn btn-secondary text-white" role="button" href="{{ path('messenging') }}">Messagerie</a>
            </div>
     </div>
     {# Liste des commentaires à valider

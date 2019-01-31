@@ -173,7 +173,7 @@ class PresentationController extends AbstractController
     }
 
     /**
-     * @Route("/presentation/{slug}/{id}", name="presentation_show", methods={"GET"})
+     * @Route("/presentation/{slug}/{id}", name="presentation_show", methods={"GET"}, requirements={"id"="\d+"})
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
