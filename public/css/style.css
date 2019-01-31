@@ -179,6 +179,7 @@ criteria-nav > div{
 .last {
     color: #17A2B8;
     font-weight: 700;
+    margin: 0 0.4rem;
 }
 
 .first a,

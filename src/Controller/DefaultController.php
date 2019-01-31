@@ -55,6 +55,7 @@ class DefaultController extends AbstractController
         // FIN calcul moyenne des notes de tous les petsitterse
 
         // PAGINATION
+        // https://packagist.org/packages/knplabs/knp-paginator-bundle
         // Pour la pagination, injection des services PaginatorInterface et Request
         // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
 
@@ -184,9 +185,9 @@ class DefaultController extends AbstractController
         $notes = $noteResolv->getUsersNotesFromPres($presentations);
 
         // PAGINATION
+        // https://packagist.org/packages/knplabs/knp-paginator-bundle
         // Pour la pagination, injection des services PaginatorInterface et Request
         // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
-
         $presentations = $paginator->paginate(
             // Doctrine Query, not results
             $presentations,
