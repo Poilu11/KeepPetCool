@@ -80,13 +80,12 @@ class UserType extends AbstractType
                         ]
                     ],
                     'constraints' => [
-                        // Ne fonctionne pas correctement => traité dans le Controller
-                        // new Length([
-                        //     'min' => 4,
-                        //     'max' => 12,
-                        //     'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
-                        //     'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
-                        // ])
+                        new Length([
+                            'min' => 4,
+                            'max' => 12,
+                            'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
+                            'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
+                        ])
                     ]
                 ])
                 ->remove('type');
