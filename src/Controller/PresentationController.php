@@ -6,6 +6,7 @@ use App\Util\Slugger;
 use App\Util\NoteResolver;
 use App\Entity\Presentation;
 use App\Form\PresentationType;
+use App\Repository\AnimalRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PresentationRepository;
@@ -193,7 +194,7 @@ class PresentationController extends AbstractController
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
-    public function show($id, $slug, Presentation $presentation, PresentationRepository $presentationRepository, CommentRepository $commentRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
+    public function show($id, $slug, Presentation $presentation, PresentationRepository $presentationRepository, CommentRepository $commentRepository, AnimalRepository $animalRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
     {
         // On vérifie que le slug est égal au slug de la présentation recherché par l'id
         if($slug !== $presentationRepository->find($id)->getSlug())
@@ -285,11 +286,19 @@ class PresentationController extends AbstractController
         // }
         // FIN Calcul moyenne des notes
 
+        $animals = $animalRepository->findBy(['user' => $presentation->getUser(), 'isActive' => true], ['title' => 'ASC']);
+        
+        if(empty($animals))
+        {
+            $animals = false;
+        }
+
         return $this->render('presentation/show.html.twig', [
             'presentation' => $presentation,
             'comments' => $comments,
             'nbComments' => count($comments),
-            'note' => $noteResolver->getUserNoteFromPres($presentation)
+            'note' => $noteResolver->getUserNoteFromPres($presentation),
+            'animals' => $animals
         ]);
     }
 
