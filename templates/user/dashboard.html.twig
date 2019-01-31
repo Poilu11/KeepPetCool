@@ -58,14 +58,14 @@
                     </tr>
                 </tbody>
             </table>
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
-                <a class="btn btn-secondary text-white"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
+                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
+                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
+                <a class="btn btn-secondary text-white mt-2"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
                 {% if presentation %}
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
+                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
                 {% endif %}
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('animal_list_index') }}">Mes animaux</a>
-                <a class="btn btn-secondary text-white" role="button" href="{{ path('messenging') }}">Messagerie</a>
+                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_list_index') }}">Mes animaux</a>
+                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('messenging') }}">Messagerie</a>
            </div>
     </div>
     {# Liste des commentaires à valider
@@ -111,6 +111,9 @@
             </a>
             <a class="text-decoration-none text-dark " href="{{ path('presentation_disable_list') }}">
                 <li class="list-group-item" aria-disabled="true">Liste des présentations bloquées</li>
+            </a>
+            <a class="text-decoration-none text-dark " href="{{ path('animal_disable_list') }}">
+                <li class="list-group-item" aria-disabled="true">Liste des fiches animal bloquées</li>
             </a>
         </ul>
     </div>

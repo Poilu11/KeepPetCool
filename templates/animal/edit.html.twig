@@ -5,6 +5,12 @@
 {% block body %}
     <h1>Mettre à jour la fiche de mon animal</h1>
 
+    {% if animal.isActive %}
+    <p style="color: blue;">Fiche actuellement activée : <a href="{{ path('animal_disable', {'id': animal.id}) }}">Désactiver</a></p>
+    {% else %}
+    <p style="color: red;">Fiche actuellement non-activée (non-publiée) : <a href="{{ path('animal_disable', {'id': animal.id}) }}">Activer</a></p>
+    {% endif %}
+
     {{ include('animal/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('animal_list_index') }}">back to list</a>

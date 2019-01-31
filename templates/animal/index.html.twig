@@ -37,8 +37,9 @@
                 <td>{{ animal.picture3 }}</td>
                 <td>{{ animal.isActive ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('animal_show', {'slug': animal.slug, 'id': animal.id}) }}">show</a>
-                    <a href="{{ path('animal_edit', {'id': animal.id}) }}">edit</a>
+                    <a href="{{ path('animal_show', {'slug': animal.slug, 'id': animal.id}) }}">Voir</a>
+                    <a href="{{ path('animal_edit', {'id': animal.id}) }}">Editer</a>
+                    <a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
                 </td>
             </tr>
         {% else %}
@@ -49,5 +50,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('animal_new') }}">Create new</a>
+    <a href="{{ path('animal_new') }}" class="btn btn-success">Créer une fiche de présentation de mon animal de compagnie</a>
 {% endblock %}

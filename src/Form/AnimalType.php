@@ -18,9 +18,9 @@ class AnimalType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Présentation de votre animal',
+                'label' => 'Titre de présentation de votre animal (*)',
                 'attr' => [
-                    'placeholder' => 'Ex : Je vous présente mon chien Medor'
+                    'placeholder' => 'Présentation de Titi, mon petit pitbull chéri'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -32,16 +32,17 @@ class AnimalType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom de votre animal de compagnie (facultatif)',
                 'attr' => [
-                    'placeholder' => 'Ex : Titi'
+                    'placeholder' => 'Titi'
                 ]
             ])
             ->add('detail', TextType::class, [
-                'label' => 'Informations complémentaires sur votre animal',
+                'label' => 'Informations complémentaires sur votre animal (facultatif)',
                 'attr' => [
                     'placeholder' => 'Merci de préciser au besoin l\'espèce ou la race de votre animal de compagnie'
                 ]
             ])
             ->add('sex', ChoiceType::class, [
+                'label' => 'Sexe de votre animal ? (facultatif)',
                 'expanded' => false,
                 'multiple' => false,
                 'choices'  => [
@@ -51,6 +52,7 @@ class AnimalType extends AbstractType
                 ],
             ])
             ->add('age', ChoiceType::class, [
+                'label' => 'Quel âge a votre animal de compagnie ? (facultatif)',
                 'expanded' => false,
                 'multiple' => false,
                 'choices'  => [
@@ -78,9 +80,9 @@ class AnimalType extends AbstractType
                 ],
             ])
             ->add('body', TextareaType::class, [
-                'label' => 'Présentez votre animal de compagnie',
+                'label' => 'Présentez votre animal de compagnie (*)',
                 'attr' => [
-                    'placeholder' => 'Décrivez-nous votre animal de compagnie',
+                    'placeholder' => 'Décrivez-nous votre animal de compagnie, son caractère, ses habitudes, ses goûts, etc.',
                     'rows' => 7
                 ],
                 'constraints' => [
@@ -90,13 +92,13 @@ class AnimalType extends AbstractType
                 ]
             ])
             ->add('picture1', FileType::class, [
-                'label' => 'Image n°1'
+                'label' => 'Image n°1 de votre animal (facultatif mais recommandée)'
             ])
             ->add('picture2', FileType::class, [
-                'label' => 'Image n°2'
+                'label' => 'Image n°2 de votre animal (facultatif)'
             ])
             ->add('picture3', FileType::class, [
-                'label' => 'Image n°3'
+                'label' => 'Image n°3 de votre animal (facultatif)'
             ])
             // ->add('isActive')
             // ->add('user')

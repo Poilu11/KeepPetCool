@@ -173,7 +173,23 @@ class PresentationController extends AbstractController
     }
 
     /**
-     * @Route("/presentation/{slug}/{id}", name="presentation_show", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/presentation/disablelist", name="presentation_disable_list", methods={"GET"})
+     */
+    public function disableListPresentation(PresentationRepository $presentationRepository)
+    {
+        // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+
+       // On récupère la liste de tous les publications désactivées
+       $presentations = $presentationRepository->findBy(['isActive' => false], ['createdAt' => 'DESC']);
+
+       return $this->render('presentation/listDisablePresentations.html.twig', [
+            'presentations' => $presentations
+        ]);
+    }
+
+    /**
+     * @Route("/presentation/{id}/{slug}", name="presentation_show", methods={"GET"}, requirements={"id"="\d+"})
      * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
      * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
      */
@@ -277,19 +293,4 @@ class PresentationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/presentation/disablelist", name="presentation_disable_list", methods={"GET"})
-     */
-    public function disableListPresentation(PresentationRepository $presentationRepository)
-    {
-        // On vérifie que l'utilisateur soit admin ou modo
-       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
-
-       // On récupère la liste de tous les publications désactivées
-       $presentations = $presentationRepository->findBy(['isActive' => false], ['createdAt' => 'DESC']);
-
-       return $this->render('presentation/listDisablePresentations.html.twig', [
-            'presentations' => $presentations
-        ]);
-    }
 }

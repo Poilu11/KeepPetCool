@@ -6,11 +6,12 @@ use App\Util\Slugger;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -24,13 +25,14 @@ class AnimalController extends AbstractController
      */
     public function index(AnimalRepository $animalRepository): Response
     {
+
         // On vérifie que l'utilisateur soit admin ou modo ou le titulaire de sa fiche de présentation
        $this->denyAccessUnlessGranted(['IS_AUTHENTICATED_FULLY']);
 
        // On récupère les infos du user connecté
        $currentUser = $this->getUser();
 
-       $animals = $animalRepository->findBy(['user' => $currentUser], ['title' => 'DESC']);
+       $animals = $animalRepository->findBy(['user' => $currentUser], ['title' => 'ASC']);
 
         return $this->render('animal/index.html.twig', [
             'animals' => $animals
@@ -131,7 +133,10 @@ class AnimalController extends AbstractController
                 'Votre fiche animal a correctement été crée !'
             );
 
-            return $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('animal_show', [
+                'id' => $animal->getId(),
+                'slug' => $animal->getSlug()
+            ]);
         }
 
         return $this->render('animal/new.html.twig', [
@@ -141,28 +146,28 @@ class AnimalController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/{id}", name="animal_show", methods={"GET"}, requirements={"id"="\d+"})
-     * @ParamConverter("animal", options={"mapping": {"slug": "slug"}})
-     * @ParamConverter("animal", options={"mapping": {"id": "id"}})
-     */
-    public function show($slug, $id, Animal $animal, AnimalRepository $animalRepository): Response
-    {
-        // On vérifie que le slug est égal au slug de la fiche animal recherchée par l'id
-        if($slug !== $animalRepository->find($id)->getSlug())
-        {
-            throw $this->createNotFoundException('Fiche animal non trouvée');
-        }
-            
-        return $this->render('animal/show.html.twig', [
-            'animal' => $animal,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="animal_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function edit(Request $request, Animal $animal, Slugger $slugger): Response
     {
+        // On vérifie que l'utilisateur soit connecté
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // On récupere les informations du user connecté
+        $currentUser = $this->getUser();
+
+        // On vérifie que le currentUser et le même utilisateur
+        // que le user auteur de la fiche animal
+        if($currentUser !== $animal->getUser())
+        {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas éditer la fiche animal d\'un tiers !'
+            );
+            
+            return $this->redirectToRoute('dashboard');
+        }
+
         ///////////////////////////////////////////////////////////////////////////
         // On récupère les anciennes images
         $oldPicture1 = $animal->getPicture1();
@@ -356,7 +361,7 @@ class AnimalController extends AbstractController
 
         // On vérifie que le user n'a pas
         // l'image par défaut
-        if($picture1 !== 'default-image.png' && !is_null($picture1))
+        if($picture1 !== 'default-picture.png' && !is_null($picture1))
         {
             // On supprime la picture1 (sauf s'il s'agit de celle par défaut)
             unlink(
@@ -382,9 +387,10 @@ class AnimalController extends AbstractController
         $em->remove($animal);
         $em->flush();
 
+        // Gestion du message Flash
         $this->addFlash(
             'danger',
-            'Votre fiche anima a bien été supprimée !'
+            'Votre fiche animal a bien été supprimée !'
         );
 
         return $this->redirectToRoute('animal_list_index');
@@ -401,4 +407,112 @@ class AnimalController extends AbstractController
         return md5(uniqid());
     }
 
+    /**
+     * @Route("/{id}/disable", name="animal_disable", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function disable(Animal $animal, Request $request, EntityManagerInterface $em)
+    {
+        // On vérifie que l'utilisateur soit admin ou modo ou le titulaire de sa fiche de présentation
+       $this->denyAccessUnlessGranted(['IS_AUTHENTICATED_FULLY']);
+
+       $currentUser = $this->getUser();
+
+       if($currentUser->getRole()->getCode() !== 'ROLE_ADMIN' && $currentUser->getRole()->getCode() !== 'ROLE_MODO' && $currentUser->getId() !== $animal->getUser()->getId())
+       {
+            $this->addFlash(
+                'danger',
+                'Vous n\'avez pas l\'autorisaton de désactiver la fiche animal d\'un tiers'
+            );
+
+            return $this->redirectToRoute('dashboard');
+       }
+
+       if($animal->getIsActive())
+       {
+            $animal->setIsActive(false);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Fiche animal désactivée avec succès !'
+            );
+
+       }
+       else
+       {
+            $animal->setIsActive(true);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Fiche animal activée avec succès !'
+            );
+       }
+
+        return $this->redirectToRoute('animal_show', [
+            'id' => $animal->getId(),
+            'slug' => $animal->getSlug(),
+        ]);
+    }
+
+    /**
+     * @Route("/disablelist", name="animal_disable_list", methods={"GET"})
+     */
+    public function disableListAnimal(AnimalRepository $animalRepository)
+    {
+        // On vérifie que l'utilisateur soit admin ou modo
+       $this->denyAccessUnlessGranted(['ROLE_ADMIN','ROLE_MODO']);
+
+       // On récupère la liste de tous les fiches animal désactivées
+       $animals = $animalRepository->findBy(['isActive' => false], ['title' => 'ASC']);
+
+       return $this->render('animal/listDisableAnimals.html.twig', [
+            'animals' => $animals
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/{slug}", name="animal_show", methods={"GET"}, requirements={"id"="\d+","slug"="[^/]+"})
+     * @ParamConverter("animal", options={"mapping": {"id": "id"}})
+     * @ParamConverter("animal", options={"mapping": {"slug": "slug"}})
+     */
+    public function show($id, $slug, Animal $animal, AnimalRepository $animalRepository): Response
+    {
+        // On vérifie que le slug est égal au slug de la fiche animal recherchée par l'id
+        if($slug !== $animalRepository->find($id)->getSlug())
+        {
+            throw $this->createNotFoundException('Fiche animal non trouvée');
+        }
+        
+        // Si fiche animal bloquée
+        $currentUser = $this->getUser();
+        if(!$animal->getIsActive())
+        {
+            // Utilisateur non connecté
+            if(!isset($currentUser))
+            {
+                $this->addFlash(
+                    'danger',
+                    'Fiche animal actuellement bloquée !'
+                );
+
+                return $this->redirectToRoute('home_page');
+            }
+
+            // Utilisateur connecté avec le rôle User
+            if(isset($currentUser) && $currentUser->getRole()->getCode() == 'ROLE_USER')
+            {
+                $this->addFlash(
+                    'danger',
+                    'Fiche animal actuellement bloquée !'
+                );
+
+                return $this->redirectToRoute('home_page');
+            }
+        }
+            
+        return $this->render('animal/show.html.twig', [
+            'animal' => $animal,
+        ]);
+    }
 }
