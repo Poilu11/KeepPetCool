@@ -6,8 +6,9 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -16,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("username", message="Identifiant déjà utilisé")
  * @UniqueEntity("email", message="Adresse email déjà utilisée")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, EquatableInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -585,5 +586,22 @@ class User implements UserInterface, \Serializable
         }
 
         return $this;
+    }
+
+    /**
+     * Returns whether the current user is up-to-date or requires re-authentication.
+     */
+    public function isEqualTo(UserInterface $user) : bool
+    {
+        // Nécesssite implémentation EquatableInterface
+        if (!$user instanceof self) {
+            return false;
+        }
+        
+        if ($this->getId() !== $user->getId()) {
+            return false;
+        }
+        
+        return true;
     }
 }
