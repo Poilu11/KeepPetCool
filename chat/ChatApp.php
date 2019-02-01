@@ -38,30 +38,30 @@ class ChatApp implements MessageComponentInterface {
 
         //La chaine de caractère $msg est formattée à la manière du json. On utilise json décode pour la rendre exploitable.
         
-
         $msg = json_decode($msg, true);
         var_dump($msg);
+
+        //Si aucune couleur n'est associé à cet Id, alors on en associe une.
+        if(!array_key_exists($msg["id"], $this->idToColor))
+        {
+            $this->idToColor[$msg["id"]] = $this->colors[array_rand($this->colors)];
+        }
+
+        $msg["color"] = $this->idToColor[$msg["id"]];
 
         //Pour chaque client qui n'est pas l'auteur du message, on trnasmet le message.
         foreach ($this->clients as $client)
         {
-            if(!array_key_exists($msg["id"], $this->idToColor))
-            {
-                $this->idToColor[$msg["id"]] = $this->colors[array_rand($this->colors)];
-            }
-
-            $msg["color"] = $this->idToColor[$msg["id"]];
-
             if ($from !== $client)
             {
-                $msg = json_encode($msg);
-                $client->send($msg);
+                $json = json_encode($msg);
+                $client->send($json);
             }
             else if( $from === $client)
             {
                 $msg["username"] = "Me (".$msg["username"].")";
-                $msg = json_encode($msg);
-                $client->send($msg);
+                $json = json_encode($msg);
+                $client->send($json);
             }
         }
     }
