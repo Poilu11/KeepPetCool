@@ -18,7 +18,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="home_page", methods={"GET"})
+     * @Route("/", name="welcome", methods={"GET"})
+     */
+    public function welcome()
+    {
+        // Notre page d'accueil explicative
+
+        return $this->render('default/welcome.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/index", name="home_page", methods={"GET"})
      */
     public function home(NoteResolver $noteResolver, PaginatorInterface $paginator, Request $request)
     {

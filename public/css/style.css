@@ -18,6 +18,103 @@ body {
     box-sizing: border-box;
 }
 
+/* Début Page Welcome */
+
+#fisrtPartHome {
+    width: 100%;
+    min-height: 400px;
+    background-color: #78C2AD;
+    padding: 0 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row nowrap;
+    text-align: center;
+    margin-top: -2rem;
+}
+
+#fisrtPartHome div {
+    margin: 0 2rem;
+}
+
+#fisrtPartHome div h2 {
+    font-size: 4rem;
+}
+
+#fisrtPartHome div h3 {
+    font-size: 3rem;
+}
+
+#fisrtPartHome div h2,
+#fisrtPartHome div h3 {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+#secondPartHome {
+    width: 100%;
+    min-height: 400px;
+    background-color: #FFCE67;
+    padding: 0 20%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+}
+
+#secondPartHome div {
+    margin: 1rem auto;
+    text-align: center;
+}
+
+#secondPartHome div h4 {
+    margin: 2rem 0;
+}
+
+#boldHome {
+    font-weight: bold;
+}
+
+#petsittingPicture {
+    position: absolute;
+    bottom: 5rem;
+    right : 10rem;
+    width: 7%;
+}
+
+#thirdPartHome {
+    width: 100%;
+    min-height: 400px;
+    background-color: rgb(252, 153, 96);
+    padding: 3% 0;
+}
+
+#fourthPartHome {
+    width: 100%;
+    min-height: 200px;
+    background-color: #6CC3D5;
+    margin-bottom: -3rem;
+}
+
+#fourthPartHome h5 {
+    width: 100%;
+    text-align: center;
+}
+
+#socialGallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row nowrap;
+}
+
+#fourthPartHome img {
+    width: 5%;
+    margin: 1rem;
+}
+
+/* Fin Page Welcome */
+
 footer {
 
     position: absolute;
