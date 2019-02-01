@@ -3,79 +3,108 @@
 {% block title %}Animal{% endblock %}
 
 {% block body %}
-    <h1>Animal</h1>
+<div class="container">
 
-    {% if is_granted('ROLE_MODO') %}
-    <div class=" d-flex justify-content-end">
-        <a class="m-3 btn btn-danger text-white" href="{{ path('animal_disable', {'id': animal.id}) }}"
-            role="button"><i class="text-white fas fa-times" style="color: red;"></i> Bloquer/Débloquer cette
-            fiche animal</a>
+{% if is_granted('ROLE_MODO') %}
+<div class=" d-flex justify-content-end">
+    <a class="m-3 btn btn-danger text-white" href="{{ path('animal_disable', {'id': animal.id}) }}" role="button"><i
+            class="text-white fas fa-times" style="color: red;"></i> Bloquer/Débloquer cette
+        fiche animal</a>
+</div>
+{% endif %}
+
+{% if not animal.isActive %}
+<p style="color: red;">Fiche animal actuellement bloquée</p>
+{% endif %}
+
+ <!-- The Modal -->
+ <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
     </div>
-    {% endif %}
+  </div>
 
-    {% if not animal.isActive %}
-    <p style="color: red;">Fiche animal actuellement bloquée</p>
-    {% endif %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Propriétaire</th>
-                <td>{{ animal.user.username }} - {{ animal.user.firstname }} {{ animal.user.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ animal.title }}</td>
-            </tr>
-            <tr>
-                <th>Nom de mon animal</th>
-                <td>{{ animal.name }}</td>
-            </tr>
-            <tr>
-                <th>Detail</th>
-                <td>{{ animal.detail }}</td>
-            </tr>
-            <tr>
-                <th>Sex</th>
-                <td>{{ animal.sex }}</td>
-            </tr>
-            <tr>
-                <th>Age</th>
-                <td>{{ animal.age }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ animal.body|nl2br }}</td>
-            </tr>
-            <tr>
-                <th>Picture1</th>
-                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}"
-                    style="width: 100px; height:150px;"></td>
-            </tr>
-            {# pour conditionner affichage de l'image 2 #}
-            {% if animal.picture2 %}
-            <tr>
-                <th>Picture2</th>
-                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture2) }}"
-                    style="width: 100px; height:150px;"></td>
-            </tr>
-            {% endif %}
-            {# pour conditionner affichage de l'image 3 #}
-            {% if animal.picture3 %}
-            <tr>
-                <th>Picture3</th>
-                <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture3) }}"
-                    style="width: 100px; height:150px;"></td>
-            </tr>
-            {% endif %}
 
-            
-        </tbody>
-    </table>
+    <h2 class="text-center">{{ animal.name }}</h2>
+    <div class="d-flex justify-content-around text-center"> 
+    <img class="img-thumbnail img-responsive" style="border-radius:50%;width:200px; height:200px;" alt="img-responsive" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
+    <img class="img-thumbnail" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
+    <img class="img-thumbnail" style="border-radius:50%; width:200px; height:200px;" src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
+</div>
 
-    {# <a href="{{ path('animal_list_index') }}">back to list</a>
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Propriétaire</th>
+            <td>{{ animal.user.username }} </td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ animal.title }}</td>
+        </tr>
+        <tr>
+            <th>Nom de mon animal</th>
+            <td>{{ animal.name }}</td>
+        </tr>
+        <tr>
+            <th>Detail</th>
+            <td>{{ animal.detail }}</td>
+        </tr>
+        <tr>
+            <th>Sex</th>
+            <td>{{ animal.sex }}</td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td>{{ animal.age }}</td>
+        </tr>
+        <tr>
+            <th>Body</th>
+            <td>{{ animal.body|nl2br }}</td>
+        </tr>
+        {# pour conditionner affichage de l'image 2 #}
+        {% if animal.picture2 %}
+        <tr>
+            <th>Picture2</th>
+            <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture2) }}" style="width: 100px; height:150px;"></td>
+        </tr>
+        {% endif %}
+        {# pour conditionner affichage de l'image 3 #}
+        {% if animal.picture3 %}
+        <tr>
+            <th>Picture3</th>
+            <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture3) }}" style="width: 100px; height:150px;"></td>
+        </tr>
+        {% endif %}
 
-    <a href="{{ path('animal_edit', {'id': animal.id}) }}">edit</a>
-    <a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a> #}
+
+    </tbody>
+</table>
+
+<a href="{{ path('animal_list_index') }}">back to list</a>
+
+<a href="{{ path('animal_edit', {'id': animal.id}) }}">edit</a>
+<a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
+
+</div>
 
 {% endblock %}

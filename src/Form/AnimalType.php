@@ -50,16 +50,23 @@ class AnimalType extends AbstractType
                     'F' => 'F',
                     'M' => 'M'
                 ],
+                'attr' => [
+                    'style' => 'width: 200px'
+            ],
             ])
             ->add('age', ChoiceType::class, [
                 'label' => 'Quel âge a votre animal de compagnie ? (facultatif)',
                 'expanded' => false,
                 'multiple' => false,
+                'attr' => [
+                        'style' => 'width: 200px'
+                ],
                 'choices'  => [
                     'NC' => null,
                     '0' => 0,
                     '1' => 1,
-                    '2' => 3,
+                    '2' => 2,
+                    '3' => 3,
                     '4' => 4,
                     '5' => 5,
                     '6' => 6,
@@ -76,7 +83,8 @@ class AnimalType extends AbstractType
                     '17' => 17,
                     '18' => 18,
                     '19' => 19,
-                    '20' => 20                   
+                    '20' => 20,
+                    '21' => 21     
                 ],
             ])
             ->add('body', TextareaType::class, [
@@ -95,10 +103,10 @@ class AnimalType extends AbstractType
                 'label' => 'Image n°1 de votre animal (facultatif mais recommandée)'
             ])
             ->add('picture2', FileType::class, [
-                'label' => 'Image n°2 de votre animal (facultatif)'
+                'label' => 'Image n°2 de votre animal (facultatif)'                
             ])
             ->add('picture3', FileType::class, [
-                'label' => 'Image n°3 de votre animal (facultatif)'
+                'label' => 'Image n°3 de votre animal (facultatif)'               
             ])
             // ->add('isActive')
             // ->add('user')
