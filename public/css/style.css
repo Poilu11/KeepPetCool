@@ -75,6 +75,17 @@ body {
     font-weight: bold;
 }
 
+.linkHome {
+    font-size: 1.5rem;
+    color: #78C2AD;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.linkHome:hover {
+    color: #78C2AD;
+}
+
 #petsittingPicture {
     position: absolute;
     bottom: 5rem;
@@ -97,8 +108,10 @@ body {
 }
 
 #fourthPartHome h5 {
+    font-weight: bold;
     width: 100%;
     text-align: center;
+    padding-top: 1rem;
 }
 
 #socialGallery {
@@ -106,6 +119,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-flow: row nowrap;
+    margin-bottom: 1rem;
 }
 
 #fourthPartHome img {
