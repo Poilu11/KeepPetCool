@@ -139,9 +139,17 @@
 <div class="container border-left border-dark">
     <h4>A propos de {{ presentation.user.firstname}}</h4>
     <p id="presentationBody">{{ presentation.body|nl2br }}</p>
-
-
-
+    {% if animals %}
+    <h4>Ces animaux :</h4>
+    <div class="m-4 d-flex justify-content-between">
+    {% for animal in presentation.user.animals %}
+    <div>
+    <p class="text-center">{{ animal.name }}</p>
+    <a href="{{ path('animal_show', {'slug': animal.slug, 'id': animal.id}) }}"><img class="modal-image img-thumbnail" data-toggle="modal" data-target=".modal1" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}"></a>
+</div>
+    {% endfor %}
+</div>
+    {% endif %}
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Coordonnées :</p>
     <ul>

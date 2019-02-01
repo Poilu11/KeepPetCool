@@ -58,15 +58,18 @@
                     </tr>
                 </tbody>
             </table>
-                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
-                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
-                <a class="btn btn-secondary text-white mt-2"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
-                {% if presentation %}
-                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
-                {% endif %}
-                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_list_index') }}">Mes animaux</a>
-                <a class="btn btn-secondary text-white mt-2" role="button" href="{{ path('messenging') }}">Messagerie</a>
+            
            </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Aller à l'accueil</a>
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('profile_edit', {'id': user.id}) }}" >Editer mon profil</a>
+        <a class="m-2 btn btn-secondary text-white mt-2"  role="button" href="{{ path('presentation_new') }}">Créer/Editer ma fiche de présentation</a>
+        {% if presentation %}
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('presentation_show' , {'id': presentation.id, 'slug': presentation.slug }) }}">Ma présentation</a>
+        {% endif %}
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_list_index') }}">Mes animaux</a>
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('messenging') }}">Messagerie</a>
     </div>
     {# Liste des commentaires à valider
     uniquement si le user est de type "petsitter" #}

@@ -17,94 +17,77 @@
 <p style="color: red;">Fiche animal actuellement bloquée</p>
 {% endif %}
 
- <!-- The Modal -->
- <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 
+<!-- Large modal Mohamed -->
+ 
 
-
-    <h2 class="text-center">{{ animal.name }}</h2>
+    <h2 class="text-center font-weight-bold">{{ animal.name }}</h2>
     <div class="d-flex justify-content-around text-center"> 
-    <img class="img-thumbnail img-responsive" style="border-radius:50%;width:200px; height:200px;" alt="img-responsive" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
-    <img class="img-thumbnail" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
-    <img class="img-thumbnail" style="border-radius:50%; width:200px; height:200px;" src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
+            <img class="modal-image img-thumbnail" data-toggle="modal" data-target=".modal1" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
+
+            <div class="modal fade modal1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                   <img src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
+                   <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+            {% if animal.picture2 %}
+            <img class="modal-image img-thumbnail" data-toggle="modal" data-target=".modal-2" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
+            <div class="modal fade modal-2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                   <img src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
+                   <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% if animal.picture3 %}
+            <img class="modal-image img-thumbnail" data-toggle="modal" data-target=".modal3" style="border-radius:50%; width:200px; height:200px;;" src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
+
+            <div class="modal fade modal3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                   <img src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
+                   <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+ 
 </div>
 
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Propriétaire</th>
-            <td>{{ animal.user.username }} </td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ animal.title }}</td>
-        </tr>
-        <tr>
-            <th>Nom de mon animal</th>
-            <td>{{ animal.name }}</td>
-        </tr>
-        <tr>
-            <th>Detail</th>
-            <td>{{ animal.detail }}</td>
-        </tr>
-        <tr>
-            <th>Sex</th>
-            <td>{{ animal.sex }}</td>
-        </tr>
-        <tr>
-            <th>Age</th>
-            <td>{{ animal.age }}</td>
-        </tr>
-        <tr>
-            <th>Body</th>
-            <td>{{ animal.body|nl2br }}</td>
-        </tr>
-        {# pour conditionner affichage de l'image 2 #}
-        {% if animal.picture2 %}
-        <tr>
-            <th>Picture2</th>
-            <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture2) }}" style="width: 100px; height:150px;"></td>
-        </tr>
-        {% endif %}
-        {# pour conditionner affichage de l'image 3 #}
-        {% if animal.picture3 %}
-        <tr>
-            <th>Picture3</th>
-            <td><img class="ml-3 mt-3 float-left" src="{{ asset(picture_upload_path ~ animal.picture3) }}" style="width: 100px; height:150px;"></td>
-        </tr>
-        {% endif %}
+<div class="card mt-4 mb-4 mr-auto ml-auto col-11 p-0  ">
+    <div class="card-header bg-dark">
+            <h3 class="text-white">{{ animal.title }}</h3>
+            
 
+    </div>
+    <div class="card-body">
+        <p>Sex : {{ animal.sex }} / Age : {{ animal.age }} ans</p> 
+        <p>Détails : {{ animal.detail }}</p>
+        <h3> A propos de léo :</h3>
+        <p>{{ animal.body|nl2br }}</p>
 
-    </tbody>
-</table>
+    </div>
+</div>
 
-<a href="{{ path('animal_list_index') }}">back to list</a>
-
-<a href="{{ path('animal_edit', {'id': animal.id}) }}">edit</a>
-<a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
-
+<div class="d-flex justify-content-center">
+{% if app.user == animal.user %}
+<a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_list_index') }}">Retour à la liste</a>
+<a class="m-2  btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_edit', {'id': animal.id}) }}">Editer</a>
+<a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
+{% endif %}
+<a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Retour</a>
+</div>
 </div>
 
 {% endblock %}

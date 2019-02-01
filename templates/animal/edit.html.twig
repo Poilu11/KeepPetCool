@@ -3,26 +3,20 @@
 {% block title %}Fiche animal - Edition{% endblock %}
 
 {% block body %}
-    <h1></h1>
-
-    {% if animal.isActive %}
-    <p style="color: blue;">Fiche actuellement activée : <a href="{{ path('animal_disable', {'id': animal.id}) }}">Désactiver</a></p>
-    {% else %}
-    <p style="color: red;">Fiche actuellement non-activée (non-publiée) : <a href="{{ path('animal_disable', {'id': animal.id}) }}">Activer</a></p>
-    {% endif %}
-    <div class="card mt-4 mb-4 mr-auto ml-auto col-6 p-0  ">
-        <div class="card-header bg-dark">
-            <h2 class="text-center text-white">Mettre à jour la fiche de mon animal</h2>
-        </div>
-        <div class="card-body">
-    {{ include('animal/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="card mt-4 mb-4 mr-auto ml-auto col-6 p-0  ">
+    <div class="card-header bg-dark">
+        <h2 class="text-center text-white">Mettre à jour la fiche de mon animal</h2>
+    </div>
+    <div class="card-body">
+        {% if animal.isActive %}
+        <p class="text-primary">Fiche actuellement activée : <a class="text-danger text-decoration-none" href="{{ path('animal_disable', {'id': animal.id}) }}">Désactiver</a></p>
+        {% else %}
+        <p class="text-primary">Fiche actuellement non-activée (non-publiée) : <a  class="text-success text-decoration-none" href="{{ path('animal_disable', {'id': animal.id}) }}">Activer</a></p>
+        {% endif %}
+        {{ include('animal/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
 </div>
-</div>
-    <a href="{{ path('animal_list_index') }}">back to list</a>
+<a href="{{ path('animal_list_index') }}">back to list</a>
 
-    <a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
+<a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
 {% endblock %}
-
-
-
-

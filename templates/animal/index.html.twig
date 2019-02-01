@@ -4,21 +4,17 @@
 
 {% block body %}
 <div class="container">
-    <h1 class="h2 text-center">Vos animaux</h1>
+    <h1 class="h1 text-center">Vos Animaux</h1>
 
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th class="table-light">Id</th>
                 <th>Title</th>
-                <!-- <th>Slug</th> -->
                 <th>Detail</th>
                 <th>Sex</th>
                 <th>Age</th>
                 <th>Body</th>
-                <!-- <th>Picture1</th>
-                <th>Picture2</th>
-                <th>Picture3</th> -->
                 <th>En Ligne</th>
                 <th>Actions</th>
             </tr>
@@ -28,14 +24,10 @@
             <tr class="table-light">
                 <td class="table-secondary">{{ animal.id }}</td>
                 <td class="table-secondary">{{ animal.title }}</td>
-                <!-- <td>{{ animal.slug }}</td> -->
                 <td>{{ animal.detail }}</td>
                 <td>{{ animal.sex }}</td>
                 <td>{{ animal.age }}</td>
                 <td>{{ animal.body }}</td>
-                <!-- <td>{{ animal.picture1 }}</td>
-                <td>{{ animal.picture2 }}</td>
-                <td>{{ animal.picture3 }}</td> -->
                 <td>{{ animal.isActive ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('animal_show', {'slug': animal.slug, 'id': animal.id}) }}">Voir /</a>
@@ -51,7 +43,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('animal_new') }}" class="btn btn-success">Créer une fiche de mon animal de compagnie</a>
-
+    <div class=" d-flex justify-content-center ">
+    <a href="{{ path('animal_new') }}" class="m-2 btn btn-secondary">Créer une fiche de mon animal de compagnie</a>
+    <a href="{{ path('dashboard') }}" class="m-2 btn btn-secondary">Retour au tableau de bord</a>
+    </div>
 </div>
 {% endblock %}
