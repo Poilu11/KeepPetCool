@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/DoctrineExtensions": "^1.1",
+        "cboden/ratchet": "^0.4.1",
         "fzaninotto/faker": "^1.8",
         "knplabs/knp-paginator-bundle": "^2.8",
         "sensio/framework-extra-bundle": "^5.1",
@@ -44,7 +45,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Chat\\": "chat/"
         }
     },
     "autoload-dev": {

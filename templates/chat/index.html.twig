@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+    <div class="chat container-fluid" data-maxMsg = "15" data-nbMsg="0">
+        <div class="displayPanel m-top-5"></div>
+
+        <input class="sendPanel m-top-5" type="text"></input>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        // On récupère les informations liés au serveur de websockets, définies dans le .env puis dans les globals de twig.
+        var ws_server_ip = "{{ ws_server_ip }}"; 
+        var ws_server_port = "{{ ws_server_port }}"; 
+        var username = "{{user.username}}";
+        var userId= "{{user.id}}";
+    </script>
+    <script src="{{asset('js/chat.js')}}"></script>
+{% endblock %}

@@ -76,80 +76,6 @@ ap-input {
     left: 10px;
 }
 
-/* 
-.criteria-nav{
-    z-index: 100;
-    position: fixed;
-    top: 0px;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    align-items : center;
-    color: whitesmoke;
-} */
-
-/* 
-criteria-nav > div{
-     display: flex; 
-    flex-direction: column;
-    align-content: center;
-    align-items : center;
-} */
-
-/* .criteria-nav > button{
-    border: solid 0.1em whitesmoke;
-    border-radius: 0.1em;
-    color: whitesmoke;
-} */
-
-/* .criteria-nav input{
-    width: 100;
-    padding: 0px;
-} */
-
-/* CSS barre SEARCH */
-/*
-#input-styling-address input {
-  display: inline-block;
-  border: 1px solid #d9d9d9;
-  border-radius: 12px;
-  background: #ffffff;
-  padding: 1em 0 1em 45px;
-  width: 100%;
-}
-
-#input-styling-address input:focus, #input-styling-address input:active {
-  outline: 0;
-  border-color: #aaaaaa;
-  background: #ffffff;
-}
-
-#input-styling-address .ap-nostyle-dropdown-menu {
-  box-shadow: none;
-  border: 1px solid #dadada;
-  border-radius: 0;
-  background: #fff;
-  width: 100%;
-}
-
-#input-styling-address .ap-nostyle-input-icon {
-  display: block;
-  position: absolute;
-  background: none;
-  border: none;
-}
-
-#input-styling-address .algolia-places-nostyle { width: 50%; }
-#input-styling-address .ap-nostyle-icon-pin { left: 5px;top: 10px; }
-#input-styling-address .ap-nostyle-icon-clear { right: 5px;top: 15px }
-#input-styling-address input:hover { border-color: silver; }
-#input-styling-address input::placeholder { color: #aaaaaa; }
-#input-styling-address .ap-nostyle-suggestion { border-bottom: 1px solid #efefef; }
-*/
-
 .ap-with-places {
     color: black;
 }
@@ -162,6 +88,47 @@ criteria-nav > div{
     background-size: cover;
     border-radius: 3.5em;
 }
+
+
+/* CSS du chat */
+
+.chat {
+    display: block;
+    width: 70%;
+    margin: auto;
+    padding: 1em;
+    font-size: 1.2em;
+    background-color: #6C757D;
+    border-radius: 30px;
+}
+
+.displayPanel {
+    height: 50vh;
+    border: black 1px solid;
+    padding:0.5em;
+    margin: auto;
+    margin-bottom: 1.5em;
+    overflow: auto;
+    background-color: #F5F5F5;
+    border: 2px solid black;
+    border-radius: 30px;
+    word-break: break-word;
+}
+
+.sendPanel {
+    width: 100%;
+    margin: auto;
+    background-color: #F5F5F5;
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+
+
+
+
+
+
 
 
 /* CSS de la pagination */
