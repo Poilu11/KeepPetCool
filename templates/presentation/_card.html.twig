@@ -51,6 +51,7 @@
          
 
             <p class="card-text text-dark mt-4 mb-4">
+                {# slice permet de couper une chaîne de caractères #}
             {{presentation.body|length > 200 ? presentation.body|slice(0,200) ~ '...' : presentation.body|slice(0,200)}}
             </p>
 

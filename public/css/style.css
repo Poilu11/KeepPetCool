@@ -12,6 +12,7 @@ body {
     padding-bottom: 3em;
 }
 
+
 * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -189,4 +190,12 @@ criteria-nav > div{
 .next a,
 .last a {
     color: #17A2B8;
+}
+
+
+/* CSS Formulaire */
+
+.prixh
+{
+    width: 200px;
 }

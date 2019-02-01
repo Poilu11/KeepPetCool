@@ -36,13 +36,13 @@ class UserType extends AbstractType
                     'invalid_message' => 'La confirmation du mot de passe est incorrecte',
                     'required' => true,
                     'first_options'  => [
-                        'label' => 'Mot de passe (entre 4 et 12 caractères)',
+                        'label' => 'Mot de passe (entre 4 et 18 caractères) (*)',
                         'attr' => [
                             'placeholder' => 'Création du mot de passe'
                         ]
                     ],
                     'second_options' => [
-                        'label' => 'Confirmation du mot de passe',
+                        'label' => 'Confirmation du mot de passe (*)',
                         'attr' => [
                             'placeholder' => 'Confirmation du mot de passe'
                         ]
@@ -53,7 +53,7 @@ class UserType extends AbstractType
                         ]),
                         new Length([
                             'min' => 4,
-                            'max' => 12,
+                            'max' => 18,
                             'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
                             'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
                         ])
@@ -68,13 +68,13 @@ class UserType extends AbstractType
                     'invalid_message' => 'La confirmation du mot de passe est incorrecte',
                     'required' => false,
                     'first_options'  => [
-                        'label' => 'Mot de passe (entre 4 et 12 caractères)',
+                        'label' => 'Mot de passe (entre 8 et 18 caractères) (*)',
                         'attr' => [
                             'placeholder' => 'Laisser vide si inchangé'
                         ]
                     ],
                     'second_options' => [
-                        'label' => 'Confirmation du mot de passe',
+                        'label' => 'Confirmation du mot de passe (*)',
                         'attr' => [
                             'placeholder' => 'Confirmation du mot de passe modifié'
                         ]
@@ -82,7 +82,7 @@ class UserType extends AbstractType
                     'constraints' => [
                         new Length([
                             'min' => 4,
-                            'max' => 12,
+                            'max' => 18,
                             'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
                             'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
                         ])
@@ -98,7 +98,7 @@ class UserType extends AbstractType
         
         $builder
             ->add('username', TextType::class, [
-                'label' => 'Identifiant',
+                'label' => 'Identifiant (*)',
                 'attr' => [
                     'placeholder' => 'Exemple : Richard75'
                 ],
@@ -116,9 +116,9 @@ class UserType extends AbstractType
             ])
             // ->add('password')
             ->add('email', EmailType::class, [
-                'label' => 'Adresse email',
+                'label' => 'Adresse email (*)',
                 'attr' => [
-                    'placeholder' => 'Exemple : example@gmail.com'
+                    'placeholder' => 'Exemple : richard75@gmail.com'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -132,7 +132,7 @@ class UserType extends AbstractType
             ])
             // ->add('isActive')
             ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
+                'label' => 'Prénom (*)',
                 'attr' => [
                     'placeholder' => 'Richard'
                 ],
@@ -143,7 +143,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('lastname', TextType::class, [
-                'label' => 'Nom',
+                'label' => 'Nom (*)',
                 'attr' => [
                     'placeholder' => 'Dupond'
                 ],
@@ -154,20 +154,21 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresse',
+                'label' => 'Adresse (*)',
                 'attr' => [
                     'placeholder' => '117 boulevard des Champs Elysées'
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Vous devez renseigner un nom'
+                        'message' => 'Vous devez renseigner une adresse'
                     ])
                 ]
             ])
             ->add('zipCode', TextType::class, [
-                'label' => 'Code Postal',
+                'label' => 'Code Postal (*)',
                 'attr' => [
-                    'placeholder' => '75000'
+                    'placeholder' => '75000',
+                    'style' => 'width: 200px'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -182,9 +183,10 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ville',
+                'label' => 'Ville (*)',
                 'attr' => [
-                    'placeholder' => 'Paris'
+                    'placeholder' => 'Paris',
+                    'style' => 'width: 350px'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -195,21 +197,42 @@ class UserType extends AbstractType
             ->add('longitude', HiddenType::class)
             ->add('latitude', HiddenType::class)
             ->add('avatar', FileType::class, [
-                'label' => 'Votre avatar'
+                'label' => 'Votre avatar (facultatif)'
             ])
             ->add('phoneNumber', TextType::class, [
-                'label' => 'Numéro téléphone fixe',
+                'label' => 'Numéro téléphone fixe (facultatif)',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => '01-20-30-40-50'
+                    'placeholder' => '01-20-30-40-50',
+                    'style' => 'width: 200px',
+                    'class' => 'autoCompletion'
                 ],
+                'constraints' => [
+                    new Length([
+                        'min' => 10,
+                        'max' => 16,
+                        'minMessage' => 'Numéro de téléphone trop court ! Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Numéro de téléphone trop long ! Maximum {{ limit }} caractères',
+                    ])
+                ]
             ])
             ->add('cellNumber', TextType::class, [
-                'label' => 'Numéro téléphone mobile (visible sur le site)',
+                'label' => 'Numéro téléphone mobile (facultatif)',
+                'help' => 'Votre numéro sera visible sur le site afin d\'être joignable (uniquement pour nos inscrits).',
                 'required' => false,
                 'attr' => [
-                    'placeholder' => '07-20-30-40-50'
+                    'placeholder' => '07-20-30-40-50',
+                    'style' => 'width: 200px',
+                    'class' => 'autoCompletion'
                 ],
+                'constraints' => [
+                    new Length([
+                        'min' => 10,
+                        'max' => 16,
+                        'minMessage' => 'Numéro de téléphone trop court ! Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Numéro de téléphone trop long ! Maximum {{ limit }} caractères',
+                    ])
+                ]
             ])
             // ->add('pathCertificat')
             // ->add('isValidated')
@@ -217,7 +240,7 @@ class UserType extends AbstractType
             // ->add('updatedAt')
             // ->add('connectedAt')
             ->add('type', ChoiceType::class, [
-                'label' => 'Vous êtes...',
+                'label' => 'Vous êtes... (*)',
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,
