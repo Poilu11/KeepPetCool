@@ -74,7 +74,7 @@
     <div class="card-body">
         <p>Sex : {{ animal.sex }} / Age : {{ animal.age }} ans</p> 
         <p>Détails : {{ animal.detail }}</p>
-        <h3> A propos de léo :</h3>
+        <h3>&Agrave; propos {% if animal.name %}de {{ animal.name }}{% endif %} :</h3>
         <p>{{ animal.body|nl2br }}</p>
 
     </div>

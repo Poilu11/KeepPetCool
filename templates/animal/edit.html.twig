@@ -13,7 +13,7 @@
         {% else %}
         <p class="text-primary">Fiche actuellement non-activée (non-publiée) : <a  class="text-success text-decoration-none" href="{{ path('animal_disable', {'id': animal.id}) }}">Activer</a></p>
         {% endif %}
-        {{ include('animal/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('animal/_form.html.twig', {'button_label': 'Valider'}) }}
     </div>
 </div>
 <a href="{{ path('animal_list_index') }}">back to list</a>
