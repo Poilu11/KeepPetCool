@@ -9,6 +9,7 @@ parameters:
     avatar_directory: '%kernel.project_dir%/public/avatar'
     picture_directory: '%kernel.project_dir%/public/images/animal'
     locationiq_key: '%env(LOCATIONIQ_KEY)%'
+    password_gmail: '%env(PASSWORD_GMAIL)%'
 
 services:
     # default configuration for services in *this* file
@@ -30,7 +31,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
+    
+    # SLUGGER
     petsitting_service.slugger:
         class: App\Util\Slugger
         arguments:
@@ -39,10 +41,18 @@ services:
     # valeur par defaut si type-hint utilisé dans une fonction (controller) ou un constructeur (nécessaire)
     App\Util\Slugger: '@petsitting_service.slugger'
 
-
+    # COORDRESOLVER
     petsitting_service.coordResolver:
         class: App\Util\CoordResolver
         arguments:
             $key: '%locationiq_key%'
 
     App\Util\CoordResolver: '@petsitting_service.coordResolver'
+
+    # MAILER
+    petsitting_service.mailer:
+        class: App\Util\Mailer
+        arguments:
+            $password: '%password_gmail%'
+
+    App\Util\Mailer: '@petsitting_service.mailer'

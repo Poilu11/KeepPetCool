@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Util\Mailer;
 use App\Entity\Message;
 use App\Repository\UserRepository;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +22,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/new", name="message_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository)
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository, Mailer $mailer)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -64,6 +67,13 @@ class MessageController extends AbstractController
 
             $em->persist($message);
             $em->flush();
+
+            // Début traitement envoi email au destinataire
+                $mailer->send($userTo->getEmail(),
+                    'Bonjour, <br>Nous vous informons que vous venez de recevoir un nouveau message sur votre messagerie interne KeepPetCool. <br>Connectez-vous à votre compte pour le consulter. <br> A bientôt. <br> L\'équipe KeepPetCool',
+                    $userTo->getFirstname(),
+                    $userTo->getLastname());
+            // Fin traitement envoi email au destinataire
 
             $this->addFlash(
                 'success',
