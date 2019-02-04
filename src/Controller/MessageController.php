@@ -22,7 +22,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/new", name="message_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository)
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository, \Swift_Mailer $mailer)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -68,47 +68,29 @@ class MessageController extends AbstractController
             $em->persist($message);
             $em->flush();
 
-            // Début traitement envoi email au destinataire
+            // DEBUT SWIFT MAILER
+                $message = (new \Swift_Message('KeepPetCool - Nouveau message !'))
+                ->setFrom('keeppetcool@gmail.com')
+                ->setTo($userTo->getEmail())
+                ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/new.html.twig',
+                ['username' => $userTo->getUsername()]
+                ),
+                'text/html'
+                );
 
-                // https://github.com/PHPMailer/PHPMailer
-                // https://forum.alsacreations.com/topic-20-79170-1-Probleme-avec-PHPMailer-sur-Mutu-OVH.html
+                $mailer->send($message);
+            // FIN SWIFT MAILER
 
-                $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-                try {
-                //Server settings
-                $mail->isSMTP();                                      // Set mailer to use SMTP
-                $mail->SMTPDebug = 2;
-                $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                $mail->Username = 'keeppetcool@gmail.com';                 // SMTP username
-                $mail->Password = 'keeppetcool4!';                           // SMTP password
-                $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-                $mail->Port = 465;                                    // TCP port to connect to
-
-                //Recipients
-                $mail->setFrom('keeppetcool@gmail.com', 'KeepPetCool');
-                $mail->addAddress($userTo->getEmail(), $userTo->getFirstname() . ' ' . $userTo->getLastname());
-
-                //Content
-                $mail->isHTML(true);                                  // Set email format to HTML
-                $mail->Subject = 'KeepPetCool - Nouveau message !';
-                $mail->Body    = 'Bonjour, <br> Vous avez reçu un nouveau message sur votre messagerie KeepPetCool. <br> Connectez-vous à votre compte pour y accéder. <br> A bientôt, <br> L\'équipe KeepPetCool';
-                $mail->AltBody = 'Bonjour, Vous avez reçu un nouveau message sur votre messagerie KeepPetCool. Connectez-vous à votre compte pour y accéder. A bientôt, L\'équipe KeepPetCool';
-
-                $mail->send();
-                    dd('Message envoyé OK');
-                } catch (Exception $e) {
-                    dd('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
-                }
-                    // Fin traitement envoi email au destinataire
-
-                    $this->addFlash(
-                        'success',
-                        'Votre message a correctement été envoyé'
-                    );
-                    
-                    return $this->redirectToRoute('messenging');
-                }
+            $this->addFlash(
+                'success',
+                'Votre message a correctement été envoyé'
+            );
+            
+            return $this->redirectToRoute('messenging');
+        }
 
         // Récupération des valeurs du bouton "Envoyer"
         // transmises en GET

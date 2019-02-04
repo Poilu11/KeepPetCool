@@ -1,0 +1,18 @@
+{# templates/emails/registration.html.twig #}
+
+<h3>Vous avez reçu un nouveau message !</h3>
+
+<p>Bonjour {{ username }},<br>
+    Vous avez reçu un nouveau message sur votre messagerie KeepPetCool.<br>
+    Connectez-vous à votre compte pour le consulter.
+</p>
+
+<p>
+    A bientôt,<br>
+    L'équipe KeepPetCool
+</p>
+
+
+
+{# example, assuming you have a route named "login" #}
+<p>Se connecter : <a href="{{ path('login') }}">Votre compte</a>.</p>
