@@ -76,7 +76,8 @@ class MessageController extends AbstractController
                 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
                 try {
                 //Server settings
-                $mail->isMail();                                      // Set mailer to use SMTP
+                $mail->isSMTP();                                      // Set mailer to use SMTP
+                $mail->SMTPDebug = 2;
                 $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->Username = 'keeppetcool@gmail.com';                 // SMTP username
@@ -95,9 +96,9 @@ class MessageController extends AbstractController
                 $mail->AltBody = 'Bonjour, Vous avez reçu un nouveau message sur votre messagerie KeepPetCool. Connectez-vous à votre compte pour y accéder. A bientôt, L\'équipe KeepPetCool';
 
                 $mail->send();
-                    // dump('Message envoyé OK');
+                    dd('Message envoyé OK');
                 } catch (Exception $e) {
-                    // dump('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
+                    dd('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
                 }
                     // Fin traitement envoi email au destinataire
 
