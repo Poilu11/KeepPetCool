@@ -101,23 +101,35 @@ ap-input {
     background-color: #6C757D;
     border-radius: 30px;
 }
+.displayPanel--frame{
 
-.displayPanel {
-    height: 50vh;
-    border: black 1px solid;
-    padding:0.5em;
-    margin: auto;
-    margin-bottom: 1.5em;
-    overflow: auto;
-    background-color: #F5F5F5;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 1em;
     border: 2px solid black;
     border-radius: 30px;
+    background-color: #F5F5F5;
+}
+.displayPanel {
+    height: 50vh;
+    width: 97%;
+    padding:1em;
+    margin: auto;
+    overflow-y: auto;
+    background-color: #F5F5F5;
     word-break: break-word;
 }
 
 .sendPanel {
     width: 100%;
+    min-height: 1.8em;
+    height:fit-content;
+    word-break: break-all;
+    overflow-wrap: break-word;
     margin: auto;
+    margin-bottom: 0.5em;
     background-color: #F5F5F5;
     border: 2px solid black;
     border-radius: 30px;

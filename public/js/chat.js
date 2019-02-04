@@ -2,6 +2,7 @@
 var connection = {
 
     socket: null,
+    recoProcess: null,
 
     init: function()
     {
@@ -10,9 +11,26 @@ var connection = {
         connection.socket = new WebSocket("ws://"+ws_server_ip+":"+ws_server_port);
 
         // On définit ici les différents callbacks qui seront déclenché l'ouverture et à la fermeture de la connexion, et à la reception d'un message provenant du serveur.
-        connection.socket.onopen = function(e) {console.log("Connexion établie.\n");};
+        connection.socket.onopen = function(e)
+        {
+            displayPanel.write(connection.info("Vous êtes connecté au chat !"));
 
-        connection.socket.onclose = function(e) {console.log("Connexion terminée.\n");};
+            if(connection.recoProcess != null)
+            {
+                clearInterval(connection.recoProcess);
+            }
+        };
+
+        connection.socket.onclose = function(e) {
+
+            if(connection.recoProcess == null)
+            {
+                displayPanel.write(connection.info("Vous n'êtes plus connecté chat ! Tentative de reconnexion..."));
+
+                connection.recoProcess = setInterval(connection.init, 2000);
+            }
+
+        };
 
         connection.socket.onmessage = function(e) {displayPanel.write(e.data)};
     },
@@ -22,13 +40,20 @@ var connection = {
     {
         var jsonStr = JSON.stringify(jsonObj);
         connection.socket.send(jsonStr);
-    }
+    },
+
+    //Sert à générer des messages d'information pour le user.
+    info: function(str)
+    {
+        return '{"username": "INFO", "content": "'+str+'", "color": "#f9000c" }';
+    },
 }
 
 
 var sendPanel = {
 
     input: null,
+    maxLength: 200, 
 
     init: function()
     {   
@@ -36,6 +61,7 @@ var sendPanel = {
         sendPanel.input = document.querySelector(".sendPanel");
         // On ajoute un event au relachement de la touche "entrée"
         sendPanel.input.addEventListener('keyup', sendPanel.handleEnterKey);
+        sendPanel.input.addEventListener('input', sendPanel.handleMaxLength);
     },
 
     handleEnterKey: function(e)
@@ -57,6 +83,14 @@ var sendPanel = {
                 sendPanel.input.value = "";
             } 
         }
+    },
+
+    handleMaxLength: function(e)
+    { 
+        if(sendPanel.input.value.length + 1 > sendPanel.maxLength)
+        {
+            sendPanel.input.value = sendPanel.input.value.slice(0, sendPanel.maxLength);
+        }
     }
 }
 
@@ -73,6 +107,7 @@ var displayPanel = {
     // Cette fonction sert à afficher un message dans le chat.
     write: function(jsonStr)
     {
+        console.log(jsonStr);
         // On détermine si la scrollbar est tout en bas.
         var isScrollBottom = ((displayPanel.board.scrollTop + displayPanel.board.clientHeight)/displayPanel.board.scrollHeight) > 0.95 ? true : false ;
 

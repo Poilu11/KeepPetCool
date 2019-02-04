@@ -14,11 +14,12 @@
             </a>
             {% endif %}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="text-center text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
+            <a class="mt-2 text-center text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
                 <i class="m-auto h2 fas fa-user"></i><p class="mt-2">Profil</p></a>
-            <a class="text-center text-danger text-decoration-none nav-link" href="{{path('logout')}}">
+            <a class="mt-2 text-center text-danger text-decoration-none nav-link" href="{{path('logout')}}">
                 <i class="h2 fas fa-sign-out-alt"></i><p>Logout</p></a>
-
+            <a class="mt-2 text-center text-white text-decoration-none nav-link" href="{{path('chat')}}">
+                <i class="h2 m-auto fas fa-comments"></i><p class="mt-2">Shoutbox</p></a>
             {% endif %}
              
         </nav>
