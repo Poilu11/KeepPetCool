@@ -81,8 +81,8 @@ class MessageController extends AbstractController
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->Username = 'keeppetcool@gmail.com';                 // SMTP username
                 $mail->Password = 'keeppetcool4!';                           // SMTP password
-                $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-                $mail->Port = 587;                                    // TCP port to connect to
+                $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+                $mail->Port = 465;                                    // TCP port to connect to
 
                 //Recipients
                 $mail->setFrom('keeppetcool@gmail.com', 'KeepPetCool');
