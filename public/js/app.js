@@ -84,3 +84,5 @@ var searchButton =
 
 document.addEventListener('DOMContentLoaded', userCheckboxes.init);
 document.addEventListener('DOMContentLoaded', searchButton.init);
+
+

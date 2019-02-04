@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos animaux{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="h1 text-center">Vos Animaux</h1>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>N°</th>
+                <th>Titre de la présentation</th>
+                <th>En ligne</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for index, animal in animals %}
+            <tr class="table-light">
+                <td>{{ index + 1 }}</td>
+                <td class="table-secondary">{{ animal.title }}</td>
+                <td>{{ animal.isActive ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('animal_show', {'slug': animal.slug, 'id': animal.id}) }}">Voir /</a>
+                    <a href="{{ path('animal_edit', {'id': animal.id}) }}">Editer /</a>
+                    <a href="{{ path('animal_delete', {'id': animal.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">Aucune fiche animal créée pour le moment.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class=" d-flex justify-content-center ">
+    <a href="{{ path('animal_new') }}" class="m-2 btn btn-secondary">Créer une fiche pour mon animal de compagnie</a>
+    <a href="{{ path('dashboard') }}" class="m-2 btn btn-secondary">Retour au tableau de bord</a>
+    </div>
+</div>
+{% endblock %}

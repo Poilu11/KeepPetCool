@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>
         {% block title %}Welcome!{% endblock %}
     </title>
+
+    <meta name="description" content="KeepPetCool - Plateforme de petsitting mettant en relation des petsitters avec des propriétaires d'animaux de compagnie. Garde d'animaux.">
+    <meta name="keywords" content="KeepPetCool, petsitting, garde animaux, dogsitting">
+
     {% block stylesheets %}
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" rel="stylesheet">
@@ -14,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i|ZCOOL+KuaiLe" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     {% endblock %}
@@ -21,8 +27,8 @@
 
 <body>
     <header id="parentMessage" class="bg-secondary pb-0 pt-5 mt-5 mb-4">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p id="message" class="text-white"> Bienvenue {{ app.user.username }} !</p>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.pathinfo == '/dashboard' %}
+        <p id="message" class="text-white" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
         {% endif %}
         <div>
             <h1 class="text-center"><a class="text-decoration-none text-white" href="{{ path('home_page') }}">KeepPetCool<img
@@ -97,6 +103,8 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.15.4"></script>
     <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/completion.js')}}"></script>
+
     <script>
         (function () {
             var placesAutocomplete = places({

@@ -171,13 +171,9 @@ class UserController extends AbstractController
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // Je récupere les informations de l'user connecté
+        // Je récupere les informations du user connecté
         $currentUser = $this->getUser();
-        $oldAdress = $currentUser->getAddress();
-        $oldZipCode = $currentUser->getZipCode();
-        $oldCity = $currentUser->getCity();
-        $oldLatitude = $currentUser->getLatitude();
-        $oldLongitude = $currentUser->getLongitude();
+
         // Si les données de l'user connecté sont différentes des données de l'user qu'on cherche à éditer, on éjecte et on redirige vers dashboard
         if($currentUser->getId() !== $user->getId())
         {
@@ -201,6 +197,13 @@ class UserController extends AbstractController
 
         // On récupère le mot de passe actuel
         $oldPassword = $user->getPassword();
+
+        // On récupères les informations actuelles du user
+        $oldAdress = $currentUser->getAddress();
+        $oldZipCode = $currentUser->getZipCode();
+        $oldCity = $currentUser->getCity();
+        $oldLatitude = $currentUser->getLatitude();
+        $oldLongitude = $currentUser->getLongitude();
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -254,33 +257,8 @@ class UserController extends AbstractController
                 // On récupère le mot de passe en clair
                 $plainPassword = $user->getPassword();
 
-                // On ajoute une condition pour vérifier la longueur du mot de passe
-                // car la constraint Length() ne fonctionne pas de manière optimale
-                // sans la contrainte NotBlank()
-                $countWordsPlainPassword = strlen($plainPassword);
-                if($countWordsPlainPassword >= 4 && $countWordsPlainPassword <= 12)
-                {
-                    // Encodage du mot de passe modifié
-                    $encodedPassword = $encoder->encodePassword($user, $plainPassword);
-                }
-                else
-                {
-                    $this->addFlash(
-                        'danger',
-                        'Modification du nouveau mot de passe non prise en compte : doit contenir 4 et 12 caractères.'
-                    );
-                    // TRES IMPORTANT
-                    // On récupère alors l'ancien mot de passe encodé
-                    // qu'on réenregistre pour le user
-                    $encodedPassword = $oldPassword;
-                    $user->setPassword($encodedPassword);
-                    $this->getDoctrine()->getManager()->flush();
-                    // Si je ne ré-enregistre pas l'ancien (actuel) mot de passe en BDD
-                    // le user est alors déconnecté, et la redirection ci-dessous ne fonctionne donc pas => Le user est redirigé vers la page de connexion
-                    // De plus, la constraint Length() dans le UserType ne semble pas
-                    // fonctionner de manière optimale sans le Blank()
-                    return $this->redirectToRoute('profile_edit', ['id' => $user->getId()]);
-                }
+                // Encodage du mot de passe modifié
+                $encodedPassword = $encoder->encodePassword($user, $plainPassword);
             }
             
             $user->setPassword($encodedPassword);

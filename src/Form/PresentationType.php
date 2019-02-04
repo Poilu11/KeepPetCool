@@ -51,7 +51,7 @@ class PresentationType extends AbstractType
 
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Titre de votre présentation',
+                'label' => 'Titre de votre présentation *',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci d\'indiquer un titre !'
@@ -59,9 +59,9 @@ class PresentationType extends AbstractType
                 ]
             ])
             ->add('body', TextareaType::class, [
-                'label' => 'Présentez-vous',
+                'label' => 'Présentez-vous *',
                 'attr' => [
-                    'rows' => 7
+                    'rows' => 7,
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -69,11 +69,6 @@ class PresentationType extends AbstractType
                     ])
                 ]
             ])
-            // ->add('isActive')
-            // ->add('slug')
-            // ->add('createdAt')
-            // ->add('updatedAt')
-            // ->add('user')
             ->add('species', EntityType::class, [
                 'label' => 'Catégorie d\'espèces pour le petsitting',
                 'class' => Species::class,
@@ -90,10 +85,17 @@ class PresentationType extends AbstractType
             ])
             ->add('price', IntegerType::class, [
                 'label' => 'Prix / heure',
+                'help' => 'Augmenter vos chances de trouver un animal à garder en renseignant ce champs',
                     'attr' => [
-                    'placeholder' => 'Exemple : 15€'
+                    'placeholder' => 'Exemple : 15€',
+                    'style' => 'width: 200px'                    
                 ],
             ])
+             // ->add('isActive')
+            // ->add('slug')
+            // ->add('createdAt')
+            // ->add('updatedAt')
+            // ->add('user')
             ->addEventListener(FormEvents::PRE_SET_DATA, $listener)
             ;
     }

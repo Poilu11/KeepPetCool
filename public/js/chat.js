@@ -21,6 +21,7 @@ var connection = {
             if(connection.recoProcess != null)
             {
                 clearInterval(connection.recoProcess);
+                connection.recoProcess = null;
             }
         };
 
@@ -30,7 +31,7 @@ var connection = {
             //Si la connecion est fermée, alors on lance un processus de reconnexion, en vérifiant au éalable qu'aucun processus de reconnexion ne soit en cours d'exécution.
             if(connection.recoProcess == null)
             {   //On indique la déconnexion dans le chat.
-                displayPanel.write(connection.info("Vous n'êtes plus connecté chat ! Tentative de reconnexion..."));
+                displayPanel.write(connection.info("Vous n'êtes plus connecté au chat ! Tentative de reconnexion..."));
 
                 //On lance le processus de reconnexion.
                 connection.recoProcess = setInterval(connection.init, 2000);

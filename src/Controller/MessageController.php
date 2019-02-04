@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Util\Mailer;
 use App\Entity\Message;
 use App\Repository\UserRepository;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +22,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/new", name="message_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository)
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository, \Swift_Mailer $mailer)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -64,6 +67,22 @@ class MessageController extends AbstractController
 
             $em->persist($message);
             $em->flush();
+
+            // DEBUT SWIFT MAILER
+                $message = (new \Swift_Message('KeepPetCool - Nouveau message !'))
+                ->setFrom('keeppetcool@gmail.com')
+                ->setTo($userTo->getEmail())
+                ->setBody(
+                $this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/new.html.twig',
+                ['username' => $userTo->getUsername()]
+                ),
+                'text/html'
+                );
+
+                $mailer->send($message);
+            // FIN SWIFT MAILER
 
             $this->addFlash(
                 'success',
