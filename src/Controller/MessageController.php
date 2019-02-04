@@ -71,11 +71,12 @@ class MessageController extends AbstractController
             // Début traitement envoi email au destinataire
 
                 // https://github.com/PHPMailer/PHPMailer
+                // https://forum.alsacreations.com/topic-20-79170-1-Probleme-avec-PHPMailer-sur-Mutu-OVH.html
 
                 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
                 try {
                 //Server settings
-                $mail->isSMTP();                                      // Set mailer to use SMTP
+                $mail->isMail();                                      // Set mailer to use SMTP
                 $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
                 $mail->SMTPAuth = true;                               // Enable SMTP authentication
                 $mail->Username = 'keeppetcool@gmail.com';                 // SMTP username
