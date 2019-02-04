@@ -23,7 +23,7 @@ class ChatApp implements MessageComponentInterface {
         $this->clients = new \SplObjectStorage;
     }
 
-    // Ce callback est executé lorsqu'une nouvelle connexion s'effectue sur le serveur. Une nouvelle connexion s'effectue lorsque qu'un sript js du client se connecte.
+    // Ce callback est executé lorsqu'une nouvelle connexion s'effectue sur le serveur, c-a-d lorsque le js de la page établit la connexion.
     public function onOpen(ConnectionInterface $conn)
     {
         // On stocke la connexion dans une propriété.
@@ -39,15 +39,14 @@ class ChatApp implements MessageComponentInterface {
     }
 
 
-    //Ce callback est executé lorsque qu'un client envoit un message au serveur via le javascript.
+    //Ce callback est executé lorsque qu'un client envoit un message au serveur.
     //Le $from représente la connexion du client qui a envoyé le message. Le $msg est une chaine de caractère qui correspond au message envoyé.
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        //On récupère le nombre de connexion au chat, sauf celui qui est l'auteur du chat. Cela sert uniquement pour les logs du chat.
-        $numRecv = count($this->clients) - 1;
-        dump(sprintf('Connection %d sending message "%s" to %d other connections' . "\n" , $from->resourceId, $msg, $numRecv));
+        
+        dump('Message received : '.PHP_EOL.$msg);
 
-        //La chaine de caractère $msg est formattée à la manière du json. On utilise json_decode pour la rendre exploitable sous la forme d'un tableau associatif.
+        //La chaine de caractère $msg est formattée comme un json. On utilise json_decode pour la rendre exploitable sous la forme d'un tableau associatif.
         $msg = json_decode($msg, true);
 
         //Si aucune couleur n'est associé à cet Id, alors on en associe une.
@@ -55,15 +54,17 @@ class ChatApp implements MessageComponentInterface {
         {
             $this->idToColor[$msg["id"]] = $this->colors[array_rand($this->colors)];
         }
+
+        //On ajoute une entrée 'color' au tableau associatif.
         $msg["color"] = $this->idToColor[$msg["id"]];
 
         //On réencode le message en json, pour le rendre plus facilement interprétable par le js.
         $json = json_encode($msg);
 
-        //On garde le message dans la mémoire interne du serveur de websocket, afin de les distribué aux nouveaux arrivants.
+        //On garde le message dans la mémoire interne du serveur de websocket, afin de les distribuer aux nouveaux arrivants.
         $this->keepMsg($json);
 
-        //Pour chaque client qui n'est pas l'auteur du message, on trnasmet le message.
+        //Pour chacun des utilisateurs connectés au serveur, on envoit le message.
         foreach ($this->clients as $client)
         {
             $client->send($json);
@@ -87,11 +88,13 @@ class ChatApp implements MessageComponentInterface {
         dump("An error has occurred: {$e->getMessage()} on connection {$conn->resourceId}\n");
     }
 
+    //Cette fonction sert à garder en mémoire les messages du chat.
     private function keepMsg($json)
     {
         //Place un élément à la fin du tableau.
         array_push($this->msgQueue, $json);
 
+        //Si la taille de la liste de message dépasse la capacité définie plus haut, alors on retire le message le plus ancien.
         if(count($this->msgQueue) > $this->msgCapacity)
         {
             array_shift($this->msgQueue);
