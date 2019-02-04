@@ -4,8 +4,8 @@
 
 swiftmailer:
     transport: 'smtp'
-    host:      'smtp.gmail.com'
-    username:  'keeppetcool@gmail.com'
-    password:  'keeppetcool4!'
-    port:      '587'
-    encryption: 'tls'
+    host:      'mail.elgnani.fr'
+    username:  'test74000@elgnani.fr'
+    password:  'test74000test74000'
+    port:      '465'
+    encryption: 'ssl'
