@@ -70,7 +70,7 @@ class MessageController extends AbstractController
 
             // DEBUT SWIFT MAILER
                 $message = (new \Swift_Message('KeepPetCool - Nouveau message !'))
-                ->setFrom('test74000@elgnani.fr')
+                ->setFrom('keeppetcool@gmail.com')
                 ->setTo($userTo->getEmail())
                 ->setBody(
                 $this->renderView(

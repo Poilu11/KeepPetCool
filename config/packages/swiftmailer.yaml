@@ -1,11 +1,11 @@
-# swiftmailer:
-#     url: '%env(MAILER_URL)%'
-#     spool: { type: 'memory' }
-
 swiftmailer:
-    transport: 'smtp'
-    host:      'mail.elgnani.fr'
-    username:  'test74000@elgnani.fr'
-    password:  'test74000test74000'
-    port:      '465'
-    encryption: 'ssl'
+    url: '%env(MAILER_URL)%'
+    spool: { type: 'memory' }
+
+# swiftmailer:
+#     transport: 'smtp'
+#     host:      'mail.elgnani.fr'
+#     username:  'test74000@elgnani.fr'
+#     password:  'test74000test74000'
+#     port:      '465'
+#     encryption: 'ssl'
