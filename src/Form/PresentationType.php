@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,6 +56,12 @@ class PresentationType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci d\'indiquer un titre !'
+                    ]),
+                    new Length([
+                        'min' => 3,
+                        'max' => 120,
+                        'minMessage' => 'Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Maximum {{ limit }} caractères',
                     ])
                 ]
             ])
