@@ -6,6 +6,8 @@
 //Pour tuer le processus il faut d'abord afficher la liste des processus lié au script runServer.php : ps -ef |grep "runServer.php"
 //Il faut repérer le numéro du processus puis faire la commande : kill numéro
 
+// !!! Si nohup ne fonctionne pas bien : suivre ce tutoriel pour un autre manière de procéder : https://www.maketecheasier.com/run-bash-commands-background-linux/
+
 use Chat\ChatApp;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
