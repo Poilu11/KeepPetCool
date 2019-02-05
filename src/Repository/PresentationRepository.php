@@ -19,32 +19,71 @@ class PresentationRepository extends ServiceEntityRepository
         parent::__construct($registry, Presentation::class);
     }
 
-    public function findAllPresentationsByUserType($type){
+    public function findAllPresentations($active = null){
 
-        $qb = $this->createQueryBuilder('presentation')
+        if($active !== null)
+        {
+            $qb = $this->createQueryBuilder('presentation')
             ->innerJoin('presentation.user', 'user')
-            ->orderBy('presentation.createdAt', 'DESC')
+            ->orderBy('user.connectedAt', 'DESC')
+            ->setParameter('active', $active)
+            ->where('presentation.isActive =:active')
+            ->getQuery();
+        }
+        else
+        {
+            $qb = $this->createQueryBuilder('presentation')
+            ->innerJoin('presentation.user', 'user')
+            ->orderBy('user.connectedAt', 'DESC')
+            ->getQuery();
+        }
+
+        return $qb->execute();
+
+    }
+
+    public function findAllPresentationsByUserType($type, $active = null){
+
+        if($active !== null)
+        {
+            $qb = $this->createQueryBuilder('presentation')
+            ->innerJoin('presentation.user', 'user')
+            ->orderBy('user.connectedAt', 'DESC')
+            ->setParameter('type', $type)
+            ->setParameter('active', $active)
+            ->where('user.type =:type')
+            ->andwhere('presentation.isActive =:active')
+            ->getQuery();
+
+        }
+        else
+        {
+            $qb = $this->createQueryBuilder('presentation')
+            ->innerJoin('presentation.user', 'user')
+            ->orderBy('user.connectedAt', 'DESC')
             ->setParameter('type', $type)
             ->where('user.type =:type')
             ->getQuery();
+
+        }
         
         return $qb->execute();
 
     }
 
-    public function findActivePresentationsByUserType($type){
+    // public function findActivePresentationsByUserType($type){
 
-        $qb = $this->createQueryBuilder('presentation')
-            ->innerJoin('presentation.user', 'user')
-            ->orderBy('presentation.createdAt', 'DESC')
-            ->setParameter('type', $type)
-            ->where('presentation.isActive = true')
-            ->andWhere('user.type =:type')
-            ->getQuery();
+    //     $qb = $this->createQueryBuilder('presentation')
+    //         ->innerJoin('presentation.user', 'user')
+    //         ->orderBy('presentation.user.connectedAt', 'DESC')
+    //         ->setParameter('type', $type)
+    //         ->where('presentation.isActive = true')
+    //         ->andWhere('user.type =:type')
+    //         ->getQuery();
         
-        return $qb->execute();
+    //     return $qb->execute();
 
-    }
+    // }
 
     /*
     public function findPresByUserNear($type, $lat, $long, $radius)

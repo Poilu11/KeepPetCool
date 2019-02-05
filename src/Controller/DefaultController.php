@@ -33,31 +33,67 @@ class DefaultController extends AbstractController
      */
     public function home(NoteResolver $noteResolver, PaginatorInterface $paginator, Request $request)
     {
+        // On récupère les infos de l'utilisateur connecté (si connecté)
+        $currentUser = $this->getUser();
+
+        // On récupère le Repository de PresetationEntity
         $presentationRepository = $this->getDoctrine()->getRepository(Presentation::class);
 
         // Si utisateur non connecté
         // accès à toutes les présentations petsitter actives
-        $allPresentations = $presentationRepository->findBy(['isActive' => true], ['createdAt' => 'DESC']);
-
-        // On récupère les infos de l'utilisateur connecté (si connecté)
-        $currentUser = $this->getUser();
-
-        // Si utisateur non connecté
+        if(!isset($currentUser) || empty($currentUser))
+        {
+            $allPresentations = $presentationRepository->findAllPresentations(true);
+            dump($allPresentations);
+        }
+        
+        // Si utisateur connecté
         if (isset($currentUser) && !empty($currentUser))
         {
-            if($currentUser->getType() == 'owner')
+            // Si utilisateur a le rôle de User
+            if($currentUser->getRole()->getCode() == 'ROLE_USER')
             {
-                $allPresentations = $presentationRepository->findActivePresentationsByUserType('petsitter');
+                $allPresentations = $presentationRepository->findAllPresentations(true);
             }
 
-            if($currentUser->getType() == 'petsitter')
-            {
-                $allPresentations = $presentationRepository->findActivePresentationsByUserType('owner');
-            }
-
+            // Si utilisateur a le rôle de Admin ou Modo
             if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
             {
-                $allPresentations = $presentationRepository->findBy([], ['createdAt' => 'DESC']);
+                $allPresentations = $presentationRepository->findAllPresentations();
+            }
+        }
+
+        // UTILISATION DES FILTRES
+        $filter = $request->query->get('filter');
+
+        if(isset($filter) && !empty($filter))
+        {
+            // Gestion 404
+            if ($filter != 'petsitter' || $filter != 'owner') {
+                throw $this->createNotFoundException('Cette rechercheche n\'a pas pu aboutir !');
+            }
+
+            // Utilisateur non connecté
+            if(!isset($currentUser) || empty($currentUser))
+            {
+                $allPresentations = $presentationRepository->findAllPresentationsByUserType($filter, true);
+                dump($allPresentations);
+            }
+            
+            // Si utilisateur connecté
+            if (isset($currentUser) && !empty($currentUser))
+            {
+                // Si utilisateur a le rôle de User
+                if($currentUser->getRole()->getCode() == 'ROLE_USER')
+                {
+                    $allPresentations = $presentationRepository->findAllPresentationsByUserType($filter, true);
+                }
+
+                // Si utilisateur a le rôle de Admin ou Modo
+                if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
+                {
+                    $allPresentations = $presentationRepository->findAllPresentationsByUserType($filter);                    
+                }
             }
         }
 
