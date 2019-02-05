@@ -69,7 +69,7 @@ class DefaultController extends AbstractController
         if(isset($filter) && !empty($filter))
         {
             // Gestion 404
-            if ($filter != 'petsitter' || $filter != 'owner') {
+            if ($filter != 'petsitter' && $filter != 'owner') {
                 throw $this->createNotFoundException('Cette rechercheche n\'a pas pu aboutir !');
             }
 
