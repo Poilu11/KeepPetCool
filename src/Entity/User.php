@@ -33,6 +33,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Regex(
+     *     pattern="#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])#",
+     *     match=true,
+     *     message="Le mot de passe doit être constitué de chiffres, et d'au moins une lettre en minuscule et une lettre en majuscule (pas de caractères spéciaux)."
+     * )
      */
     private $password;
 
