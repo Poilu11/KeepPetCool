@@ -41,6 +41,7 @@ class ChatApp implements MessageComponentInterface {
 
     //Ce callback est executé lorsque qu'un client envoit un message au serveur.
     //Le $from représente la connexion du client qui a envoyé le message. Le $msg est une chaine de caractère qui correspond au message envoyé.
+    // $msg = {"id" : id de l'utlisateur en bdd, "username" : username, 'content' : contenui du message}
     public function onMessage(ConnectionInterface $from, $msg)
     {
         
@@ -52,6 +53,7 @@ class ChatApp implements MessageComponentInterface {
         //Si aucune couleur n'est associé à cet Id, alors on en associe une.
         if(!array_key_exists($msg["id"], $this->idToColor))
         {
+            // arry_rand renvoit un index aléatoire.
             $this->idToColor[$msg["id"]] = $this->colors[array_rand($this->colors)];
         }
 

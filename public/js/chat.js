@@ -33,10 +33,9 @@ var connection = {
             {   //On indique la déconnexion dans le chat.
                 displayPanel.write(connection.info("Vous n'êtes plus connecté au chat ! Tentative de reconnexion..."));
 
-                //On lance le processus de reconnexion.
+                //On lance le processus de reconnexion. SetInterval renvoit l'id de la fonction executé à interval régulier.
                 connection.recoProcess = setInterval(connection.init, 2000);
             }
-
         };
 
         // Ce callback est exécuté lorsque l'on reçoit un message du serveur.
@@ -100,7 +99,7 @@ var sendPanel = {
     // On gère le longueur maximale du message.
     handleMaxLength: function(e)
     { 
-        if(sendPanel.input.value.length + 1 > sendPanel.maxLength)
+        if(sendPanel.input.value.length > sendPanel.maxLength)
         {
             sendPanel.input.value = sendPanel.input.value.slice(0, sendPanel.maxLength);
         }
@@ -121,9 +120,12 @@ var displayPanel = {
     // Cette fonction sert à afficher un message dans le chat.
     write: function(jsonStr)
     {
-        // Le problèe était que le scrollbar ne suit pas par défaut le défilement du chat. Ainsi, si 15 messages apparaissent à la seconde, ceux-ci sont cachés en bas de la du container, puisque la scrollbar ne suit pas le défilement. Le comportement que l'on souhaite développer est le suivant: si la scrollbar est en bas de la div, alors si un nouveau message apparaît elle resque coller en bas de la div.
+        // Le problème était que le scrollbar ne suit pas par défaut le défilement du chat. Ainsi, si 15 messages apparaissent à la seconde, ceux-ci sont cachés en bas de la du container, puisque la scrollbar ne suit pas le défilement. Le comportement que l'on souhaite développer est le suivant: si la scrollbar est en bas de la div, alors si un nouveau message apparaît elle resque coller en bas de la div.
 
         // On détermine si la scrollbar est tout en bas.
+        // scrollTop renvoit les nombre de pixels cachés en haut du scroll de la div.
+        // clientHeight retourne le nombre de pixels visibles sur la div.
+        // scrollHeight retourne la hauteur totale de la div, y compris les pixels cachés par le scroll en haut et en bas de la div.
         var isScrollBottom = ((displayPanel.board.scrollTop + displayPanel.board.clientHeight)/displayPanel.board.scrollHeight) > 0.95 ? true : false ;
 
         //On créer affiche une nouvelle ligne dans le tableau d'affichage.
@@ -146,9 +148,10 @@ var displayPanel = {
     // Sert à créer un élément html à partir de données formattées en json.
     createLine: function(jsonStr)
     {   
-        console.log()
+        //JSON.parse sert à transformer en un objet json.
         jsonObj = JSON.parse(jsonStr);
 
+        //Je crée mon objet du DOM à partir du message json.
         var html = '<div style="color:'+jsonObj.color+';">';
         html += '<strong>'+jsonObj.username+' : </strong>';
         html += jsonObj.content;
