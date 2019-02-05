@@ -12,11 +12,13 @@ class MailerTest extends TestCase
     {
         $mailer = new Mailer('keeppetcool4!');
 
-        $mailer->send('mathevon.florian@gmail.com',
+        $result = $mailer->send('mathevon.florian@gmail.com',
                     'Bonjour, <br>Message de Test<br> L\'équipe KeepPetCool',
                     'KeepPetCool - Nouveau message !',
                     'Testeur',
                     'Testorator'
             );
+
+        $this->assertEquals(true, $result);
     }
 }

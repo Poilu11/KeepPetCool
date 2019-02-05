@@ -39,9 +39,9 @@ class Mailer
         $mail->AltBody = str_replace($body, '<br>', ' ');
         
         $mail->send();
-            // dump('Message envoyé OK');
+            return true;
         } catch (Exception $e) {
-            // dump('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
+            dump('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
         }
         
     }
