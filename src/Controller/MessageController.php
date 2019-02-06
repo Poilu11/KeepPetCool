@@ -53,6 +53,17 @@ class MessageController extends AbstractController
                 return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
             }
 
+            if(strlen($messageObject) < 3 || strlen($messageObject) > 120)
+            {
+                $this->addFlash(
+                    'danger',
+                    'Le titre de votre fiche animal ne doit pas dépasser 120 caractères (minimum 3) !'
+                );
+
+                return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
+                exit;
+            }
+
             // Je récupère l'objet User (pour from et to)
             // avec l'id récupéré dans le formulaire
             $userFrom = $userRepository->find($userFromId);
