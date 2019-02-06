@@ -28,7 +28,7 @@ var ajaxFaq = {
 
             console.log(response);
 
-            var template = '<div id="accordion" class="col-8 m-auto pt-5">\
+            var template = '<div id="accordion" class="col-lg-8 col-sm-10 m-auto pt-5">\
                             <div class="card mb-5 border-10 border-dark">\
                             <div class="card-header" id="heading#number#">\
                                 <h5 class="mb-0">\

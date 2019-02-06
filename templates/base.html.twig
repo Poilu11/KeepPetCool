@@ -40,7 +40,7 @@
                 {{ include('_criteria_nav.html.twig') }}
             </div>
             <!--Navbar-->
-            <nav class="p-2 d-lg-none  d-sm-block navbar-light light-blue lighten-4">
+            <nav class="p-2 d-xl-none d-lg-none  d-sm-block navbar-light light-blue lighten-4">
 
                 <!-- Collapse button -->
                 <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
@@ -93,12 +93,13 @@
 
             </nav>
             <!--/.Navbar-->
+
         </header>
 
         {# gestion des messages flash #}
         {% for index, messages in app.flashes %}
         {% for message in messages %}
-        <div class="m-auto col-6 alert alert-{{ index }}">
+        <div class="m-auto col-6-xl col-lg-8  col-md-8 col-sm-10 alert alert-{{ index }}">
             <button type="button" role="alert" class="close" data-dismiss="alert">&times;</button>
             <p class="mb-0">{{ message }}</p>
         </div>
