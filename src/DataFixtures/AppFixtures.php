@@ -7,6 +7,7 @@ use Faker\Factory;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Util\Slugger;
+use App\Entity\Animal;
 use App\Entity\Comment;
 use App\Entity\Service;
 use App\Entity\Species;
@@ -212,6 +213,28 @@ class AppFixtures extends Fixture
                 );
             }
         ]);
+
+        $populator->addEntity(Animal::class, 50, array(
+            'title' => function() use ($generator) { return $generator->words($nb = 7, $asText = true); },
+            'detail' => function() use ($generator) { return $generator->sentence($nbWords = 10, $variableNbWords = true); },
+            'body' => function() use ($generator) { return $generator->sentence($nbWords = 100, $variableNbWords = true); },
+            'name' => function() use ($generator) { return $generator->firstName(null); },
+            'isActive' => true,
+            'sex' => 'M',
+            'age' => 7,
+            'picture1' => 'default-picture.png',
+            'picture2' => null,
+            'picture3' => null,
+          ), [
+              // https://github.com/fzaninotto/Faker#populating-entities-using-an-orm-or-an-odm
+               function($presentation) {
+                  $presentation->setSlug(
+                      $this->slugger->sluggify(
+                          $presentation->getTitle()
+                      )
+                  );
+              }
+          ]);
 
         $populator->addEntity(Comment::class, 40, array(
             'body' => function() use ($generator) { return $generator->sentence($nbWords = 50, $variableNbWords = true); },

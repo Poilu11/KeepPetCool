@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} KeepPetCool - Accueil {% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+
+    <div class="navigation">
+        {{ knp_pagination_render(animals) }}
+    </div>
+
+{% for animal in animals %}
+
+
+
+{{ include('animal/_card.html.twig') }}
+
+
+{% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(animals) }}
+    </div>
+
+</div>
+
+{% endblock %}

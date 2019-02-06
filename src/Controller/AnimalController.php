@@ -7,6 +7,7 @@ use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File;
@@ -20,6 +21,53 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class AnimalController extends AbstractController
 {
+        /**
+     * @Route("/allpets", name="animal_global_list", methods={"GET"})
+     */
+    public function globalList(AnimalRepository $animalRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        // On récupère les infos de l'utilisateur connecté (si connecté)
+        $currentUser = $this->getUser();
+
+        if(isset($currentUser) && !empty($currentUser))
+        {
+            // Si utilisateur a le rôle de User
+            if($currentUser->getRole()->getCode() == 'ROLE_USER')
+            {
+                $allAnimals = $animalRepository->findActiveAnimals(true);
+            }
+
+            // Si utilisateur a le rôle de Admin ou Modo
+            if($currentUser->getRole()->getCode() == 'ROLE_ADMIN' || $currentUser->getRole()->getCode() == 'ROLE_MODO')
+            {
+                $allAnimals = $animalRepository->findActiveAnimals();
+            }
+        }
+        else
+        {
+            // Si utilisateur non connecte
+            $allAnimals = $animalRepository->findActiveAnimals(true);
+        }
+
+        // PAGINATION
+        // https://packagist.org/packages/knplabs/knp-paginator-bundle
+        // Pour la pagination, injection des services PaginatorInterface et Request
+        // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
+
+        $animals = $paginator->paginate(
+            // Doctrine Query, not results
+            $allAnimals,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            7
+        );
+
+        return $this->render('animal/globalList.html.twig', [
+            'animals' => $animals
+        ]);
+    }
+
     /**
      * @Route("/list", name="animal_list_index", methods={"GET"})
      */
