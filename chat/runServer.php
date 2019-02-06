@@ -1,12 +1,17 @@
 <?php
 
-// Pour lancer le serveur de websocket en background sur bash : nohup php monChemin/runServer.php &
-// Utiliser crtl + c pour sortir de la commande, elle continuera à tourner en background.
+//https://www.maketecheasier.com/run-bash-commands-background-linux/
 
-//Pour tuer le processus il faut d'abord afficher la liste des processus lié au script runServer.php : ps -ef |grep "runServer.php"
-//Il faut repérer le numéro du processus puis faire la commande : kill numéro
+/* Pour lancer la commande : 
+*php chat/runServer.php &>/dev/null & (&>/dev/null sert à empecher les dump de s'afficher) (le & de la fin sert à faire tourner le processus en background et donc à récupérer la main sur le terminal)
+*disown (sert à empecher que le processus s'arrete en fermant le terminal)
+*/
 
-// !!! Si nohup ne fonctionne pas bien : suivre ce tutoriel pour un autre manière de procéder : https://www.maketecheasier.com/run-bash-commands-background-linux/
+/* Pour arrêter une commande :
+*   ps -ef |grep "runServer.php" pour afficher la liste des processus lié au script runServer.php
+*   Il faut ensuite repérer le numéro du processus puis faire la commande : kill numéro
+*/
+
 
 use Chat\ChatApp;
 use Ratchet\Http\HttpServer;
