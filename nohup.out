@@ -64,3 +64,10 @@ Message received : \n
 """
 "New connection! (52)\n"
 "Connection 52 has disconnected\n"
+"New connection! (52)\n"
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sdfsdf"}
+"""
+"New connection! (52)\n"
+"Connection 52 has disconnected\n"

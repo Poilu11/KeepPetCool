@@ -15,4 +15,5 @@
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid
+/nohup.out
 ###< symfony/web-server-bundle ###
