@@ -1,7 +1,7 @@
 <p class="h3 font-weight-bold" >Laisser un commentaire</p>
 <form action="{{ path('comment_new', {'idPetsitter': presentation.user.id, 'idOwner': app.user.id}) }}" method="POST">
     <div class="form-group">
-        <label for="bodyForm">Votre avis</label>
+        <label for="bodyForm">Vous avez utilisé les services de ce Petsitter ? Donnez votre avis ici.</label>
         <textarea class="form-control" id="bodyForm" name="body" rows="7" placeholder="Laisser un commentaire"></textarea>
       </div>
         <div class="form-group">
