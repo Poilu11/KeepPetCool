@@ -162,8 +162,6 @@ class DefaultController extends AbstractController
 
             return $jsonArray;
         }
-
-        dump('Ajax Controller KO');
         
         return $this->render('default/faq.html.twig', [
             
@@ -171,12 +169,23 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="contact", methods={"GET", "POST"})
+     * @Route("/contact", name="contact", methods={"GET"})
      */
     public function contact()
     {
         
         return $this->render('default/contact.html.twig', [
+            
+        ]);
+    }
+
+    /**
+     * @Route("/apiexplain", name="api_explain", methods={"GET"})
+     */
+    public function apiExplain()
+    {
+        
+        return $this->render('default/api.html.twig', [
             
         ]);
     }
