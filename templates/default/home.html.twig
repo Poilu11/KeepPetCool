@@ -10,21 +10,43 @@
         {{ knp_pagination_render(presentations) }}
     </div>
 
-    <div class="d-flex justify-content-center" id="filterSearch">
+    <div class="dropdown show container mb-2">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Tri
+        </a>
 
-            <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Tout</a>
-            <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page', {'filter': 'petsitter'}) }}">A la recherche d'un petsitter</a>
-            <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page', {'filter': 'owner'}) }}">A la recherche d'un propriétaire</a>
-            <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_global_list') }}">Les Animaux</a>
-
-     
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{ path('home_page') }}">Tout</a>
+            <a class="dropdown-item" role="button" href="{{ path('home_page', {'filter': 'petsitter'}) }}">A
+                la recherche d'un petsitter</a>
+            <a class="dropdown-item" role="button" href="{{ path('home_page', {'filter': 'owner'}) }}">A
+                la recherche d'un propriétaire</a>
+            <a class="dropdown-item" role="button" href="{{ path('animal_global_list') }}">Les
+                Animaux</a>
         </div>
-{% for presentation in presentations %}
+    </div>
+
+    <!-- <div class="row col-lg-12 col-sm-4 d-flex justify-content-center" id="filterSearch">
+
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page') }}">Tout</a>
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page', {'filter': 'petsitter'}) }}">A
+            la recherche d'un petsitter</a>
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('home_page', {'filter': 'owner'}) }}">A
+            la recherche d'un propriétaire</a>
+        <a class="m-2 btn btn-secondary text-white mt-2" role="button" href="{{ path('animal_global_list') }}">Les
+            Animaux</a>
 
 
-{{ include('presentation/_card.html.twig') }}
+    </div> -->
 
-{% endfor %}
+
+    {% for presentation in presentations %}
+
+
+    {{ include('presentation/_card.html.twig') }}
+
+    {% endfor %}
 
     <div class="navigation">
         {{ knp_pagination_render(presentations) }}

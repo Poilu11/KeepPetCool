@@ -29,7 +29,7 @@
     <div class="container-fluid p-0">
         <header id="parentMessage" class="bg-secondary pb-0 mb-4">
             {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.pathinfo == '/dashboard' %}
-            <p id="message" class="text-white" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
+            <p id="message" class="text-dark" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
             {% endif %}
             <div>
 
@@ -41,7 +41,7 @@
                 {{ include('_criteria_nav.html.twig') }}
             </div>
             <!--Navbar-->
-            <nav class="p-2 d-lg-none d-md-block navbar-light light-blue lighten-4">
+            <nav class="p-2 d-lg-none  d-sm-block navbar-light light-blue lighten-4">
 
                 <!-- Collapse button -->
                 <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
