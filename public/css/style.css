@@ -34,7 +34,6 @@ body {
 }
 
 #fisrtPartHome div {
-    margin: 0 2rem;
     width: 40%;
 }
 
@@ -43,16 +42,16 @@ body {
 }
 
 #fisrtPartHome div h2 {
-    font-size: 4rem;
-    word-break: break-all;
+    font-size: 2rem;
+    
 }
 
 #fisrtPartHome div h3 {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 #fisrtPartHome div h2,
-#fisrtPartHome div h3 {
+#fisrtPartHome div h4 {
     font-family: 'Gloria Hallelujah', cursive;
 }
 

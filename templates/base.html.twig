@@ -27,64 +27,89 @@
 
 <body>
     <div class="container-fluid p-0">
-    <header id="parentMessage" class="bg-secondary pb-0 mb-4">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.pathinfo == '/dashboard' %}
-        <p id="message" class="text-white" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
-        {% endif %}
-        <div>
-            
+        <header id="parentMessage" class="bg-secondary pb-0 mb-4">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.pathinfo == '/dashboard' %}
+            <p id="message" class="text-white" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
+            {% endif %}
+            <div>
 
-            <h1 class="text-center" style="font-family:Gloria Hallelujah "><a class="text-decoration-none text-white" href="{{ path('home_page') }}">KeepPetCool<img
-                        alt="" class="" src="{{ asset('images/logo2KeepPetCool.png') }}" style="width:10%;">
-                </a></h1>
+
+                <h1 class="text-center" style="font-family:Gloria Hallelujah "><a class="text-decoration-none text-white"
+                        href="{{ path('home_page') }}">KeepPetCool<img alt="" class="" src="{{ asset('images/logo2KeepPetCool.png') }}"
+                            style="width:10%;">
+                    </a></h1>
                 {{ include('_criteria_nav.html.twig') }}
-        </div>
-        <!--Navbar-->
-<nav class="p-2 d-lg-none d-md-block navbar-light light-blue lighten-4">
+            </div>
+            <!--Navbar-->
+            <nav class="p-2 d-lg-none d-md-block navbar-light light-blue lighten-4">
 
-        <!-- Collapse button -->
-        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
-          aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
-              class="fas fa-bars fa-1x"></i></span></button>
-      
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-      
-          <!-- Links -->
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-          </ul>
-          <!-- Links -->
-      
-        </div>
-        <!-- Collapsible content -->
-      
-      </nav>
-      <!--/.Navbar-->
-    </header>
+                <!-- Collapse button -->
+                <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+                    aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span
+                        class="dark-blue-text"><i class="fas fa-bars fa-1x"></i></span></button>
 
-    {# gestion des messages flash #}
-    {% for index, messages in app.flashes %}
-    {% for message in messages %}
-    <div class="m-auto col-6 alert alert-{{ index }}">
-        <button type="button" role="alert" class="close" data-dismiss="alert">&times;</button>
-        <p class="mb-0">{{ message }}</p>
+                <!-- Collapsible content -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+                    <!-- Links -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="text-white  text-decoration-none nav-link" href="{{ path('home_page') }}">
+                               Home
+                            </a>
+                        </li>
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="text-white text-decoration-none nav-link" href="{{path('login')}}">
+                                
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-white  text-decoration-none nav-link" href="{{path('signup')}}">
+                               
+                                Sign-Up
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
+                            
+                               Profil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="text-danger text-decoration-none nav-link" href="{{path('logout')}}">
+                                
+                               Logout
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <!-- Links -->
+
+                </div>
+                <!-- Collapsible content -->
+
+            </nav>
+            <!--/.Navbar-->
+        </header>
+
+        {# gestion des messages flash #}
+        {% for index, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="m-auto col-6 alert alert-{{ index }}">
+            <button type="button" role="alert" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0">{{ message }}</p>
+        </div>
+        {% endfor %}
+        {% endfor %}
+
+        {% block body %}{% endblock %}
     </div>
-    {% endfor %}
-    {% endfor %}
 
-    {% block body %}{% endblock %}
-</div>  
-
-    <footer class="bg-dark text-center p-2 mt-5" style="">
+    <footer class="bg-dark text-center p-2 mt-5">
         <span class="col-4">
             <a class="text-white text-decoration-none" href="{{path('faq')}}">FAQ</a>
         </span>
