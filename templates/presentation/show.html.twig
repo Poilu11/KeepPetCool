@@ -36,8 +36,8 @@
     {% endif %}
 
 
-    <div class="d-flex justify-content-between">
-        <div class="m-2">
+    <div class="row">
+        <div class="m-2 col-lg-7">
             <h2 class="mb-3"><img src="{{ asset(avatar_upload_path ~ (presentation.user.avatar ?: 'default-avatar.png')) }}"
                     alt="" class="mr-3  img-thumbnail float-left" style="width:15%;border-radius:40%;">
                 {{ presentation.title }}</h2>
@@ -88,7 +88,7 @@
 
         </div>
 
-        <div class="row justify-content-around col-4">
+        <div class="m-2 row justify-content-around col-lg-4 col-sm-12  ">
             {% for service in presentation.services %}
             {% if service.name == "Gardiennage à domicile" %}
             <div class="m-2 text-center">

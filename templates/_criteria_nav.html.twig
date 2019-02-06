@@ -1,99 +1,111 @@
-<nav class="bg-dark border border-dark criteria-nav text-white fixed-top row justify-content-between m-0">
-    <div class="row">
-        <a class="pb-0  text-decoration-none nav-link" href="{{ path('home_page') }}"><img class="mr-3 border-right " src="{{ asset('images/logonavbar2.png') }}"
-                alt=""></a>
-        <nav class="row d-flex align-items-center">
-            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="text-white text-decoration-none nav-link" href="{{path('login')}}">
-                <i class="h2  text-center fas fa-sign-in-alt"></i>
-                <p>Login</p>
-            </a>
-            <a class="text-center text-white text-decoration-none nav-link" href="{{path('signup')}}">
-                <i class="h2 fas fa-user-plus"></i>
-                <p>Sign-Up</p>
-            </a>
-            {% endif %}
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="mt-2 text-center text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
-                <i class="m-auto h2 fas fa-user"></i><p class="mt-2">Profil</p></a>
-            <a class="mt-2 text-center text-danger text-decoration-none nav-link" href="{{path('logout')}}">
-                <i class="h2 fas fa-sign-out-alt"></i><p>Logout</p></a>
-            <a class="mt-2 text-center text-white text-decoration-none nav-link" href="{{path('chat')}}">
-                <i class="h2 m-auto fas fa-comments"></i><p class="mt-2">Shoutbox</p></a>
-            {% endif %}
-             
-        </nav>
-    </div>
+<nav class="bg-dark criteria-nav text-white row justify-content-between m-0">
 
-    <div class="d-flex align-items-center d-flex justify-content-end col-8">
-        
+
+
+    <nav class=" d-lg-flex  d-none align-items-center">
+
+        <a class="text-center text-white text-decoration-none nav-link" href="{{ path('home_page') }}">
+            <i class="fa-lg fas fa-home"></i>
+            <p class="mb-0">Home</p>
+        </a>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a class="text-center text-white text-decoration-none nav-link" href="{{path('login')}}">
+            <i class="fa-lg text-center fas fa-sign-in-alt"></i>
+            <p class="mb-0">Login</p>
+        </a>
+        <a class="text-center text-white text-decoration-none nav-link" href="{{path('signup')}}">
+            <i class="fa-lg fas fa-user-plus"></i>
+            <p class="mb-0">Sign-Up</p>
+        </a>
+        {% endif %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a class="text-center text-white text-decoration-none nav-link" href="{{path('dashboard')}}">
+            <i class="fa-lg fas fa-user"></i>
+            <p class="mb-0">Profil</p>
+        </a>
+        <a class="text-center text-danger text-decoration-none nav-link" href="{{path('logout')}}">
+            <i class="fa-lg fas fa-sign-out-alt"></i>
+            <p class="mb-0">Logout</p>
+        </a>
+        <a class="text-center text-white text-decoration-none nav-link" href="{{path('chat')}}">
+            <i class="fa-lg fas fa-comments"></i>
+            <p class="mb-0">Shoutbox</p>
+        </a>
+
+        {% endif %}
+
+    </nav>
+
+    <div class="d-lg-flex align-items-center justify-content-end col-xl-6 col-lg-8 col-md-12 col-sm-12">
+
         {%if userType is not defined or userType == null %}
-            {% if app.user %}
-                {% if app.user.type == 'petsitter' %}
-                    {% set petsitterClass = ""%}
-                    {% set ownerClass = "criteria-active"%}
-                {% else %}
-                    {% set petsitterClass = "criteria-active"%}
-                    {% set ownerClass = ""%}
-                {% endif %}
-            {% else %}
-                {% set petsitterClass = "criteria-active"%}
-                {% set ownerClass = ""%}
-            {% endif %}
-        {% elseif userType == 'owner' %}
-            {% set petsitterClass = ""%}
-            {% set ownerClass = "criteria-active"%}
+        {% if app.user %}
+        {% if app.user.type == 'petsitter' %}
+        {% set petsitterClass = ""%}
+        {% set ownerClass = "criteria-active"%}
         {% else %}
-            {% set petsitterClass = "criteria-active"%}
-            {% set ownerClass = "" %}
+        {% set petsitterClass = "criteria-active"%}
+        {% set ownerClass = ""%}
+        {% endif %}
+        {% else %}
+        {% set petsitterClass = "criteria-active"%}
+        {% set ownerClass = ""%}
+        {% endif %}
+        {% elseif userType == 'owner' %}
+        {% set petsitterClass = ""%}
+        {% set ownerClass = "criteria-active"%}
+        {% else %}
+        {% set petsitterClass = "criteria-active"%}
+        {% set ownerClass = "" %}
         {% endif %}
 
         {% if adress is defined %}
-            {% set adressValue = adress %}
+        {% set adressValue = adress %}
         {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% set adressValue = app.user.zipcode %}
+        {% set adressValue = app.user.zipcode %}
         {% else %}
-            {% set adressValue = '' %}
+        {% set adressValue = '' %}
         {% endif %}
 
         {% set selected = {key5 : '', key10 : '', key15 :'', key20 : '', key30 : '', key50 : ''} %}
 
         {% if radius is defined %}
-            {% if radius == 5 %}
-                {% set selected = selected|merge({key5: 'selected'}) %}
-            {% elseif radius == 10 %}
-                {% set selected = selected|merge({key10: 'selected'}) %}
-            {% elseif radius == 15 %}
-                {% set selected = selected|merge({key15: 'selected'}) %}
-            {% elseif radius == 20 %}
-                {% set selected = selected|merge({key20: 'selected'}) %}
-            {% elseif radius == 30 %}
-                {% set selected = selected|merge({key30: 'selected'}) %}
-            {% elseif radius == 50 %}
-                {% set selected = selected|merge({key50: 'selected'}) %}
-            {% endif %}
+        {% if radius == 5 %}
+        {% set selected = selected|merge({key5: 'selected'}) %}
+        {% elseif radius == 10 %}
+        {% set selected = selected|merge({key10: 'selected'}) %}
+        {% elseif radius == 15 %}
+        {% set selected = selected|merge({key15: 'selected'}) %}
+        {% elseif radius == 20 %}
+        {% set selected = selected|merge({key20: 'selected'}) %}
+        {% elseif radius == 30 %}
+        {% set selected = selected|merge({key30: 'selected'}) %}
+        {% elseif radius == 50 %}
+        {% set selected = selected|merge({key50: 'selected'}) %}
+        {% endif %}
         {% endif %}
 
-        <div class="p-0 d-xl-block  d-none">
+        <div class="col-2 p-0 d-xl-block  d-none">
             Je cherche :
         </div>
-        <div class="p-0 m-1 col-lg-1 col-md-2 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
+        <div class="row m-2 justify-content-around" style="flex-wrap:nowrap">
+        <div class="p-0 m-1 col-lg-6 col-5 text-center {{petsitterClass}} user-checkbox" data-usertype="petsitter">
             <i class="m-auto fas fa-user-alt"></i>
             <div>Petsitter</div>
         </div>
-        <div class="m-1 col-lg-1 col-md-2 text-center {{ownerClass}} user-checkbox" data-usertype="owner">
+        <div class="m-1 col-lg-6 col-5 text-center {{ownerClass}} user-checkbox" data-usertype="owner">
             <i class="fas fa-dog"></i>
             <div>Owner</div>
         </div>
-        <p class="ml-1 mb-0">à</p>
-        <div class="col-3 col-md-4">
-
-        <input class="text-dark" id="zipcode" placeholder="Adresse" value="{{adressValue}}"></input>
-
+    </div>
+    <div class="row col-12 col-lg-5" style="flex-wrap:nowrap">
+        <p class="m-auto">à</p>
+            <input class="text-dark" id="zipcode" placeholder="Adresse" value="{{adressValue}}">
         </div>
-        <p class="mb-0">sur</p>
-        <div class="d-flex align-items-center p-2 col-lg-auto col-md-2" >
-            <select class="form-control"  id="radius" type="number">
+        <div class="row col-12 col-lg-6 col-xl-4 justify-content-between">
+        <p class="col-2 mt-auto mb-auto">sur</p>
+        <div class="d-flex align-items-center p-2 col-3 col-lg-auto col-md-2">
+            <select class="form-control" id="radius" type="number">
                 <option value="5" {{selected.key5}}>5</option>
                 <option value="10" {{selected.key10}}>10</option>
                 <option value="15" {{selected.key15}}>15</option>
@@ -105,9 +117,10 @@
         </div>
         <input id="search-latitude" name="search[latitude]" type="hidden" value="">
         <input id="search-longitude" name="search[longitude]" type="hidden" value="">
-        <button class="btn btn-outline-secondary text-white text-none-decoration " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
-        <!-- je remplis chaque champ de la route avec un placeholder afin de faciliter le traitement en js -->
-           <i class="text-white fas fa-search"></i> Recherche
+        <button class="m-1 btn btn-outline-secondary text-white text-none-decoration " id="searchButton" data-route="{{path('search', {'userType' : 'userType', 'adress': 'adress', 'radius': 'radius', 'latAndLong': 'latAndLong'})}}">
+            <!-- je remplis chaque champ de la route avec un placeholder afin de faciliter le traitement en js -->
+            <i class="text-white fas fa-search"></i> Recherche
         </button>
+    </div>
     </div>
 </nav>

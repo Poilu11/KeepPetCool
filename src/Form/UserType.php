@@ -36,7 +36,7 @@ class UserType extends AbstractType
                     'invalid_message' => 'La confirmation du mot de passe est incorrecte',
                     'required' => true,
                     'first_options'  => [
-                        'label' => 'Mot de passe (entre 4 et 18 caractères) (*)',
+                        'label' => 'Mot de passe (entre 8 et 18 caractères, avec chiffres et lettres en minuscules et majuscules) (*)',
                         'attr' => [
                             'placeholder' => 'Création du mot de passe'
                         ]
@@ -52,7 +52,7 @@ class UserType extends AbstractType
                             'message' => 'Vous devez fournir un mot de passe !'
                         ]),
                         new Length([
-                            'min' => 4,
+                            'min' => 8,
                             'max' => 18,
                             'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
                             'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',
@@ -68,7 +68,7 @@ class UserType extends AbstractType
                     'invalid_message' => 'La confirmation du mot de passe est incorrecte',
                     'required' => false,
                     'first_options'  => [
-                        'label' => 'Mot de passe (entre 8 et 18 caractères) (*)',
+                        'label' => 'Mot de passe (entre 8 et 18 caractères, avec chiffres et lettres en minuscules et majuscules) (*)',
                         'attr' => [
                             'placeholder' => 'Laisser vide si inchangé'
                         ]
@@ -81,7 +81,7 @@ class UserType extends AbstractType
                     ],
                     'constraints' => [
                         new Length([
-                            'min' => 4,
+                            'min' => 8,
                             'max' => 18,
                             'minMessage' => 'Mot de passe trop court ! Minimum {{ limit }} caractères',
                             'maxMessage' => 'Mot de passe trop long ! Maximum {{ limit }} caractères',

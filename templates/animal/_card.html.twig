@@ -1,0 +1,41 @@
+<div class="card mr-auto ml-auto col-8 m-2">
+    <div class="card-body d-flex align-items-start">
+
+        <div class="card-header col-3 m-1 border bg-light overflow-hidden" >
+            <div class="text-center d-flex flex-column align-items-center">
+
+                <div class="avatar" style="background-image:url('{{ asset('images/animal/' ~ animal.picture1) }}');"></div>
+
+                <h5 class="d-block card-title  m-2">{{ animal.name}}</h5>
+            
+            </div>
+        </div>
+        
+        <div class="col-8 m-auto">
+            <h6 class="card-subtitle mb-2 h4"><a href="{{path('animal_show', {'id': animal.id, 'slug': animal.slug})}}" class="text-muted">{{animal.title|length > 35 ? animal.title|slice(0,35) ~ '...' : animal.title|slice(0,35)}}</a></h6>
+
+            {% if not animal.isActive %}
+                <p style="color: red;">Fiche animal actuellement bloquée</p>
+            {% endif %}
+
+            <p>Propriétaire : {{ animal.user.username }}</p>
+
+            {# pour consulter un tableau indéxé numériquement, on passe la variable entre crochet, car si on la communique par un point, il le traite comme une chaine de caractère. #}         
+
+            <p class="card-text text-dark mt-4 mb-4">
+                {# slice permet de couper une chaîne de caractères #}
+            {{animal.body|length > 200 ? animal.body|slice(0,200) ~ '...' : animal.body|slice(0,200)}}
+            </p>
+
+            <p class="font-weight-bold">Lieu : {{ animal.user.city }} ({{ animal.user.zipCode }})</p>
+
+            <a class="btn btn-secondary" href="{{path('animal_show', {'id': animal.id, 'slug': animal.slug})}}" class="text-white card-link" role="button">Afficher</a>            
+           
+
+            {% if is_granted(['ROLE_ADMIN','ROLE_MODO']) %}
+            <a class="btn btn-danger" href="{{ path('animal_disable', {'id': animal.id }) }}" class="text-white" role="button"><i class="mr-1 fas fa-ban"></i>Dé/Bloquer</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>

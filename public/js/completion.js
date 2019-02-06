@@ -1,7 +1,7 @@
 var completion = {
 
     init: function() {
-        console.log('init');
+        console.log('init completion');
 
         var telephoneInput = document.querySelectorAll('.autoCompletion');
         

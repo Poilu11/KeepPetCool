@@ -22,7 +22,7 @@ class MessageController extends AbstractController
     /**
      * @Route("/new", name="message_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository, \Swift_Mailer $mailer)
+    public function new(Request $request, EntityManagerInterface $em, UserRepository $userRepository, Mailer $mailer)
     {
         // On vérifie que l'utilisateur soit connecté
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -53,6 +53,17 @@ class MessageController extends AbstractController
                 return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
             }
 
+            if(strlen($messageObject) < 3 || strlen($messageObject) > 120)
+            {
+                $this->addFlash(
+                    'danger',
+                    'Le titre de votre fiche animal ne doit pas dépasser 120 caractères (minimum 3) !'
+                );
+
+                return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
+                exit;
+            }
+
             // Je récupère l'objet User (pour from et to)
             // avec l'id récupéré dans le formulaire
             $userFrom = $userRepository->find($userFromId);
@@ -68,21 +79,14 @@ class MessageController extends AbstractController
             $em->persist($message);
             $em->flush();
 
-            // DEBUT SWIFT MAILER
-                $message = (new \Swift_Message('KeepPetCool - Nouveau message !'))
-                ->setFrom('keeppetcool@gmail.com')
-                ->setTo($userTo->getEmail())
-                ->setBody(
-                $this->renderView(
-                // templates/emails/registration.html.twig
-                'emails/new.html.twig',
-                ['username' => $userTo->getUsername()]
-                ),
-                'text/html'
+            // Début traitement envoi email au destinataire
+                $mailer->send($userTo->getEmail(),
+                    'Bonjour, <br>Nous vous informons que vous venez de recevoir un nouveau message sur votre messagerie interne KeepPetCool. <br>Connectez-vous à votre compte pour le consulter. <br> A bientôt. <br> L\'équipe KeepPetCool',
+                    'KeepPetCool - Nouveau message !',
+                    $userTo->getFirstname(),
+                    $userTo->getLastname()
                 );
-
-                $mailer->send($message);
-            // FIN SWIFT MAILER
+            // Fin traitement envoi email au destinataire
 
             $this->addFlash(
                 'success',

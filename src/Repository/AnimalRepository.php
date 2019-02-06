@@ -19,6 +19,29 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
+    public function findActiveAnimals($active = null){
+
+        if($active !== null)
+        {
+            $qb = $this->createQueryBuilder('animal')
+            ->innerJoin('animal.user', 'user')
+            ->orderBy('user.connectedAt', 'DESC')
+            ->setParameter('active', $active)
+            ->where('animal.isActive =:active')
+            ->getQuery();
+        }
+        else
+        {
+            $qb = $this->createQueryBuilder('animal')
+            ->innerJoin('animal.user', 'user')
+            ->orderBy('user.connectedAt', 'DESC')
+            ->getQuery();
+        }
+
+        return $qb->execute();
+
+    }
+
     // /**
     //  * @return Animal[] Returns an array of Animal objects
     //  */

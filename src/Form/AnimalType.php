@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Animal;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -25,6 +26,12 @@ class AnimalType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Merci d\'indiquer un titre !'
+                    ]),
+                    new Length([
+                        'min' => 3,
+                        'max' => 120,
+                        'minMessage' => 'Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Maximum {{ limit }} caractères',
                     ])
                 ]
             ])
@@ -33,12 +40,28 @@ class AnimalType extends AbstractType
                 'label' => 'Nom de votre animal de compagnie (facultatif)',
                 'attr' => [
                     'placeholder' => 'Titi'
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'max' => 30,
+                        'minMessage' => 'Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Maximum {{ limit }} caractères',
+                    ])
                 ]
             ])
             ->add('detail', TextType::class, [
                 'label' => 'Informations complémentaires sur votre animal (facultatif)',
                 'attr' => [
                     'placeholder' => 'Merci de préciser au besoin l\'espèce ou la race de votre animal de compagnie'
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 3,
+                        'max' => 500,
+                        'minMessage' => 'Minimum {{ limit }} caractères',
+                        'maxMessage' => 'Maximum {{ limit }} caractères',
+                    ])
                 ]
             ])
             ->add('sex', ChoiceType::class, [
@@ -52,7 +75,7 @@ class AnimalType extends AbstractType
                 ],
                 'attr' => [
                     'style' => 'width: 200px'
-            ],
+                ],
             ])
             ->add('age', ChoiceType::class, [
                 'label' => 'Quel âge a votre animal de compagnie ? (facultatif)',
@@ -96,7 +119,7 @@ class AnimalType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Vous devez fournir une présentation de votre animal !'
-                    ])
+                    ]),
                 ]
             ])
             ->add('picture1', FileType::class, [
