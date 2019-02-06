@@ -1,9 +1,9 @@
 
 
-<div class="card mr-auto ml-auto col-8 m-2">
-    <div class="card-body d-flex align-items-start">
+<div class="card col-xl-8 col-lg-10 col-md-12 col-sm-12 m-auto">
+    <div class="card-body row">
 
-        <div class="card-header col-3 m-1 border bg-light overflow-hidden" >
+        <div class="card-header col-lg-3 col-md-4 col-sm-12 m-1 border bg-light overflow-hidden" >
             <div class="text-center d-flex flex-column align-items-center">
 
                 <div class="avatar" style="background-image:url('{{ asset('avatar/' ~ presentation.user.avatar) }}');"></div>
@@ -28,18 +28,18 @@
             </div>
         </div>
         
-        <div class="col-8 m-auto">
+        <div class="col-lg-8 col-md-5 col-sm-12  m-auto">
             {% if presentation.user.type == 'petsitter' %}
             <div class="m-2 d-flex justify-content-end">
-            <span class="p-2 badge badge-pill badge-info">Je garde vos animaux de compagnie</span>
+            <span class="d-lg-block   p-2 badge badge-pill badge-info">Je garde vos animaux de compagnie</span>
             </div>
             {% elseif presentation.user.type == 'owner'%}
             <div class="m-2 d-flex justify-content-end">
-            <span class="p-2 badge badge-pill badge-success">J'ai un animal à faire garder</span>
+            <span class="d-lg-block p-2 badge badge-pill badge-success">J'ai un animal à faire garder</span>
                 </div>
             {% else %}
             <div class="m-2 d-flex justify-content-end">
-                <span class="p-2 badge badge-pill badge-danger">Admin</span>
+                <span class="d-lg-block  p-2 badge badge-pill badge-danger">Admin</span>
                 </div>
             {% endif %}
             <h6 class="card-subtitle mb-2 h4"><a href="{{path('presentation_show', {'id': presentation.id, 'slug': presentation.slug})}}" class="text-muted">{{presentation.title|length > 35 ? presentation.title|slice(0,35) ~ '...' : presentation.title|slice(0,35)}}</a></h6>
@@ -50,7 +50,7 @@
             
          
 
-            <p class="card-text text-dark mt-4 mb-4">
+            <p class="d-lg-inline d-none card-text text-dark mt-4 mb-4">
                 {# slice permet de couper une chaîne de caractères #}
             {{presentation.body|length > 200 ? presentation.body|slice(0,200) ~ '...' : presentation.body|slice(0,200)}}
             </p>

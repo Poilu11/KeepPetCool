@@ -1,8 +1,8 @@
 <nav class="bg-dark criteria-nav text-white row justify-content-between m-0">
 
 
-    <div>
-    <nav class=" d-lg-flex d-none align-items-center">
+
+    <nav class=" d-lg-flex  d-none align-items-center">
 
         <a class="text-center text-white text-decoration-none nav-link" href="{{ path('home_page') }}">
             <i class="fa-lg fas fa-home"></i>
@@ -31,10 +31,10 @@
         {% endif %}
 
     </nav>
-</div>
 
 
-    <div class="d-lg-flex align-items-center justify-content-end col-lg-8 col-md-12 col-xl-6">
+
+    <div class="d-lg-flex align-items-center justify-content-end col-xl-6 col-lg-8 col-md-12 col-sm-12">
 
         {%if userType is not defined or userType == null %}
         {% if app.user %}
@@ -100,8 +100,8 @@
         <p class="m-auto">à</p>
             <input class="text-dark" id="zipcode" placeholder="Adresse" value="{{adressValue}}">
         </div>
-        <div class="row col-12 col-lg-6 col-xl-4">
-        <p class="col-1 mt-auto mb-auto">sur</p>
+        <div class="row col-12 col-lg-6 col-xl-4 justify-content-between">
+        <p class="col-2 mt-auto mb-auto">sur</p>
         <div class="d-flex align-items-center p-2 col-3 col-lg-auto col-md-2">
             <select class="form-control" id="radius" type="number">
                 <option value="5" {{selected.key5}}>5</option>
