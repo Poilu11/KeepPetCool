@@ -44,7 +44,7 @@ class DefaultController extends AbstractController
         if(!isset($currentUser) || empty($currentUser))
         {
             $allPresentations = $presentationRepository->findAllPresentations(true);
-            dump($allPresentations);
+            // dump($allPresentations);
         }
         
         // Si utisateur connecté
@@ -77,7 +77,7 @@ class DefaultController extends AbstractController
             if(!isset($currentUser) || empty($currentUser))
             {
                 $allPresentations = $presentationRepository->findAllPresentationsByUserType($filter, true);
-                dump($allPresentations);
+                // dump($allPresentations);
             }
             
             // Si utilisateur connecté
