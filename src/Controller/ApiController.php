@@ -16,6 +16,7 @@ class ApiController extends AbstractController
      */
     public function api(Request $request, PresentationRepository $presentationRepository, AnimalRepository $animalRepository)
     {
+
         $filter = $request->query->get('filter');
 
         if(isset($filter) || !empty($filter))
@@ -29,9 +30,10 @@ class ApiController extends AbstractController
                     foreach($presentations as $presentation)
                     {
                         $response[$presentation->getId()] = [
-                            $presentation->getTitle(),
-                            $presentation->getBody(),
-                            $presentation->getUser()->getUsername()
+                            'title' => $presentation->getTitle(),
+                            'body' => $presentation->getBody(),
+                            'username' => $presentation->getUser()->getUsername(),
+                            'zipcode' => $presentation->getUser()->getZipCode()
                         ];
                     }
                    
@@ -45,9 +47,10 @@ class ApiController extends AbstractController
                     foreach($presentations as $presentation)
                     {
                         $response[$presentation->getId()] = [
-                            $presentation->getTitle(),
-                            $presentation->getBody(),
-                            $presentation->getUser()->getUsername()
+                            'title' => $presentation->getTitle(),
+                            'body' => $presentation->getBody(),
+                            'username' => $presentation->getUser()->getUsername(),
+                            'zipcode' => $presentation->getUser()->getZipCode()
                         ];
                     }
 
@@ -61,10 +64,11 @@ class ApiController extends AbstractController
                     foreach($animals as $animal)
                     {
                         $response[$animal->getId()] = [
-                            $animal->getTitle(),
-                            $animal->getName(),
-                            $animal->getBody(),
-                            $animal->getUser()->getUsername()
+                            'title' => $animal->getTitle(),
+                            'name' => $animal->getName(),
+                            'body' => $animal->getBody(),
+                            'username' => $animal->getUser()->getUsername(),
+                            'zipcode' => $animal->getUser()->getZipCode()
                         ];
                     }
                     

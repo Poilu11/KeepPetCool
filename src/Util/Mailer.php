@@ -16,10 +16,10 @@ class Mailer
     public function send(string $email, string $body, string $object = 'KeepPetCool', string $firstname = 'Anonymous', string $lastname = 'Anonymous'){
         
         // https://github.com/PHPMailer/PHPMailer
-        
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
         try {
         //Server settings
+        $mail->CharSet = 'UTF-8';
         $mail->isSMTP();                                      // Set mailer to use SMTP
         $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -41,7 +41,7 @@ class Mailer
         $mail->send();
             return true;
         } catch (Exception $e) {
-            dump('Message could not be sent. Mailer Error: ', $mail->ErrorInfo);
+            dump('Le message n\'a pu être envoyé. Message d\'erreur : ', $mail->ErrorInfo);
         }
         
     }

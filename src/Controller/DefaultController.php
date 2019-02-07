@@ -143,19 +143,24 @@ class DefaultController extends AbstractController
             $array = [
                  0 => [
                     'One',
-                    'Question une ?',
+                    'Comment fonctionne notre site ?',
                     'nim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.'
                 ],
                 1 => [
                     'Two',
-                    'Question deux ?',
+                    'Comment devenir un petsitter (dogsitter) certifié par KeepPetCool.com ? <span style="font-weight: bold; color: rgb(170, 170, 35);"><i class="fas fa-medal"></i></span>',
                     'nim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.'
                 ],
                 2 => [
                     'Three',
-                    'Question Trois ?',
+                    'Comment nous signaler un contenu inapproprié ?',
                     'nim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.'
-                ]
+                ],
+                3 => [
+                    'Four',
+                    'Comment nous contacter ?',
+                    'nim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven\'t heard of them accusamus labore sustainable VHS.'
+                ],
             ];
 
             $jsonArray = $this->json($array);
@@ -169,20 +174,9 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="contact", methods={"GET"})
+     * @Route("/api-use", name="api_use", methods={"GET"})
      */
-    public function contact()
-    {
-        
-        return $this->render('default/contact.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route("/apiexplain", name="api_explain", methods={"GET"})
-     */
-    public function apiExplain()
+    public function apiUse()
     {
         
         return $this->render('default/api.html.twig', [

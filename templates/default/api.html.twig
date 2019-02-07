@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}API - KeepPetCool {% endblock %}
+{% block title %}API - KeepPetCool{% endblock %}
 
 {% block body %}
 
@@ -9,24 +9,32 @@
     <div class="card bg-light mr-auto ml-auto mt-4 mb-3 col-8">
         <div class="card-header bg-dark text-light rounded-bottom h4">Comment utiliser notre API ?</div>
         <div class="card-body">
-            <h5 class="card-title">KeePetCool S.A.R.L</h5>
-            <p class="card-text"> mus sed sapien eleifend, porta velit sed, gravida nulla. Vivamus nibh diam, tempor sit amet auctor vitae, viverra quis mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam ex lacus, rutrum in sapien at, fringilla tincidunt ante. Integer congue venenatis justo. Nunc in turpis mattis, facilisis elit eu, cursus  </p>
+            <h5 class="card-title">Paramètre de note API (filter)</h5>
+            <p class="card-text"><code>https://keeppetcool.com/api?filter=</code></p>
+                <p>Valeurs pouvant être utilisées : </p>
+            
+                <ul>
+                    <li><code>all</code></li>
+                    <li><code>petsitter</code></li>
+                    <li><code>owner</code></li>
+                    <li><code>animal</code></li>
+                </ul>                
+            
         </div>
     </div>
 
     <div class="card bg-light mr-auto ml-auto mt-4 mb-3 col-8">
-        <div class="card-header bg-dark text-light rounded-bottom h4">Les différents filtres pouvant être utilisés :</div>
+        <div class="card-header bg-dark text-light rounded-bottom h4">Tester notre API (réponse en JSON)</div>
         <div class="card-body">
             <p class="card-text"><a href="{{path('api', {'filter': 'all'})}}">Toutes les présentations</a></p>
             <p class="card-text"><a href="{{path('api', {'filter': 'petsitter'})}}">Toutes les fiche de présentation petsitters</a></p>
             <p class="card-text"><a href="{{path('api', {'filter': 'owner'})}}">Toutes les fiche de présentation propriétaires</a></p>
             <p class="card-text"><a href="{{path('api', {'filter': 'animal'})}}">Toutes les fiches animal</a></p>
-            <p class="card-text"> mus sed sapien eleifend, porta velit sed, gravida nulla. Vivamus nibh diam, tempor sit amet auctor vitae, viverra quis mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam ex lacus, rutrum in sapien at, fringilla tincidunt ante. Integer congue venenatis justo. Nunc in turpis mattis, facilisis elit eu, cursus  </p>
         </div>
     </div>
 
     <div class="card bg-light mr-auto ml-auto mt-4 mb-3 col-8">
-        <div class="card-header bg-dark text-light rounded-bottom h4">Conditions d'utilisation :</div>
+        <div class="card-header bg-dark text-light rounded-bottom h4">Conditions d'utilisation de notre API</div>
         <div class="card-body">
             <p class="card-text"> mus sed sapien eleifend, porta velit sed, gravida nulla. Vivamus nibh diam, tempor sit amet auctor vitae, viverra quis mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam ex lacus, rutrum in sapien at, fringilla tincidunt ante. Integer congue venenatis justo. Nunc in turpis mattis, facilisis elit eu, cursus  </p>
         </div>

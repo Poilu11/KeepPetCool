@@ -82,7 +82,7 @@ class MessageController extends AbstractController
             // Début traitement envoi email au destinataire
                 $mailer->send($userTo->getEmail(),
                     'Bonjour, <br>Nous vous informons que vous venez de recevoir un nouveau message sur votre messagerie interne KeepPetCool. <br>Connectez-vous à votre compte pour le consulter. <br> A bientôt. <br> L\'équipe KeepPetCool',
-                    'KeepPetCool - Nouveau message !',
+                    'KeepPetCool - Nouveau message reçu !',
                     $userTo->getFirstname(),
                     $userTo->getLastname()
                 );
