@@ -14,7 +14,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/api", name="api", methods={"GET"})
      */
-    public function index(Request $request, PresentationRepository $presentationRepository, AnimalRepository $animalRepository)
+    public function api(Request $request, PresentationRepository $presentationRepository, AnimalRepository $animalRepository)
     {
         $filter = $request->query->get('filter');
 
