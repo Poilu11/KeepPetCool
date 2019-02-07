@@ -67,7 +67,7 @@
             {% if presentation.user.type == 'petsitter' %}
             {% if not (presentation.price) %}
             {% else %}
-            <p> Prix /h : {{ presentation.price }} €</p>
+            <p> Prix / h : {{ presentation.price }} €</p>
             {% endif %}
             <p>
                 {% for species in presentation.species %}
