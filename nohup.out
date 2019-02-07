@@ -71,3 +71,49 @@ Message received : \n
 """
 "New connection! (52)\n"
 "Connection 52 has disconnected\n"
+"New connection! (95)\n"
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sfsdf"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sdf"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sdf"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"fsdfsd"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sd"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"fd"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"f"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sdff"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"df"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"sd"}
+"""
+"""
+Message received : \n
+{"id":"4","username":"owner","content":"fd"}
+"""
+"Connection 95 has disconnected\n"
