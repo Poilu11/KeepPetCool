@@ -9,7 +9,7 @@ var connection = {
     {
         // L'adresse du serveur de websocket est de la forme ws://127.0.0.1:8080.
         // Cette ligne permet de se connecter au serveur de websocket.
-        connection.socket = new WebSocket("wss://95.142.169.6:8080/");
+        connection.socket = new WebSocket("ws://"+ws_server_ip+":"+ws_server_port);
 
         // On définit ici les différents callbacks qui seront déclenché l'ouverture et à la fermeture de la connexion, et à la reception d'un message provenant du serveur.
         connection.socket.onopen = function(e)

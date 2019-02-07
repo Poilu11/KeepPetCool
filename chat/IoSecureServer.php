@@ -17,12 +17,14 @@ class IoSecureServer extends IoServer{
     {
         parent::__construct($app, $socket, $loop);
 
+        /*
         self::$secureOptions = [
-            'local_cert' => '/etc/letsencrypt/live/chat.keeppetcool.com/cert.pem',
-            'local_pk' => '/etc/letsencrypt/live/chat.keeppetcool.com/privkey.pem',
+            'local_cert' => '',
+            'local_pk' => '',
             'allow_self_signed' => true,
             'verify_peer' => false
             ];
+        */
     }
 
     public static function factory(MessageComponentInterface $component, $port = 80, $address = '0.0.0.0') 
@@ -30,7 +32,10 @@ class IoSecureServer extends IoServer{
         $loop = LoopFactory::create();
         $socket = new Reactor($address . ':' . $port, $loop);
         
-        $socket = new SecureReactor($socket, $loop, self::$secureOptions);
+        if (!empty(self::$secureOptions) && is_array(self::$secureOptions)) 
+        {
+            $socket = new SecureReactor($socket, $loop, self::$secureOptions);
+        }
 
         
         return new static($component, $socket, $loop);

@@ -12,6 +12,8 @@
 *   Il faut ensuite repérer le numéro du processus puis faire la commande : kill numéro
 */
 
+// Mon serveur : 95.142.169.6
+
 
 use Chat\ChatApp;
 use Ratchet\Http\HttpServer;
@@ -23,6 +25,6 @@ use Ratchet\WebSocket\WsServer;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$server = IoSecureServer::factory(new HttpServer(new WsServer(new ChatApp())) ,8080, '95.142.169.6');
+$server = IoSecureServer::factory(new HttpServer(new WsServer(new ChatApp())) ,8080, '127.0.0.1');
 
 $server->run();
