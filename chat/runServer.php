@@ -15,7 +15,7 @@
 
 use Chat\ChatApp;
 use Ratchet\Http\HttpServer;
-use Ratchet\Server\IoServer;
+use Chat\IoSecureServer;
 use Ratchet\WebSocket\WsServer;
 
 
@@ -23,6 +23,6 @@ use Ratchet\WebSocket\WsServer;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$server = IoServer::factory(new HttpServer(new WsServer(new ChatApp())) ,8080);
+$server = IoSecureServer::factory(new HttpServer(new WsServer(new ChatApp())) ,8080);
 
 $server->run();

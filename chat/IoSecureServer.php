@@ -11,15 +11,15 @@ use React\Socket\SecureServer as SecureReactor;
 
 class IoSecureServer extends IoServer{
 
-    protected $secureOptions = [];
+    protected static $secureOptions = [];
 
-    public function __construct()
+    public function __construct(MessageComponentInterface $app, ServerInterface $socket, LoopInterface $loop = null)
     {
-        parent::__construct();
+        parent::__construct($app, $socket, $loop);
 
-        $secureOptions = [
-            'local_cert' => 'path to file',
-            'local_pk' => 'path to file',
+        self::$secureOptions = [
+            'local_cert' => '/etc/letsencrypt/live/chat.keeppetcool.com/cert.pem',
+            'local_pk' => '/etc/letsencrypt/live/chat.keeppetcool.com/privkey.pem',
             'allow_self_signed' => true,
             'verify_peer' => false
             ];
@@ -30,7 +30,7 @@ class IoSecureServer extends IoServer{
         $loop = LoopFactory::create();
         $socket = new Reactor($address . ':' . $port, $loop);
         
-        $socket = new SecureReactor($socket, $loop, $secureOptions);
+        $socket = new SecureReactor($socket, $loop, self::$secureOptions);
 
         
         return new static($component, $socket, $loop);
