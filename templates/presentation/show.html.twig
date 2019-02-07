@@ -43,7 +43,7 @@
                 {{ presentation.title }}</h2>
 
             <p class="mb-1">{% if presentation.user.type == 'petsitter' %}
-                {{ presentation.user.firstname}} {{ presentation.user.lastname}}
+                {{ presentation.user.firstname}}
                 {% if note != 'NC' %}
                 {% for i in 1..note|round %}
                 <i class="fas fa-star"></i>
