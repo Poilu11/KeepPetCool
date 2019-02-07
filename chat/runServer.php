@@ -23,6 +23,6 @@ use Ratchet\WebSocket\WsServer;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$server = IoSecureServer::factory(new HttpServer(new WsServer(new ChatApp())) ,80, '95.142.169.6');
+$server = IoSecureServer::factory(new HttpServer(new WsServer(new ChatApp())) ,443, '95.142.169.6');
 
 $server->run();
