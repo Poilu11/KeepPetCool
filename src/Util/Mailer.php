@@ -41,7 +41,7 @@ class Mailer
         $mail->send();
             return true;
         } catch (Exception $e) {
-            dump('Le message n\'a pu être envoyé. Message d\'erreur : ', $mail->ErrorInfo);
+            // dump('Le message n\'a pu être envoyé. Message d\'erreur : ', $mail->ErrorInfo);
         }
         
     }
