@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Util\Mailer;
 use App\Form\UserType;
 use App\Util\CoordResolver;
 use App\Repository\RoleRepository;
@@ -64,7 +65,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET", "POST"})
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv)
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv, Mailer $mailer)
     {
         // Si connecté,
         // On redirige sur la page dashboard
@@ -148,6 +149,15 @@ class UserController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            // Début traitement envoi email pour nouvelle inscription
+                $mailer->send($user->getEmail(),
+                    'Bonjour, <br>Nous vous confirmons votre inscription sur notre site KeepPetCool. <br>Connectez-vous pour créer votre fiche de présentation. <br>Vous pouvez également créer une fiche de présentation pour votre animal (ou vos animaux). <br>Votre identifiant : ' . $user->getUsername() . '<br>A bientôt. <br>L\'équipe KeepPetCool',
+                    'Bienvenue chez KeepPetCool ! - Confirmation inscription',
+                    $user->getFirstname(),
+                    $user->getLastname()
+                );
+            // Fin traitement envoi email pour nouvelle inscription
 
             $this->addFlash(
                 'success',

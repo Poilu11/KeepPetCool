@@ -57,8 +57,8 @@ class AppFixtures extends Fixture
         $em->persist($userRole);
 
         $adminUser = new User();
-        $adminUser->setUsername('admin4')
-            ->setPassword($this->encoder->encodePassword($adminUser, 'admin4'))
+        $adminUser->setUsername('admin1202')
+            ->setPassword($this->encoder->encodePassword($adminUser, 'admin1202'))
             ->setEmail('admin@admin.com')
             ->setType('administrateur')
             ->setFirstname('Simon')
