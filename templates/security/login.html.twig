@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Connexion à KeepPetCool{% endblock %}
+
 {% block body %}
 
 {% if error %}
@@ -24,7 +26,7 @@
             </div>
             <input type="hidden" name="_target_path" value="/dashboard" />
             <button class="m-auto btn btn-dark" type="submit">Connexion</button>            
-            <a class="m-auto btn btn-dark text-white" href="{{ path('signup') }}" class="text-white">S'inscrire</a>
+            <a class="m-auto btn btn-outline-light text-dark" href="{{ path('signup') }}">S'inscrire</a>
         
         </form>
         </div>

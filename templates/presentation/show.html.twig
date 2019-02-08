@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Presentation {% endblock %}
+{% block title %} {{ presentation.title}} {% endblock %}
 
 {% block body %}
 
@@ -90,44 +90,41 @@
 
         <div class="m-2 row justify-content-around col-lg-4 col-sm-12  ">
             {% for service in presentation.services %}
-            {% if service.name == "Gardiennage à domicile" %}
-            <div class="m-2 text-center">
-                <i class="h2 fas fa-home"></i><i class="fas fa-sun"></i>
-                <p class="mb-1">Gardiennage jour</p>
+                {% if service.name == "Gardiennage à domicile" %}
+                <div class="m-2 text-center">
+                    <i class="h2 fas fa-home"></i><i class="fas fa-sun"></i>
+                    <p class="mb-1">{{ service.name }}</p>
 
-            </div>
-            <div class="m-2 text-center">
-                <i class="h2 fas fa-home"></i>
-                <i class="fas fa-moon"></i>
-                <p class="mb-1">Gardiennage nuit</p>
+                </div>
+                {% endif %}
+                {% if service.name == "Pension" %}
+                <div class="m-2 text-center">
+                    <i class="h2 fas fa-home"></i>
+                    <i class="fas fa-moon"></i>
+                    <p class="mb-1">{{ service.name }}</p>
+                </div>
+                {% endif %}
+                {% if service.name == "Promenade" %}
+                <div class="m-2 text-center">
+                    <i class="h2 fas fa-walking"></i>
+                    <p class="mb-1">{{ service.name }}</p>
 
-            </div>
-            {% else %}
-            {% endif %}
-            {% if service.name == "Promenade" %}
-            <div class="m-2 text-center">
-                <i class="h2 fas fa-walking"></i>
-                <p class="mb-1">Promenade</p>
+                </div>
+                {% endif %}
+                {% if service.name == "Visite" %}
+                <div class="m-2 text-center">
+                    <i class="h2 fas fa-walking"></i>
+                    <p class="mb-1">{{ service.name }}</p>
 
-            </div>
-            {% else %}
-            {% endif %}
-            {% if service.name == "Visite" %}
-            <div class="m-2 text-center">
-                <i class="h2 fas fa-walking"></i>
-                <p class="mb-1">Visite</p>
+                </div>
+                {% endif %}
+                {% if service.name == "Transport" %}
+                <div class="m-2 text-center">
+                    <i class="h2 fas fa-car"></i>
+                    <p class="mb-1">{{ service.name }}</p>
 
-            </div>
-            {% else %}
-            {% endif %}
-            {% if service.name == "Transport" %}
-            <div class="m-2 text-center">
-                <i class="h2 fas fa-car"></i>
-                <p class="mb-1">Transport</p>
-
-            </div>
-            {% else %}
-            {% endif %}
+                </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

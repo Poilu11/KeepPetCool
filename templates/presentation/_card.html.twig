@@ -1,5 +1,4 @@
 
-
 <div class="card col-xl-8 col-lg-10 col-md-12 col-sm-12 m-auto">
     <div class="card-body row">
 
@@ -57,11 +56,10 @@
 
             <p class="font-weight-bold">Lieu : {{ presentation.user.city }} ({{ presentation.user.zipCode }})</p>
 
-            <a class="btn btn-secondary" href="{{path('presentation_show', {'id': presentation.id, 'slug': presentation.slug})}}" class="text-white card-link" role="button">Afficher</a>            
-           
+            <a class="btn btn-secondary text-white card-link" href="{{path('presentation_show', {'id': presentation.id, 'slug': presentation.slug})}}" role="button">Afficher</a>
 
             {% if is_granted(['ROLE_ADMIN','ROLE_MODO']) %}
-            <a class="btn btn-danger" href="{{ path('presentation_disable', {'id': presentation.id }) }}" class="text-white" role="button"><i class="mr-1 fas fa-ban"></i>Dé/Bloquer</a>
+            <a class="btn btn-danger text-white" href="{{ path('presentation_disable', {'id': presentation.id }) }}" role="button"><i class="mr-1 fas fa-ban"></i>Dé/Bloquer</a>
             {% endif %}
 
         </div>
