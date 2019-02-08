@@ -13,6 +13,7 @@ use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PresentationRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
@@ -398,7 +399,7 @@ class UserController extends AbstractController
     /**
      * @Route("/status", name="status", methods={"GET", "POST"})
      */
-    public function status(Request $request, RoleRepository $roleRepository, UserRepository $userRepository)
+    public function status(Request $request, RoleRepository $roleRepository, UserRepository $userRepository, PaginatorInterface $paginator)
     {
         if(!empty($_POST))
         {
@@ -450,8 +451,20 @@ class UserController extends AbstractController
         
         $roles = $roleRepository->findAll();
 
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy([], ['username' => 'ASC']);
 
+        // PAGINATION
+        // https://packagist.org/packages/knplabs/knp-paginator-bundle
+        // Pour la pagination, injection des services PaginatorInterface et Request
+        // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
+        $users = $paginator->paginate(
+            // Doctrine Query, not results
+            $users,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            20
+        );
 
         return $this->render('user/status.html.twig', [
             'roles' => $roles,
