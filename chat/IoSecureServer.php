@@ -17,12 +17,14 @@ class IoSecureServer extends IoServer{
     {
         parent::__construct($app, $socket, $loop);
 
+        /*
         self::$secureOptions = [
             'local_cert' => '/etc/letsencrypt/live/chat.keeppetcool.com/cert.pem',
             'local_pk' => '/etc/letsencrypt/live/chat.keeppetcool.com/privkey.pem',
             'allow_self_signed' => true,
             'verify_peer' => false
             ];
+        */
         
     }
 
