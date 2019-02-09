@@ -88,8 +88,9 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
     /**
      * @Assert\File(
-     * maxSize = "1024k", 
-     * mimeTypes={ "image/gif", "image/jpeg", "image/png" },
+     * maxSize = "2048k", 
+     * mimeTypes = { "image/gif", "image/jpeg", "image/png" },
+     * uploadIniSizeErrorMessage = "Vous ne pouvez pas télécharger un avatar d'une taille supérieure à {{ limit }} {{ suffix }}.",
      * mimeTypesMessage = "Seuls les formats suivants sont acceptés : gif, png, jpeg"
      * )
      * 

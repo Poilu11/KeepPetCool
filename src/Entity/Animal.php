@@ -51,8 +51,9 @@ class Animal
    
     /**
      * @Assert\File(
-     * maxSize = "1024k", 
-     * mimeTypes={ "image/gif", "image/jpeg", "image/png" },
+     * maxSize = "2048k", 
+     * mimeTypes = { "image/gif", "image/jpeg", "image/png" },
+     * uploadIniSizeErrorMessage = "Vous ne pouvez pas télécharger une image d'une taille supérieure à {{ limit }} {{ suffix }}.",
      * mimeTypesMessage = "Seuls les formats suivants sont acceptés : gif, png, jpeg"
      * )
      * 
@@ -62,8 +63,9 @@ class Animal
 
    /**
      * @Assert\File(
-     * maxSize = "1024k", 
-     * mimeTypes={ "image/gif", "image/jpeg", "image/png" },
+     * maxSize = "2048k", 
+     * mimeTypes = { "image/gif", "image/jpeg", "image/png" },
+     * uploadIniSizeErrorMessage = "Vous ne pouvez pas télécharger une image d'une taille supérieure à {{ limit }} {{ suffix }}.",
      * mimeTypesMessage = "Seuls les formats suivants sont acceptés : gif, png, jpeg"
      * )
      * 
@@ -73,8 +75,9 @@ class Animal
 
     /**
      * @Assert\File(
-     * maxSize = "1024k", 
-     * mimeTypes={ "image/gif", "image/jpeg", "image/png" },
+     * maxSize = "2048k", 
+     * mimeTypes = { "image/gif", "image/jpeg", "image/png" },
+     * uploadIniSizeErrorMessage = "Vous ne pouvez pas télécharger une image d'une taille supérieure à {{ limit }} {{ suffix }}.",
      * mimeTypesMessage = "Seuls les formats suivants sont acceptés : gif, png, jpeg"
      * )
      * 
