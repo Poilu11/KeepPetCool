@@ -79,7 +79,17 @@
                     </tr>
                     <tr>
                         <th scope="row">Rôle / Type</th>
-                        <td>{{ user.role.name }} / {{ user.type }}</td>
+                        <td>{{ user.role.name }} / {% if user.type == 'owner' %}
+                            Maître
+                            {% elseif user.type == 'petsitter' %}
+                            Petsitter
+                            {% elseif user.type == 'moderateur' %}
+                            Modérateur
+                            {% elseif user.type == 'administrateur' %}
+                            Administrateur
+                            {% else %}
+                            {{ user.type }}
+                            {% endif %}</td>
                     </tr>
                 </tbody>
             </table>
