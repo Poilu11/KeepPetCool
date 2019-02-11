@@ -249,12 +249,12 @@ class DefaultController extends AbstractController
         if(empty($presentations))
         {
             $flashAdress = str_replace('+', ' ', $adress);
-            $this->addFlash('danger', 'Personne n\'a été trouvé aux alentours de cette adresse : '.$flashAdress.'.');
+            $this->addFlash('danger', 'Personne n\'a été trouvée aux alentours de cette adresse : '.$flashAdress.'.');
         }
         else
         {
             $flashAdress = str_replace('+', ' ', $adress);
-            $flashUserType = ($userType==='owner')?'propriétaire':'petsitters';
+            $flashUserType = ($userType==='owner')?'propriétaires':'petsitters';
             $this->addFlash('success', 'Voici les '.$flashUserType.' à proximité de : '.$flashAdress.'.');
         }
 
