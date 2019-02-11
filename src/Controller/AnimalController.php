@@ -520,9 +520,8 @@ class AnimalController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/{slug}", name="animal_show", methods={"GET"}, requirements={"id"="\d+","slug"="[^/]+"})
-     * @ParamConverter("animal", options={"mapping": {"id": "id"}})
-     * @ParamConverter("animal", options={"mapping": {"slug": "slug"}})
+     * @Route("/{id}/{slug}", name="animal_show", methods={"GET"}, requirements={"id"="\d+"})
+     * @ParamConverter("animal", options={"mapping": {"id": "id", "slug": "slug"}})
      */
     public function show($id, $slug, Animal $animal, AnimalRepository $animalRepository): Response
     {
