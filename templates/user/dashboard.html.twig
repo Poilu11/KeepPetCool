@@ -35,17 +35,18 @@
 
     
     <div class="row">
-        <div class="col-lg-2 col-md-3 col-6 m-auto mr-auto ml-auto">
+        <div class="col-lg-3 col-md-4 col-7 m-auto mr-auto ml-auto">
             <div>
                 <img class="ml-3 mt-3 float-left" src="{{ asset(avatar_upload_path ~ (user.avatar ?: 'default-avatar.png')) }}"
-                    style="width: 100px; height:150px;">
+                    style="width: 120px; height:120px;">
+                    <a class="btn btn-sm btn-danger text-white mt-3 ml-1" role="button" href="{{ path('avatar_delete',{'id': user.id})}}"> <i class="text-white fas fa-times" style="color: red;"></i></a>
             </div>
-            <div>
+            {# <div>
                 <a class="btn btn-sm btn-danger text-white" role="button" href="{{ path('avatar_delete',{'id': user.id})}}"> <i class="text-white fas fa-times" style="color: red;"></i></a>
-            </div>
+            </div> #}
             
         </div>
-        <div class="col-10">
+        <div class="col-9">
             <table class="table my-3">
 
                 <tbody>
