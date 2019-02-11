@@ -110,6 +110,7 @@
     </div>
 
     <footer class="bg-dark text-center p-2 mt-5">
+        <div>
         <span class="col-4">
             <a class="text-white text-decoration-none" href="{{path('faq')}}">FAQ</a>
         </span>
@@ -119,6 +120,15 @@
         <span class="text-white col-4">
             <a class="text-white text-decoration-none" href="{{path('api_use')}}">API</a>
         </span>
+        </div>
+        {% if app.request.attributes.get('_route') != 'welcome' %}
+        <div>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-facebook-square"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-twitter-square"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-youtube"></i></a>
+        </div>            
+        {% endif %}
     </footer>
 
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
