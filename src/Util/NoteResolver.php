@@ -16,7 +16,7 @@ class NoteResolver{
 
         public function getUserNoteFromPres(Presentation $pres)
         {
-            $comments = $this->commentRepo->findBy(['petsitter' => $pres->getUser()->getId()]);
+            $comments = $this->commentRepo->findBy(['petsitter' => $pres->getUser()->getId(), 'isValidated' => true]);
             $commentsCount = count($comments);
 
             // On initialise la variable d'addition
