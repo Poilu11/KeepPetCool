@@ -43,9 +43,9 @@
             {% endif %}
             <h6 class="card-subtitle mb-2 h4"><a href="{{path('presentation_show', {'id': presentation.id, 'slug': presentation.slug})}}" class="text-muted">{{presentation.title|length > 35 ? presentation.title|slice(0,35) ~ '...' : presentation.title|slice(0,35)}}</a></h6>
 
-            <p>{% if presentation.user.type == 'petsitter' %}
+            {# <p>{% if presentation.user.type == 'petsitter' %}
                     {{ presentation.user.commentsPetsitter|length }} commentaire(s)<br>
-                {% endif %}
+                {% endif %} #}
                 Utilisateur : {{ presentation.user.username }} {% if presentation.user.isValidated %}<span style="font-weight: bold; color: rgb(170, 170, 35);"><i class="fas fa-medal"></i></span>{% endif %}</p>
 
             {# pour consulter un tableau indéxé numériquement, on passe la variable entre crochet, car si on la communique par un point, il le traite comme une chaine de caractère. #}
