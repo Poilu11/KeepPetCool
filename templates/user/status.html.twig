@@ -6,6 +6,10 @@
 <div style="width: 80%; margin: auto;">
   
   <h2>Gestion des rôles utilisateurs</h2>
+
+  <div class="navigation">
+    {{ knp_pagination_render(users) }}
+  </div>
   
   {% for user in users %}
 <form method="POST">
@@ -50,6 +54,10 @@
   </div>
 </form>
 {% endfor %}
+
+<div class="navigation">
+  {{ knp_pagination_render(users) }}
+</div>
 
 </div>
 {% endblock %}

@@ -91,10 +91,10 @@ class PresentationType extends AbstractType
                 'multiple' => true,
             ])
             ->add('price', IntegerType::class, [
-                'label' => 'Prix / heure',
-                'help' => 'Augmenter vos chances de trouver un animal à garder en renseignant ce champs',
+                'label' => 'Prix / heure (en €)',
+                'help' => 'Augmentez vos chances de trouver un animal à garder en renseignant ce champ.',
                     'attr' => [
-                    'placeholder' => 'Exemple : 15€',
+                    'placeholder' => 'Exemple : 15',
                     'style' => 'width: 200px'                    
                 ],
             ])

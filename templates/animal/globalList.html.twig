@@ -10,6 +10,23 @@
         {{ knp_pagination_render(animals) }}
     </div>
 
+    <div class="dropdown show container mb-2 mt-2">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Tri
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{ path('home_page') }}">Tout</a>
+            <a class="dropdown-item" role="button" href="{{ path('home_page', {'filter': 'petsitter'}) }}">A
+                la recherche d'un petsitter</a>
+            <a class="dropdown-item" role="button" href="{{ path('home_page', {'filter': 'owner'}) }}">A
+                la recherche d'un propriétaire</a>
+            <a class="dropdown-item" role="button" href="{{ path('animal_global_list') }}">Les
+                Animaux</a>
+        </div>
+    </div>
+
 {% for animal in animals %}
 
 

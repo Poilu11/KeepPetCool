@@ -25,7 +25,7 @@
 
 <body>
     <div class="container-fluid p-0">
-        <header id="parentMessage" class="bg-secondary pb-0 mb-4">
+        <header id="parentMessage" class="pb-0 mb-4" style="background-color:#ceb88f">
             {% if is_granted('IS_AUTHENTICATED_FULLY') and app.request.pathinfo == '/dashboard' %}
             <p id="message" class="text-dark" style="font-size: 1.2em;"> Bienvenue {{ app.user.username }} !</p>
             {% endif %}
@@ -39,7 +39,7 @@
                 {{ include('_criteria_nav.html.twig') }}
             </div>
             <!--Navbar-->
-            <nav class="p-2 d-lg-none  d-sm-block navbar-light light-blue lighten-4">
+            <nav class="p-2 d-xl-none d-lg-none  d-sm-block navbar-light light-blue lighten-4">
 
                 <!-- Collapse button -->
                 <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
@@ -92,12 +92,13 @@
 
             </nav>
             <!--/.Navbar-->
+
         </header>
 
         {# gestion des messages flash #}
         {% for index, messages in app.flashes %}
         {% for message in messages %}
-        <div class="m-auto col-6 alert alert-{{ index }}">
+        <div class="m-auto col-6-xl col-lg-8  col-md-8 col-sm-10 alert alert-{{ index }}">
             <button type="button" role="alert" class="close" data-dismiss="alert">&times;</button>
             <p class="mb-0">{{ message }}</p>
         </div>
@@ -108,6 +109,7 @@
     </div>
 
     <footer class="bg-dark text-center p-2 mt-5">
+        <div>
         <span class="col-4">
             <a class="text-white text-decoration-none" href="{{path('faq')}}">FAQ</a>
         </span>
@@ -115,8 +117,17 @@
             <a class="text-white text-decoration-none" href="{{path('mention')}}">Mentions légales</a>
         </span>
         <span class="text-white col-4">
-            <a class="text-white text-decoration-none" href="{{path('contact')}}">Contact</a>
+            <a class="text-white text-decoration-none" href="{{path('api_use')}}">API</a>
         </span>
+        </div>
+        {% if app.request.attributes.get('_route') != 'welcome' %}
+        <div>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-facebook-square"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-twitter-square"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white fa-2x"><i class="fab fa-youtube"></i></a>
+        </div>            
+        {% endif %}
     </footer>
 
     <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

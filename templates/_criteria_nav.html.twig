@@ -95,17 +95,17 @@
         </div>
         <div class="m-1 col-lg-6 col-5 text-center {{ownerClass}} user-checkbox" data-usertype="owner">
             <i class="fas fa-dog"></i>
-            <div>Owner</div>
+            <div>Maître</div>
         </div>
     </div>
     <div class="row col-12 col-lg-5" style="flex-wrap:nowrap">
-        <p class="m-auto">à</p>
-            <input class="text-dark" id="zipcode" placeholder="Adresse" value="{{adressValue}}">
+        <p class="ml-auto mb-auto mt-auto mr-1">à</p>
+            <input class="text-dark form-control" id="zipcode" placeholder="Adresse" value="{{adressValue}}">
         </div>
-        <div class="row col-12 col-lg-6 col-xl-4 justify-content-between">
+        <div class="row col-12 col-lg-6 col-xl-7 justify-content-around">
         <p class="col-2 mt-auto mb-auto">sur</p>
         <div class="d-flex align-items-center p-2 col-3 col-lg-auto col-md-2">
-            <select class="form-control" id="radius" type="number">
+            <select class="form-control col-8" id="radius" type="number">
                 <option value="5" {{selected.key5}}>5</option>
                 <option value="10" {{selected.key10}}>10</option>
                 <option value="15" {{selected.key15}}>15</option>

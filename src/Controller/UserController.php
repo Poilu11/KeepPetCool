@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Util\Mailer;
 use App\Form\UserType;
 use App\Util\CoordResolver;
 use App\Repository\RoleRepository;
@@ -12,6 +13,7 @@ use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\PresentationRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,7 +66,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET", "POST"})
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv)
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder, CoordResolver $coordResolv, Mailer $mailer)
     {
         // Si connecté,
         // On redirige sur la page dashboard
@@ -148,6 +150,15 @@ class UserController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            // Début traitement envoi email pour nouvelle inscription
+                $mailer->send($user->getEmail(),
+                    'Bonjour, <br>Nous vous confirmons votre inscription sur notre site KeepPetCool. <br>Connectez-vous pour créer votre fiche de présentation. <br>Vous pouvez également créer une fiche de présentation pour votre animal (ou vos animaux). <br>Votre identifiant : ' . $user->getUsername() . '<br>A bientôt. <br>L\'équipe KeepPetCool',
+                    'Bienvenue chez KeepPetCool ! - Confirmation inscription',
+                    $user->getFirstname(),
+                    $user->getLastname()
+                );
+            // Fin traitement envoi email pour nouvelle inscription
 
             $this->addFlash(
                 'success',
@@ -388,7 +399,7 @@ class UserController extends AbstractController
     /**
      * @Route("/status", name="status", methods={"GET", "POST"})
      */
-    public function status(Request $request, RoleRepository $roleRepository, UserRepository $userRepository)
+    public function status(Request $request, RoleRepository $roleRepository, UserRepository $userRepository, PaginatorInterface $paginator)
     {
         if(!empty($_POST))
         {
@@ -440,8 +451,20 @@ class UserController extends AbstractController
         
         $roles = $roleRepository->findAll();
 
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy([], ['username' => 'ASC']);
 
+        // PAGINATION
+        // https://packagist.org/packages/knplabs/knp-paginator-bundle
+        // Pour la pagination, injection des services PaginatorInterface et Request
+        // https://stackoverflow.com/questions/48740064/symfony-4-knppaginator-bundle-service-not-found-even-though-it-exists-in-app
+        $users = $paginator->paginate(
+            // Doctrine Query, not results
+            $users,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            20
+        );
 
         return $this->render('user/status.html.twig', [
             'roles' => $roles,

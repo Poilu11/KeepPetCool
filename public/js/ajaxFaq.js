@@ -28,13 +28,13 @@ var ajaxFaq = {
 
             console.log(response);
 
-            var template = '<div id="accordion" class="col-8 m-auto pt-5">\
+            var template = '<div id="accordion" class="col-lg-8 col-sm-10 m-auto pt-5">\
                             <div class="card mb-5 border-10 border-dark">\
                             <div class="card-header" id="heading#number#">\
                                 <h5 class="mb-0">\
-                                <button class="btn btn-link text-dark" data-toggle="collapse" data-target="#collapse#number#" aria-expanded="true" aria-controls="collapse#number#">\
+                                <div class="text-dark" data-toggle="collapse" data-target="#collapse#number#" aria-expanded="true" aria-controls="collapse#number#">\
                                     <span class="h4">#question#</span>\
-                                </button>\
+                                </div>\
                                 </h5>\
                             </div>\
                             <div id="collapse#number#" class="collapse" aria-labelledby="heading#number#" data-parent="#accordion">\
