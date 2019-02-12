@@ -191,8 +191,7 @@ class PresentationController extends AbstractController
 
     /**
      * @Route("/presentation/{id}/{slug}", name="presentation_show", methods={"GET"}, requirements={"id"="\d+"})
-     * @ParamConverter("presentation", options={"mapping": {"slug": "slug"}})
-     * @ParamConverter("presentation", options={"mapping": {"id": "id"}})
+     * @ParamConverter("presentation", options={"mapping": {"id": "id", "slug": "slug"}})
      */
     public function show($id, $slug, Presentation $presentation, PresentationRepository $presentationRepository, CommentRepository $commentRepository, AnimalRepository $animalRepository, NoteResolver $noteResolver, EntityManagerInterface $em)
     {

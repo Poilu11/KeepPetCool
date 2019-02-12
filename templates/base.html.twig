@@ -120,12 +120,13 @@
             <a class="text-white text-decoration-none" href="{{path('api_use')}}">API</a>
         </span>
         </div>
+        {# Liens réseaux sociaux #}
         {% if app.request.attributes.get('_route') != 'welcome' %}
         <div>
-                <a href="#" class="text-white fa-2x"><i class="fab fa-facebook-square"></i></a>
-                <a href="#" class="text-white fa-2x"><i class="fab fa-twitter-square"></i></a>
-                <a href="#" class="text-white fa-2x"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="text-white fa-2x"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-white fa-2x m-1"><i class="fab fa-facebook-square"></i></a>
+                <a href="#" class="text-white fa-2x m-1"><i class="fab fa-twitter-square"></i></a>
+                <a href="#" class="text-white fa-2x m-1"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white fa-2x m-1"><i class="fab fa-youtube"></i></a>
         </div>            
         {% endif %}
     </footer>

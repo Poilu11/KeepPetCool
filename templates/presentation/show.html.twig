@@ -177,7 +177,7 @@
             {% endif %}
             <h5 class="card-title">Commentaire écrit le {{ comment.createdAt|date("d/m/Y") }}</h5>
             <p> {% if comment.note != 'NC' %}
-                {% for i in 1..note|round %}
+                {% for i in 1..comment.note|round %}
                 <i class="fas fa-star"></i>
                 {% endfor %}
                 {% endif %}

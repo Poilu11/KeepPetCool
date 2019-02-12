@@ -29,7 +29,7 @@
     <div class="modal fade modal1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <img src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
+          <img style="max-width:100%" src="{{ asset(picture_upload_path ~ (animal.picture1 ?: 'default-picture.png')) }}">
           <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -42,7 +42,7 @@
     <div class="modal fade modal-2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <img src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
+          <img style="max-width:100%" src="{{ asset(picture_upload_path ~ (animal.picture2 ?: 'default-picture.png')) }}">
           <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -57,7 +57,7 @@
     <div class="modal fade modal3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <img src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
+          <img style="max-width:100%" src="{{ asset(picture_upload_path ~ (animal.picture3 ?: 'default-picture.png')) }}">
           <button type="button" class="closeModal btn btn-link" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

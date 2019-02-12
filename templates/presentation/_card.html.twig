@@ -43,7 +43,11 @@
             {% endif %}
             <h6 class="card-subtitle mb-2 h4"><a href="{{path('presentation_show', {'id': presentation.id, 'slug': presentation.slug})}}" class="text-muted">{{presentation.title|length > 35 ? presentation.title|slice(0,35) ~ '...' : presentation.title|slice(0,35)}}</a></h6>
 
-            <p>Utilisateur : {{ presentation.user.username }} {% if presentation.user.isValidated %}<span style="font-weight: bold; color: rgb(170, 170, 35);"><i class="fas fa-medal"></i></span>{% endif %}</p>
+            <p>
+                {# {% if presentation.user.type == 'petsitter' %}
+                    {{ presentation.user.commentsPetsitter|length }} commentaire(s)<br>
+                {% endif %} #}
+                Utilisateur : {{ presentation.user.username }} {% if presentation.user.isValidated %}<span style="font-weight: bold; color: rgb(170, 170, 35);"><i class="fas fa-medal"></i></span>{% endif %}</p>
 
             {# pour consulter un tableau indéxé numériquement, on passe la variable entre crochet, car si on la communique par un point, il le traite comme une chaine de caractère. #}
             
@@ -51,7 +55,7 @@
 
             <p class="d-lg-inline d-none card-text text-dark mt-4 mb-4">
                 {# slice permet de couper une chaîne de caractères #}
-            {{presentation.body|length > 200 ? presentation.body|slice(0,200) ~ '...' : presentation.body|slice(0,200)}}
+            {{presentation.body|length > 200 ? presentation.body|slice(0,200) ~ '...' : presentation.body|slice(0,200)}}<br>
             </p>
 
             <p class="font-weight-bold">Lieu : {{ presentation.user.city }} ({{ presentation.user.zipCode }})</p>
