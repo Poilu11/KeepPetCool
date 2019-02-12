@@ -9,3 +9,4 @@ twig:
         picture_upload_path: 'images/animal/'
         ws_server_ip: '%env(WS_SERVER_IP)%'
         ws_server_port: '%env(WS_SERVER_PORT)%'
+        ws_server_secure: '%env(WS_SERVER_SECURE)%'
