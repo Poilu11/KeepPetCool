@@ -57,7 +57,7 @@ class MessageController extends AbstractController
             {
                 $this->addFlash(
                     'danger',
-                    'Le titre de votre fiche animal ne doit pas dépasser 120 caractères (minimum 3) !'
+                    'L\'objet de votre message ne doit pas dépasser 120 caractères (minimum 3) !'
                 );
 
                 return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
