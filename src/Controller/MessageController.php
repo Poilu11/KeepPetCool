@@ -53,6 +53,29 @@ class MessageController extends AbstractController
                 return $this->redirectToRoute('message_new', ['userFrom' => $userFromId, 'userTo' => $userToId]);
             }
 
+            // On vérifie que l'utilisateur connecté
+            // soit bien l'expéditeur du message
+            if($currentUser->getId() !== intval($userFromId))
+            {
+                $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas envoyer un message à la place d\'un tiers !'
+                );
+
+                return $this->redirectToRoute('dashboard');
+            }
+
+            // On vérifie que le destinataire existe
+            if(is_null($userRepository->find($userToId)))
+            {
+                $this->addFlash(
+                    'danger',
+                    'Le destinataire du message n\'a pas été trouvé ou n\'existe pas !'
+                    );
+    
+                    return $this->redirectToRoute('dashboard');
+            }
+
             if(strlen($messageObject) < 3 || strlen($messageObject) > 120)
             {
                 $this->addFlash(
@@ -114,6 +137,17 @@ class MessageController extends AbstractController
             );
 
             return $this->redirectToRoute('dashboard');
+        }
+
+        // On vérifie que le destinataire existe
+        if(is_null($userTo))
+        {
+            $this->addFlash(
+                'danger',
+                'Le destinataire du message n\'a pas été trouvé ou n\'existe pas !'
+                );
+
+                return $this->redirectToRoute('dashboard');
         }
 
         return $this->render('message/new.html.twig', [
