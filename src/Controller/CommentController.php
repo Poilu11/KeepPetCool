@@ -17,8 +17,7 @@ class CommentController extends AbstractController
 {
     /**
      * @Route("/comment/{idPetsitter}/new/{idOwner}", name="comment_new", methods={"POST"}, requirements={"idPetsitter"="\d+"}, requirements={"idOwner"="\d+"})
-     * @ParamConverter("user", options={"mapping": {"idPetsitter": "id"}})
-     * @ParamConverter("user", options={"mapping": {"idOwner": "id"}})
+     * @ParamConverter("user", options={"mapping": {"idPetsitter": "id", "idOwner": "id"}})
      */
     public function new($idPetsitter, $idOwner, Request $request, PresentationRepository $presentationRepository, UserRepository $userRepository, CommentRepository $commentRepository, EntityManagerInterface $em)
     {
